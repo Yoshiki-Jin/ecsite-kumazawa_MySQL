@@ -73,6 +73,8 @@ public class OrderRepository {
 				item.setPriceL(rs.getInt("i_price_l"));
 				item.setImagePath(rs.getString("i_image_path"));
 				
+				orderToppingList = new ArrayList<>();
+				
 				oi.setItem(item);
 				
 				if(rs.getInt("ot_id") != 0) {
