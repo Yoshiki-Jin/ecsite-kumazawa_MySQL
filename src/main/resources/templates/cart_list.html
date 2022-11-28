@@ -1,97 +1,81 @@
 <!DOCTYPE html>
 <html lang="ja">
   <head>
-    <meta charset="utf-8" />
+    <!--Import Google Icon Font-->
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <!-- Import Materialize CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
+    <!-- Import Font Wesome -->
+    <link
+      href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/common.css" />
+    <link rel="stylesheet" href="css/header.css" />
+    <link rel="stylesheet" href="css/footer.css" />
+    <link rel="stylesheet" href="css/register_admin.css" />
+    <link rel="stylesheet" href="css/login.css" />
+    <link rel="stylesheet" href="css/item_list.css" />
+    <link rel="stylesheet" href="css/item_detail.css" />
+    <link rel="stylesheet" href="css/cart_list.css" />
+    <link rel="stylesheet" href="css/order_confirm.css" />
+    <link rel="stylesheet" href="css/order_finished.css" />
+    <link rel="stylesheet" href="css/responsive.css" />
+    <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>ピザ屋のネット注文</title>
-    <link href="../static/css/bootstrap.css" rel="stylesheet" />
-    <link href="../static/css/piza.css" rel="stylesheet" />
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ラクラクアロハ</title>
   </head>
   <body>
-    <div class="container">
-      <nav class="navbar navbar-default">
-        <div class="container-fluid">
-          <!-- Brand and toggle get grouped for better mobile display -->
-          <div class="navbar-header">
-            <button
-              type="button"
-              class="navbar-toggle collapsed"
-              data-toggle="collapse"
-              data-target="#bs-example-navbar-collapse-1"
-              aria-expanded="false"
-            >
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span> <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="item_list_pizza.html">
-              <!-- 企業ロゴ -->
-              <img
-                alt="main log"
-                src="../static/../static/img_pizza/header_logo.png"
-                height="35"
-              />
+    <header>
+      <div class="container">
+        <div class="header">
+          <div class="header-left">
+            <a href="top.html">
+              <img class="logo" src="img/header_logo.png" />
             </a>
           </div>
 
-          <!-- Collect the nav links, forms, and other content for toggling -->
-          <div
-            class="collapse navbar-collapse"
-            id="bs-example-navbar-collapse-1"
-          >
-            <p class="navbar-text navbar-right">
-              <a href="cart_list.html" class="navbar-link">ショッピングカート</a
-              >&nbsp;&nbsp;
-              <a href="order_history.html" class="navbar-link">注文履歴</a
-              >&nbsp;&nbsp;
-              <a href="login.html" class="navbar-link">ログイン</a>&nbsp;&nbsp;
-              <a href="item_list_pizza.html" class="navbar-link">ログアウト</a>
-            </p>
-          </div>
-          <!-- /.navbar-collapse -->
-        </div>
-        <!-- /.container-fluid -->
-      </nav>
+          <div class="header-right">
+            <a href="item_list.html">商品一覧</a>
+            <a href="register_admin.html">会員登録</a>
+            <a href="#"><i class="fas fa-shopping-cart"></i>カート</a>
+            <a href="login.html" class="login">
+              <i class="fas fa-sign-in-alt"></i>ログイン
+            </a>
 
-      <!-- table -->
-      <div class="row">
-        <div
-          class="table-responsive col-lg-offset-1 col-lg-10 col-md-offset-1 col-md-10 col-sm-10 col-xs-12"
-        >
-          <h3 class="text-center">ショッピングカート</h3>
-          <table class="table table-striped item-list-table">
+            <a href="order_history.html">注文履歴</a>
+          </div>
+        </div>
+      </div>
+    </header>
+    <div class="top-wrapper">
+      <div class="container">
+        <h1 class="page-title">ショッピングカート</h1>
+        <!-- table -->
+        <div class="row">
+          <table class="striped">
+            <thead>
+              <tr>
+                <th class="cart-table-th">商品名</th>
+                <th>サイズ、価格(税抜)、数量</th>
+                <th>トッピング、価格(税抜)</th>
+                <th>小計</th>
+              </tr>
+            </thead>
             <tbody>
               <tr>
-                <th>
-                  <div class="text-center">商品名</div>
-                </th>
-                <th>
-                  <div class="text-center">サイズ、価格(税抜)、数量</div>
-                </th>
-                <th>
-                  <div class="text-center">トッピング、価格(税抜)</div>
-                </th>
-                <th>
-                  <div class="text-center">小計</div>
-                </th>
-                <th></th>
-              </tr>
-              <tr>
-                <td>
-                  <div class="center">
-                    <img
-                      src="../static/img_pizza/1.jpg"
-                      class="img-responsive img-rounded item-img-center"
-                      width="100"
-                      height="300"
-                    /><br />
-                    じゃがバターベーコン
+                <td class="cart-item-name">
+                  <div class="cart-item-icon">
+                    <img src="img/1.jpg" />
                   </div>
+                  <span>ハワイアンパラダイス</span>
                 </td>
                 <td>
                   <span class="price">&nbsp;Ｌ</span>&nbsp;&nbsp;2,380円
@@ -104,26 +88,19 @@
                     <li>あらびきソーセージ300円</li>
                   </ul>
                 </td>
+                <td><div class="text-center">3,280円</div></td>
                 <td>
-                  <div class="text-center">3,280円</div>
-                </td>
-                <td>
-                  <div class="text-center">
-                    <button type="submit" class="btn btn-primary">削除</button>
-                  </div>
+                  <button class="btn" type="button">
+                    <span>削除</span>
+                  </button>
                 </td>
               </tr>
               <tr>
-                <td>
-                  <div class="center">
-                    <img
-                      src="../static/img_pizza/1.jpg"
-                      class="img-responsive img-rounded item-img-center"
-                      width="100"
-                      height="300"
-                    /><br />
-                    じゃがバターベーコン
+                <td class="cart-item-name">
+                  <div class="cart-item-icon">
+                    <img src="img/1.jpg" />
                   </div>
+                  <span>ハワイアンパラダイス</span>
                 </td>
                 <td>
                   <span class="price">&nbsp;Ｌ</span>&nbsp;&nbsp;2,380円
@@ -136,26 +113,19 @@
                     <li>あらびきソーセージ300円</li>
                   </ul>
                 </td>
+                <td><div class="text-center">3,280円</div></td>
                 <td>
-                  <div class="text-center">3,280円</div>
-                </td>
-                <td>
-                  <div class="text-center">
-                    <button type="submit" class="btn btn-primary">削除</button>
-                  </div>
+                  <button class="btn" type="button">
+                    <span>削除</span>
+                  </button>
                 </td>
               </tr>
               <tr>
-                <td>
-                  <div class="center">
-                    <img
-                      src="../static/img_pizza/1.jpg"
-                      class="img-responsive img-rounded item-img-center"
-                      width="100"
-                      height="300"
-                    /><br />
-                    じゃがバターベーコン
+                <td class="cart-item-name">
+                  <div class="cart-item-icon">
+                    <img src="img/1.jpg" />
                   </div>
+                  <span>ハワイアンパラダイス</span>
                 </td>
                 <td>
                   <span class="price">&nbsp;Ｌ</span>&nbsp;&nbsp;2,380円
@@ -168,45 +138,41 @@
                     <li>あらびきソーセージ300円</li>
                   </ul>
                 </td>
+                <td><div class="text-center">3,280円</div></td>
                 <td>
-                  <div class="text-center">3,280円</div>
-                </td>
-                <td>
-                  <div class="text-center">
-                    <button type="submit" class="btn btn-primary">削除</button>
-                  </div>
+                  <button class="btn" type="button">
+                    <span>削除</span>
+                  </button>
                 </td>
               </tr>
             </tbody>
           </table>
         </div>
-      </div>
 
-      <div class="row">
-        <div class="col-xs-offset-2 col-xs-8">
-          <div class="form-group text-center">
-            <span id="total-price">消費税：8,000円</span><br />
-            <span id="total-price">ご注文金額合計：38,000円 (税込)</span>
-          </div>
+        <div class="row cart-total-price">
+          <div>消費税：8,000円</div>
+          <div>ご注文金額合計：38,000円 (税込)</div>
+        </div>
+        <div class="row order-confirm-btn">
+          <button
+            class="btn"
+            type="button"
+            onclick="location.href='order_confirm.html'"
+          >
+            <span>注文に進む</span>
+          </button>
         </div>
       </div>
-
-      <div class="row">
-        <div class="col-xs-offset-5 col-xs-3">
-          <div class="form-group">
-            <form action="order_confirm.html">
-              <input
-                class="form-control btn btn-warning btn-block"
-                type="submit"
-                value="注文に進む"
-              />
-            </form>
-          </div>
-        </div>
-      </div>
+      <!-- end container -->
     </div>
-    <!-- end container -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="../static/js/bootstrap.min.js"></script>
+    <!-- end top-wrapper -->
+    <footer>
+      <div class="container">
+        <img src="img/header_logo.png" />
+        <p>アロハな気分をあなたにお届け！</p>
+      </div>
+    </footer>
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   </body>
 </html>
