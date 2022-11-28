@@ -17,7 +17,7 @@ public class OrderToppingRepository {
 	
 	public void insert(OrderTopping ot) {
 		
-		String sql = "INSERT INTO ordertopping VALUE (:topping_id, :order_item_id, :topping ;";
+		String sql = "INSERT INTO ordertopping VALUES (:topping_id, :order_item_id, :topping ;";
 		
 		SqlParameterSource param = new BeanPropertySqlParameterSource(ot);
 		
