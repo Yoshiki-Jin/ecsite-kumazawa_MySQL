@@ -16,7 +16,6 @@ public class ShowDetailController {
 	@Autowired
 	private ShowDetailService showDetailService;
 
-	
 	@GetMapping("/")
 	public String showDetail(Integer id, Model model) {
 		Item item = showDetailService.showDetail(id);

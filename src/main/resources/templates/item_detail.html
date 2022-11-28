@@ -94,8 +94,8 @@
               <span>&nbsp;Ｍ&nbsp;</span>&nbsp;&nbsp;200円(税抜)
               <span>&nbsp;Ｌ</span>&nbsp;&nbsp;300円(税抜)
             </div>
-            <div th:each="topping:${toppingList}">
-              <label class="item-topping">
+            <div >
+              <label class="item-topping" th:each="topping:${item.toppingList}">
                 <input type="checkbox" />
                 <span th:text="${topping.name}">ハワイアンソルト</span>
               </label>
