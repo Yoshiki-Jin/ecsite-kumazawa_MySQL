@@ -1,8 +1,11 @@
 package com.example.repository;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.stereotype.Repository;
@@ -46,6 +49,25 @@ public class UserRepository {
 		String sql = "INSERT INTO users (name,email,password,zipcode,address,telephone) VALUES(:name,:email,:password,:zipcode,:address,:telephone)";
 		SqlParameterSource param = new BeanPropertySqlParameterSource(user);
 		template.update(sql, param);
+	}
+
+	/**
+	 * メールアドレスからユーザー情報を検索する.
+	 * 
+	 * @param email メールアドレス
+	 * @return ユーザー情報
+	 */
+	public User findByEmail(String email) {
+		String sql = "SELECT id,name,email,password,zipcode,address,telephone FROM users WHERE email=:email";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("email", email);
+
+		List<User> userList = template.query(sql, param, USER_LOW_MAPPER);
+
+		if (userList.size() == 0) { // 検索結果が０だった場合「null」を返す
+			return null;
+		}
+
+		return userList.get(0);
 	}
 
 }

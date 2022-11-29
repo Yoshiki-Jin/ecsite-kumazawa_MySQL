@@ -27,4 +27,15 @@ public class InsertUserService {
 	public void insert(User user) {
 		userRepository.insert(user);
 	}
+
+	/**
+	 * メールアドレスからユーザー情報を検索するメソッド. *
+	 * 
+	 * @param email メールアドレス
+	 * @return ユーザー情報
+	 */
+	public User searchByEmail(String email) {
+		return userRepository.findByEmail(email);
+
+	}
 }
