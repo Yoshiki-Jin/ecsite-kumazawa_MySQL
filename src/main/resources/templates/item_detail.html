@@ -74,21 +74,25 @@
           <div class="row item-size">
             <div class="item-hedding">サイズ</div>
             <div>
+            <input type="hidden" id="priceM" th:value="${item.priceM}">
+            <input type="hidden" id="priceL" th:value="${item.priceL}">
               <label>
-                <input id="size-m" name="size" type="radio" checked="checked" />
+                <input id="size-m" name="size" type="radio"  class="size_radio" value="M" checked="checked" />
                 <span>
-                  &nbsp;<span class="price">Ｍ<span></span>&nbsp;&nbsp;</span 
-                  ><span th:text="${item.priceM}"></span>円(税抜)</span
+                  &nbsp;<span class="price">Ｍ</span
+                  ><span th:text="${'&nbsp;&nbsp;'+item.priceM+'円(税抜)'}"></span></span
                 >
               </label>
               <label>
-                <input id="size-l" name="size" type="radio" />
-                <span >
+                <input id="size-l" name="size" type="radio" class="size_radio" value="L" />
+                <span>
                   &nbsp;<span class="price">Ｌ</span
-                  ><span >&nbsp;&nbsp;</span><span th:text="${item.priceL}"></span>円(税抜)</span
+                  ><span th:text="${'&nbsp;&nbsp;'+item.priceL+'円(税抜)'}"></span></span
                 >
               </label>
             </div>
+          </div>
+          
           </div>
           <div class="row item-toppings">
             <div class="item-hedding">
@@ -98,8 +102,13 @@
             </div>
             <div >
               <label class="item-topping" th:each="topping:${item.toppingList}">
+<<<<<<< HEAD
                 <input type="checkbox" name="toppingList" th:value="${topping.id}"/>
                 <span th:text="${topping.name}" >ハワイアンソルト</span>
+=======
+                <input type="checkbox" id="topping" class="topping" />
+                <span th:text="${topping.name}">ハワイアンソルト</span>
+>>>>>>> 25f388771f8aa1f9f10625a752897af72dc43d6c
               </label>
               
             </div>
@@ -108,7 +117,11 @@
             <div class="item-hedding item-hedding-quantity">数量</div>
             <div class="item-quantity-selectbox">
               <div class="input-field col s12">
+<<<<<<< HEAD
                 <select class="browser-default" name="quantity">
+=======
+                <select class="browser-default" id="quantity">
+>>>>>>> 25f388771f8aa1f9f10625a752897af72dc43d6c
                   <option value="" disabled selected>選択して下さい</option>
                   <option value="1" th:value="1">1</option>
                   <option value="2" th:value="2">2</option>
@@ -127,7 +140,7 @@
             </div>
           </div>
           <div class="row item-total-price">
-            <span>この商品金額：38,000 円(税抜)</span>
+            <span>この商品金額：<span id="show-total-price"></span> 円(税抜)</span>
           </div>
           <div class="row item-cart-btn">
             <button
@@ -153,5 +166,7 @@
     </footer>
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script src="../js/item_detail.js"></script>
   </body>
 </html>
