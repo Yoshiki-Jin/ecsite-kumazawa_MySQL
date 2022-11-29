@@ -96,5 +96,17 @@ public class CartService {
 		return orderList;
 	}
 	
-	
+	/**
+	 * OrderItemを削除する
+	 * 該当するorderIdを検索し、OrderItemを削除する。
+	 * @param orderItemId　OrderItemId
+	 */
+	public void deleteOrderItem(Integer orderItemId) {
+		
+		//OrderToppingを削除する
+		orderToppingRepository.delete(orderItemId);
+		
+		//OrderItemを削除する
+		orderItemRepository.delete(orderItemId);
+	}
 }
