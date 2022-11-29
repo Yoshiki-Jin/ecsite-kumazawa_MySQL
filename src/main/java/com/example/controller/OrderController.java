@@ -22,6 +22,11 @@ public class OrderController {
 	@Autowired
 	private OrderService orderService;
 	
+	/**
+	 * 注文画面を表示します.
+	 * 
+	 * @return 注文画面
+	 */
 	@GetMapping("/toOrder")
 	public String toOrder() {
 		return "order_confirm";
@@ -34,7 +39,7 @@ public class OrderController {
 	 * @return 注文完了画面
 	 */
 	@PostMapping("/")
-	public String order(OrderForm orderForm,Integer responsibleCompany) {
+	public String order(OrderForm orderForm) {
 		orderService.order(orderForm);
 		return "order_finished";
 	}

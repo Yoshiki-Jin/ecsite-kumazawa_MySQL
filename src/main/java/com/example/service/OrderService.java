@@ -32,7 +32,7 @@ public class OrderService {
 	 * @param orderForm 注文情報を受け取るフォーム.
 	 */
 	public void order(OrderForm orderForm) {
-		// コメントアウト部分はload()が完成したら使用します。
+		// コメントアウト部分はload()が完成したら使用します
 
 //		Order order=orderRepository.load(orderForm.getId());
 
