@@ -70,7 +70,7 @@ public class ItemRepository {
 	 * @return 検索された商品情報全件
 	 */
 	public List<Item> findAll() {
-		String sql = "SELECT id,name,description,price_m,price_l,image_path,deleted FROM items;";
+		String sql = "SELECT id,name,description,price_m,price_l,image_path,deleted FROM items ORDER BY id;";
 		List<Item> itemList = template.query(sql, ITEM_ROW_MAPPER);
 
 		return itemList;
