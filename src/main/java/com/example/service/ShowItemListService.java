@@ -32,6 +32,7 @@ public class ShowItemListService {
 			List<Item> itemList = itemRepository.findAll();
 			return itemList;
 		} else {
+			
 			List<Item> itemList = itemRepository.findByItemName(name);
 			return itemList;
 		}
