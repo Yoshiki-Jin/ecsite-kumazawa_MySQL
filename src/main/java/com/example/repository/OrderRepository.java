@@ -8,6 +8,12 @@ import org.springframework.stereotype.Repository;
 
 import com.example.domain.Order;
 
+/**
+ * 注文情報を操作するリポジトリ.
+ * 
+ * @author inagakisaia
+ *
+ */
 @Repository
 public class OrderRepository {
 

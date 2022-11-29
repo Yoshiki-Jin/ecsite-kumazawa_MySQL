@@ -2,6 +2,12 @@ package com.example.form;
 
 import java.sql.Date;
 
+/**
+ * 注文情報を受け取るフォーム.
+ * 
+ * @author inagakisaia
+ *
+ */
 public class OrderForm {
 
 	/** ID */

@@ -26,8 +26,16 @@ public class OrderService {
 	@Autowired
 	private OrderRepository orderRepository;
 
+	/**
+	 * 注文をします.
+	 * 
+	 * @param orderForm 注文情報を受け取るフォーム.
+	 */
 	public void order(OrderForm orderForm) {
+		// コメントアウト部分はload()が完成したら使用します。
+
 //		Order order=orderRepository.load(orderForm.getId());
+
 		// 以下２行load()ができたら消します
 		Order order = new Order();
 		order.setId(1);
