@@ -82,14 +82,19 @@ public class CartService {
 	
 	/**
 	 * カートの中身を表示する.
-	 * 戻り値がList<Order>なのは履歴表示の際にもこのメソッドが使えるから.
-	 * @param userId
-	 * @return
+	 * 戻り値がList<Order>なのは履歴表示の際にもこのメソッドを使うことができ、そのようにOrderRepositoryのload()を作ったから。
+	 * @param userId　ユーザーID
+	 * @return Orderリスト
 	 */
 	public List<Order> showCart(Integer userId){
 		
 		Order order = orderRepository.findByUserIdAndStatus(userId);
+		if(order == null) {
+			return null;
+		}
 		List<Order> orderList = orderRepository.load(order.getId());
 		return orderList;
 	}
+	
+	
 }
