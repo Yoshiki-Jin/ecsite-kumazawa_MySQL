@@ -15,6 +15,11 @@ import com.example.repository.OrderItemRepository;
 import com.example.repository.OrderRepository;
 import com.example.repository.OrderToppingRepository;
 
+/**
+ * Cartへの追加、削除、表示をするServiceクラス
+ * @author kaneko
+ *
+ */
 @Service
 @Transactional
 public class CartService {
@@ -28,6 +33,13 @@ public class CartService {
 	@Autowired
 	private OrderToppingRepository orderToppingRepository;
 
+	/**
+	 * status=0のorderIdの有無を確認→無い場合作成.
+	 * カートに追加するOrderItemを登録する.
+	 * カートに追加したOrderItemのToppingListを登録する.
+	 * @param form CartForm（登録する商品の内容）
+	 * @param userId　ユーザーID
+	 */
 	public void addItem(CartForm form, Integer userId) {
 
 		Order order = orderRepository.findByUserIdAndStatus(userId);
@@ -66,5 +78,18 @@ public class CartService {
 			ot.setToppingId(topping);
 			orderToppingRepository.insert(ot);
 		}
+	}
+	
+	/**
+	 * カートの中身を表示する.
+	 * 戻り値がList<Order>なのは履歴表示の際にもこのメソッドが使えるから.
+	 * @param userId
+	 * @return
+	 */
+	public List<Order> showCart(Integer userId){
+		
+		Order order = orderRepository.findByUserIdAndStatus(userId);
+		List<Order> orderList = orderRepository.load(order.getId());
+		return orderList;
 	}
 }
