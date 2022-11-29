@@ -58,7 +58,6 @@ public class ItemRepository {
 	 * @return 名前が曖昧一致している商品一覧
 	 */
 	public List<Item> findByItemName(String name) {
-		System.out.println(name);
 		String sql = "SELECT id,name,description,price_m,price_l,image_path,deleted FROM items WHERE name LIKE :name;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("name", "%" + name + "%");
 		List<Item> itemList = template.query(sql, param, ITEM_ROW_MAPPER);
