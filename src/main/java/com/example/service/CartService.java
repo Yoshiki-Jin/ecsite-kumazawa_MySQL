@@ -86,14 +86,14 @@ public class CartService {
 	 * @param userId　ユーザーID
 	 * @return Orderリスト
 	 */
-	public List<Order> showCart(Integer userId){
+	public Order showCart(Integer userId){
 		
-		Order order = orderRepository.findByUserIdAndStatus(userId);
-		if(order == null) {
+		Order existorder = orderRepository.findByUserIdAndStatus(userId);
+		if(existorder == null) {
 			return null;
 		}
-		List<Order> orderList = orderRepository.load(order.getId());
-		return orderList;
+		Order order = orderRepository.load(existorder.getId());
+		return order;
 	}
 	
 	/**

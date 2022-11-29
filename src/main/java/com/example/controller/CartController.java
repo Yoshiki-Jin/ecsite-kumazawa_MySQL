@@ -47,9 +47,9 @@ public class CartController {
 	public String showCart(Model model) {
 		
 		//ユーザーIDを入手する（未実装）
-		Integer userId = 0;
-		List<Order> orderList = service.showCart(userId);
-		model.addAttribute("orderList",orderList);
+		Integer userId = 2;
+		Order order = service.showCart(userId);
+		model.addAttribute("order",order);
 		return "cart_list";
 	}
 }

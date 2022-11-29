@@ -129,7 +129,7 @@ public class OrderRepository {
 	 */
 	public Order findByUserIdAndStatus(Integer userId) {
 		
-		String sql = "SELECT id FROM order WHERE userId = :userId AND status = 0; ";
+		String sql = "SELECT id FROM orders WHERE userId = :userId AND status = 0; ";
 		
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId",userId);
 		
@@ -145,14 +145,14 @@ public class OrderRepository {
 	 * @param orderId　オーダーID
 	 * @return　Orderリスト（履歴検索も考慮して、複数検索ができるようにしてます。）
 	 */
-	public List<Order> load(Integer orderId) {
+	public Order load(Integer orderId) {
 		
 		String sql = "SELECT o.id, o.user_id, o.status, o.total_price, o.order_date, o.destination_name, o.destination_email, o.destination_zipcode, o.destination_address, o.destination_tel, o.delivery_time, o.payment_method, "
 				+ "oi.id, oi.item_id, oi.order_id, oi.quantity, oi.size, "
 				+ "ot.id, ot.topping_id, ot.order_item_id, "
 				+ "i.id, i.name, i.description, i.price_m, i.price_l, i.image_path, i.deleted, "
 				+ "t.id, t.name, t.price_m, t.price_l "
-				+ "FROM Order o LEFT OUTER JOIN order_items oi ON o.id = oi.order_id "
+				+ "FROM Orders o LEFT OUTER JOIN order_items oi ON o.id = oi.order_id "
 				+ "LEFT OUTER JOIN order_toppings ot ON oi.id = ot.order_item_id "
 				+ "JOIN items i ON i.id = oi.item_id "
 				+ "JOIN toppings t ON t.id = ot.topping_id "
@@ -162,13 +162,13 @@ public class OrderRepository {
 		
 		List<Order> orderList = null;
 		orderList = template.query(sql, param, ORDER_RESULT_SET_EXTRACTOR);
-		return orderList;
+		return orderList.get(0);
 	}
 	
 	public void insert(Order order) {
 		
 		//注文内容確認～宛先情報入力～完了等に関係するカラムは含めていない。
-		String sql = "INSERT INTO order(user_id,status,total_price) VALUES(:userId, :status, :total_price);";
+		String sql = "INSERT INTO orders(user_id,status,total_price) VALUES(:userId, :status, :total_price);";
 		
 		SqlParameterSource param = new BeanPropertySqlParameterSource(order);
 		
