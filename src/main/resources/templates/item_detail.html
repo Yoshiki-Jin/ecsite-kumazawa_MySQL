@@ -57,9 +57,11 @@
         </div>
       </div>
     </header>
+    <form th:action="@{/cart/insertOrderItem}" method="post" >
     <div class="top-wrapper">
       <div class="container">
         <h1 class="page-title" th:text="${item.name}">Hawaiianパラダイス</h1>
+        <input type="hidden" name="itemId" th:value="${item.id}">
         <div class="row">
           <div class="row item-detail">
             <div class="item-icon">
@@ -96,8 +98,8 @@
             </div>
             <div >
               <label class="item-topping" th:each="topping:${item.toppingList}">
-                <input type="checkbox" />
-                <span th:text="${topping.name}">ハワイアンソルト</span>
+                <input type="checkbox" name="toppingList" th:value="${topping.id}"/>
+                <span th:text="${topping.name}" >ハワイアンソルト</span>
               </label>
               
             </div>
@@ -106,20 +108,20 @@
             <div class="item-hedding item-hedding-quantity">数量</div>
             <div class="item-quantity-selectbox">
               <div class="input-field col s12">
-                <select class="browser-default">
+                <select class="browser-default" name="quantity">
                   <option value="" disabled selected>選択して下さい</option>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-                  <option value="6">6</option>
-                  <option value="7">7</option>
-                  <option value="8">8</option>
-                  <option value="9">9</option>
-                  <option value="10">10</option>
-                  <option value="11">11</option>
-                  <option value="12">12</option>
+                  <option value="1" th:value="1">1</option>
+                  <option value="2" th:value="2">2</option>
+                  <option value="3" th:value="3">3</option>
+                  <option value="4" th:value="4">4</option>
+                  <option value="5" th:value="5">5</option>
+                  <option value="6" th:value="6">6</option>
+                  <option value="7" th:value="7">7</option>
+                  <option value="8" th:value="8">8</option>
+                  <option value="9" th:value="9">9</option>
+                  <option value="10" th:value="10">10</option>
+                  <option value="11" th:value="11">11</option>
+                  <option value="12" th:value="12">12</option>
                 </select>
               </div>
             </div>
@@ -141,6 +143,7 @@
       </div>
       <!-- end container -->
     </div>
+    </form>
     <!-- end top-wrapper -->
     <footer>
       <div class="container">
