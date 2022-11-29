@@ -1,5 +1,7 @@
 package com.example.repository;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -47,6 +49,31 @@ public class ItemRepository {
 		SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
 		Item item = template.queryForObject(sql, param, ITEM_ROW_MAPPER);
 		return item;
+	}
+
+	/**
+	 * 名前で商品情報をあいまい検索します.
+	 * 
+	 * @param name 商品名
+	 * @return 名前が曖昧一致している商品一覧
+	 */
+	public List<Item> findByItemName(String name) {
+		String sql = "SELECT id,name,description,price_m,price_l,image_path,deleted FROM items WHERE name LIKE :name;";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("name", "%" + name + "%");
+		List<Item> itemList = template.query(sql, param, ITEM_ROW_MAPPER);
+		return itemList;
+	}
+
+	/**
+	 * 商品情報を全件検索します.
+	 * 
+	 * @return 検索された商品情報全件
+	 */
+	public List<Item> findAll() {
+		String sql = "SELECT id,name,description,price_m,price_l,image_path,deleted FROM items ORDER BY id;";
+		List<Item> itemList = template.query(sql, ITEM_ROW_MAPPER);
+
+		return itemList;
 	}
 
 }
