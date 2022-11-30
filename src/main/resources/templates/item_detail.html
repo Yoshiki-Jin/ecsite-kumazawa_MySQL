@@ -48,10 +48,11 @@
             <a href="cart_list.html">
               <i class="fas fa-shopping-cart"> </i>カート
             </a>
-            <a href="login.html" class="login">
-              <i class="fas fa-sign-in-alt"></i>ログイン
-            </a>
-
+            <span th:unless="${session.user}">
+            <a href="login.html" th:href="@{/loginUser/toLogin}" class="login"><i class="fas fa-sign-in-alt"></i>ログイン</a> 
+			</span>
+			<span th:if="${session.user}"> <a href="login.html" th:href="@{/logoutUser/logout}">ログアウト</a>
+            </span>
             <a href="order_history.html">注文履歴</a>
           </div>
         </div>
@@ -102,13 +103,8 @@
             </div>
             <div >
               <label class="item-topping" th:each="topping:${item.toppingList}">
-<<<<<<< HEAD
-                <input type="checkbox" name="toppingList" th:value="${topping.id}"/>
-                <span th:text="${topping.name}" >ハワイアンソルト</span>
-=======
-                <input type="checkbox" id="topping" class="topping" />
+                <input type="checkbox" id="topping" class="topping"  name="toppingList" th:value="${topping.id}" />
                 <span th:text="${topping.name}">ハワイアンソルト</span>
->>>>>>> 25f388771f8aa1f9f10625a752897af72dc43d6c
               </label>
               
             </div>
@@ -117,11 +113,8 @@
             <div class="item-hedding item-hedding-quantity">数量</div>
             <div class="item-quantity-selectbox">
               <div class="input-field col s12">
-<<<<<<< HEAD
-                <select class="browser-default" name="quantity">
-=======
-                <select class="browser-default" id="quantity">
->>>>>>> 25f388771f8aa1f9f10625a752897af72dc43d6c
+
+                <select class="browser-default" id="quantity" name="quantity">
                   <option value="" disabled selected>選択して下さい</option>
                   <option value="1" th:value="1">1</option>
                   <option value="2" th:value="2">2</option>

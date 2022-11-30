@@ -38,8 +38,8 @@
 
 				<div class="header-right">
 
-					<a href="login.html" class="login"> <i
-						class="fas fa-sign-in-alt"></i>ログイン
+					<a href="login.html" th:href="@{/show-itemList/}"  class="login"> <i
+						class="fas fa-sign-in-alt"></i>商品一覧
 					</a>
 				</div>
 			</div>
@@ -57,7 +57,7 @@
         
         </pre>
 			<div>しばらく経ってからもう一度操作してください。</div>
-			<a href="../login.html">ログイン画面</a>
+			<a href="../login.html" th:href="@{/show-itemList/}" >商品一覧</a>
 		</div>
 		<!-- end container-->
 	</div>

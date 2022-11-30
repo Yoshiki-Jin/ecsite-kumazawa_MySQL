@@ -46,9 +46,13 @@
             <a href="item_list.html" th:href="@{/show-itemList/}" >商品一覧</a>
             <a href="register_admin.html" th:href="@{/insertUser/toInsert}" >会員登録</a>
             <a href="#"><i class="fas fa-shopping-cart"></i>カート</a>
-            <a href="login.html" class="login">
-              <i class="fas fa-sign-in-alt"></i>ログイン
-            </a>
+            <span th:unless="${session.user}">
+              <a href="login.html" th:href="@{/loginUser/toLogin}" class="login">
+               <i class="fas fa-sign-in-alt"></i>ログイン </a>
+            </span>
+            <span th:if="${session.user}">
+              <a href="login.html" th:href="@{/logoutUser/logout}">ログアウト</a>
+            </span>
 
             <a href="order_history.html">注文履歴</a>
           </div>
@@ -70,75 +74,47 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
+               <tbody>
+              <tr th:each="orderItem : ${order.orderItemList}" >
                 <td class="cart-item-name">
                   <div class="cart-item-icon">
-                    <img src="img/1.jpg" />
+                    <img src="img/1.jpg" th:src="@{/img/}+${orderItem.item.imagePath}" />
                   </div>
-                  <span>ハワイアンパラダイス</span>
+                  <span th:text="${orderItem.item.name}">ハワイアンパラダイス</span>
                 </td>
                 <td>
-                  <span class="price">&nbsp;Ｌ</span>&nbsp;&nbsp;2,380円
-                  &nbsp;&nbsp;1個
+                  <span class="price" th:text="${'&nbsp;'+orderItem.size}" >&nbsp;Ｌ</span >
+                  <span th:if="${orderItem.size.compareTo('M') == 0}" th:text="${'&nbsp;&nbsp;'+orderItem.item.priceM+'円'}" >&nbsp;&nbsp;2,380円</span>
+                  <span th:if="${orderItem.size.compareTo('L') == 0}" th:text="${'&nbsp;&nbsp;'+orderItem.item.priceL+'円'}" ></span>
+                  <span th:text="${'&nbsp;&nbsp;'+orderItem.quantity+'個'}">&nbsp;&nbsp;1個</span>
                 </td>
                 <td>
                   <ul>
-                    <li>ピーマン300円</li>
-                    <li>オニオン300円</li>
-                    <li>あらびきソーセージ300円</li>
+                    <li th:if="${orderItem.size.compareTo('M') == 0}" th:each="orderTopping : ${orderItem.orderToppingList}" 
+                    th:text="${orderTopping.topping.name+' 200円'}" >
+                    </li>
+                    <li th:if="${orderItem.size.compareTo('L') == 0}" th:each="orderTopping : ${orderItem.orderToppingList}" 
+                    th:text="${orderTopping.topping.name+' 300円'}" >
+                    </li>
                   </ul>
                 </td>
                 <td><div class="text-center">3,280円</div></td>
-              </tr>
-              <tr>
-                <td class="cart-item-name">
-                  <div class="cart-item-icon">
-                    <img src="img/1.jpg" />
-                  </div>
-                  <span>ハワイアンパラダイス</span>
-                </td>
                 <td>
-                  <span class="price">&nbsp;Ｌ</span>&nbsp;&nbsp;2,380円
-                  &nbsp;&nbsp;1個
+                  <button class="btn" type="button">
+                    <span>削除</span>
+                  </button>
                 </td>
-                <td>
-                  <ul>
-                    <li>ピーマン300円</li>
-                    <li>オニオン300円</li>
-                    <li>あらびきソーセージ300円</li>
-                  </ul>
-                </td>
-                <td><div class="text-center">3,280円</div></td>
-              </tr>
-              <tr>
-                <td class="cart-item-name">
-                  <div class="cart-item-icon">
-                    <img src="img/1.jpg" />
-                  </div>
-                  <span>ハワイアンパラダイス</span>
-                </td>
-                <td>
-                  <span class="price">&nbsp;Ｌ</span>&nbsp;&nbsp;2,380円
-                  &nbsp;&nbsp;1個
-                </td>
-                <td>
-                  <ul>
-                    <li>ピーマン300円</li>
-                    <li>オニオン300円</li>
-                    <li>あらびきソーセージ300円</li>
-                  </ul>
-                </td>
-                <td><div class="text-center">3,280円</div></td>
               </tr>
             </tbody>
           </table>
         </div>
 
         <div class="row cart-total-price">
-          <div>消費税：8,000円</div>
-          <div>ご注文金額合計：38,000円 (税込)</div>
+          <div th:text="${'消費税：'+tax+'円'}" >消費税：8,000円</div>
+          <div th:text="${'ご注文金額合計：'+order.totalPrice+'円 (税込)'}">ご注文金額合計：38,000円 (税込)</div>
         </div>
 <form action="order_finished.html" th:action="@{/order/}" method="post">
+<input type="hidden" name="id" th:value="${order.id}">
         <h2 class="page-title">お届け先情報</h2>
         <div class="order-confirm-delivery-info">
           <div class="row">
