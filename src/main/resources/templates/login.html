@@ -64,12 +64,12 @@
           <br>
             <div class="error" th:text="${errorMessage}">エラーメッセージ</div>
             
-            <form class="login-form" action="login.html"  th:action="@{/loginUser/login}" method="post">
+            <form class="login-form" action="login.html"  th:action="@{/loginUser/login}" method="post" >
               <div class="row"></div>
               <div class="row">
                 <div class="input-field col s12">
                   <i class="material-icons prefix">mail_outline</i>
-                  <input class="validate" id="mailAddress" type="email" name="email" />
+                  <input class="validate" id="mailAddress" type="email" name="email"  />
                   <label
                     for="mailAddress"
                     data-error="wrong"
