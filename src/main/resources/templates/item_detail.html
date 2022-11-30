@@ -48,10 +48,11 @@
             <a href="cart_list.html">
               <i class="fas fa-shopping-cart"> </i>カート
             </a>
-            <a href="login.html" class="login">
-              <i class="fas fa-sign-in-alt"></i>ログイン
-            </a>
-
+            <span th:unless="${session.user}">
+            <a href="login.html" th:href="@{/loginUser/toLogin}" class="login"><i class="fas fa-sign-in-alt"></i>ログイン</a> 
+			</span>
+			<span th:if="${session.user}"> <a href="login.html" th:href="@{/logoutUser/logout}">ログアウト</a>
+            </span>
             <a href="order_history.html">注文履歴</a>
           </div>
         </div>
