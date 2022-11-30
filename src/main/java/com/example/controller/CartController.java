@@ -1,5 +1,7 @@
 package com.example.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.domain.Order;
+import com.example.domain.OrderItem;
 import com.example.form.CartForm;
 import com.example.service.CartService;
 
@@ -49,7 +52,7 @@ public class CartController {
 	 * @param model リクエストスコープ用
 	 * @return カート詳細画面に移動
 	 */
-	@GetMapping("showCart")
+	@GetMapping("/showCart")
 	public String showCart(Model model) {
 		
 		if(session.getAttribute("user") == null) {
@@ -63,5 +66,12 @@ public class CartController {
 		Order order = service.showCart(userId);
 		model.addAttribute("order", order);
 		return "cart_list";
+	}
+	
+	@PostMapping("/deleteOrderItem")
+	public String deleteOrderItem(Integer orderItemId) {
+		
+		service.deleteOrderItem(orderItemId);
+		return "redirect:/cart/showCart";
 	}
 }
