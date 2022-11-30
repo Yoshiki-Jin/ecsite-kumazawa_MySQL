@@ -155,7 +155,7 @@ public class OrderRepository {
 	}
 
 	/**
-	 * orderIdを条件にOrderリストを返す。
+	 * orderIdを条件にOrderリストを返す.
 	 * 
 	 * @param orderId オーダーID
 	 * @return Orderリスト（履歴検索も考慮して、複数検索ができるようにしてます。）
@@ -179,10 +179,14 @@ public class OrderRepository {
 		return orderList.get(0);
 	}
 
+	/**
+	 *　該当ユーザーのStatus=0のOrderを１件登録する.
+	 * @param order　Order
+	 */
 	public void insert(Order order) {
 
 		// 注文内容確認～宛先情報入力～完了等に関係するカラムは含めていない。
-		String sql = "INSERT INTO orders(user_id,status,total_price) VALUES(:userId, :status, :total_price);";
+		String sql = "INSERT INTO orders(user_id,status,total_price) VALUES(:userId, 0, :total_price);";
 
 		SqlParameterSource param = new BeanPropertySqlParameterSource(order);
 
@@ -190,7 +194,7 @@ public class OrderRepository {
 	}
 	
 	/**
-	 * 注文情報を更新します.
+	 * 注文情報を更新する.
 	 * 
 	 * @param order 注文情報
 	 */

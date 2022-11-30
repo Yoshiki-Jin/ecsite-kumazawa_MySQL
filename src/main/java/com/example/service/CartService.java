@@ -16,7 +16,7 @@ import com.example.repository.OrderRepository;
 import com.example.repository.OrderToppingRepository;
 
 /**
- * Cartへの追加、削除、表示をするServiceクラス
+ * Cartへの追加、削除、表示をするServiceクラス.
  * @author kaneko
  *
  */
@@ -82,7 +82,7 @@ public class CartService {
 	
 	/**
 	 * カートの中身を表示する.
-	 * 戻り値がList<Order>なのは履歴表示の際にもこのメソッドを使うことができ、そのようにOrderRepositoryのload()を作ったから。
+	 * 戻り値がList<Order>なのは履歴表示の際にもこのメソッドを使うことができ、そのようにOrderRepositoryのload()を作ったから.
 	 * @param userId　ユーザーID
 	 * @return Orderリスト
 	 */
@@ -97,8 +97,8 @@ public class CartService {
 	}
 	
 	/**
-	 * OrderItemを削除する
-	 * 該当するorderIdを検索し、OrderItemを削除する。
+	 * OrderItemを削除する.
+	 * 該当するorderIdを検索し、OrderItemを削除する.
 	 * @param orderItemId　OrderItemId
 	 */
 	public void deleteOrderItem(Integer orderItemId) {

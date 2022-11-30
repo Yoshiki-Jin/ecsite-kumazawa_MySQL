@@ -29,7 +29,7 @@ public class CartController {
 	private HttpSession session;
 
 	/**
-	 * 選択されたOrderItemを登録する
+	 * 選択されたOrderItemを登録する.
 	 * 
 	 * @param form CartForm
 	 * @return 商品一覧ページに移動
@@ -44,7 +44,7 @@ public class CartController {
 	}
 
 	/**
-	 * カートの中身を表示する
+	 * カートの中身を表示する.
 	 * 
 	 * @param model リクエストスコープ用
 	 * @return カート詳細画面に移動

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.example.domain.OrderTopping;
 
 /**
- * OrderToppingのRepository
+ * OrderToppingのRepository.
  * 
  * @author kaneko
  */
@@ -21,7 +21,7 @@ public class OrderToppingRepository {
 	private NamedParameterJdbcTemplate template;
 
 	/**
-	 * OrderToppingを１件登録する。
+	 * OrderToppingを１件登録する.
 	 * 
 	 * @param ot OrderToppingオブジェクト
 	 */
@@ -35,7 +35,7 @@ public class OrderToppingRepository {
 	}
 
 	/**
-	 * OrderItemIdを元に該当するOrderToppingを削除する。
+	 * OrderItemIdを元に該当するOrderToppingを削除する.
 	 * 
 	 * @param orderItemId
 	 */
