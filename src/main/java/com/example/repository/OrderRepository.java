@@ -134,8 +134,6 @@ public class OrderRepository {
 		order.setDestinationTel(rs.getString("destination_tel"));
 		order.setDeliveryTime(rs.getTimestamp("delivery_time"));
 		order.setPaymentMethod(rs.getInt("payment_method"));
-//		order.setUser(rs.getUser("user"));
-//		order.setOrderItemList(rs.getOrderItemList("orderItemList"));
 
 		return order;
 	};
@@ -151,11 +149,9 @@ public class OrderRepository {
 
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
 
-		// queryForObjectだと該当０件の時エラーが起きてしまう
-		// →Serviceクラスで例外処理 OR queryにして戻り値をList<Order>にする？
-		Order order = template.queryForObject(sql, param, ORDER_ROW_MAPPER);
+		List<Order> order = template.query(sql, param, ORDER_ROW_MAPPER);
 
-		return order;
+		return order.get(0);
 	}
 
 	/**
@@ -180,15 +176,7 @@ public class OrderRepository {
 
 		List<Order> orderList = null;
 		orderList = template.query(sql, param, ORDER_RESULT_SET_EXTRACTOR);
-//		Order order = null;
-//		try {
-//			order = orderList.get(0);
-//			System.out.println(order);
-//		}catch(Exception e) {
-//			System.out.println("template.query()でエラー");
-//		}
 		return orderList.get(0);
-//		return order;
 	}
 
 	public void insert(Order order) {

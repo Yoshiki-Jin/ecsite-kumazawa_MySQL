@@ -92,12 +92,7 @@ public class CartService {
 		if(existorder == null) {
 			return null;
 		}
-//		try {
 		Order order = orderRepository.load(existorder.getId());
-//		}catch(Exception e) {
-//			System.out.println("load()でエラー");
-//		}
-		System.out.println("WWWWWWWWWWWWWWW　order = "+order);
 		return order;
 	}
 	
