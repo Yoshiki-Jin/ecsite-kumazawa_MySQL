@@ -43,7 +43,7 @@
           </div>
 
           <div class="header-right">
-            <a href="item_list.html" th:href="@{/show-itemList/}">商品一覧</a>
+            <a href="item_list.html">商品一覧</a>
             <a href="register_admin.html">会員登録</a>
             <a href="#"><i class="fas fa-shopping-cart"></i>カート</a>
             <a href="login.html" class="login">
@@ -73,7 +73,7 @@
               <tr th:each="orderItem : ${order.orderItemList}" >
                 <td class="cart-item-name">
                   <div class="cart-item-icon">
-                    <img src="img/1.jpg" th:src="${orderItem.item.imagePath}"/>
+                    <img src="img/1.jpg" />
                   </div>
                   <span th:text="${orderItem.item.name}">ハワイアンパラダイス</span>
                 </td>
@@ -98,6 +98,7 @@
         </div>
 
         <div class="row cart-total-price">
+         <p>あいうえおかきくけこ</p>
           <div>消費税：8,000円</div>
           <div>ご注文金額合計：38,000円 (税込)</div>
         </div>
@@ -116,7 +117,7 @@
     <!-- end top-wrapper -->
     <footer>
       <div class="container">
-        <img src="img/header_logo.png" th:src="@{/img/header_logo.png}" />
+        <img src="img/header_logo.png" />
         <p>アロハな気分をあなたにお届け！</p>
       </div>
     </footer>
