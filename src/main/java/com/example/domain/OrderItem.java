@@ -3,12 +3,19 @@ package com.example.domain;
 import java.util.List;
 
 public class OrderItem {
+	/** id */
 	private Integer id;
+	/** 商品id */
 	private Integer itemId;
+	/** 注文id */
 	private Integer orderId;
+	/** 数量 */
 	private Integer quantity;
+	/** サイズ */
 	private Character size;
+	/** 商品 */
 	private Item item;
+	/** トッピングリスト */
 	private List<OrderTopping> orderToppingList;
 
 	public Integer getId() {

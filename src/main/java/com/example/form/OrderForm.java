@@ -2,6 +2,10 @@ package com.example.form;
 
 import java.sql.Date;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+
 /**
  * 注文情報を受け取るフォーム.
  * 
@@ -15,14 +19,20 @@ public class OrderForm {
 	/** 注文日 */
 	private Date orderDate;
 	/** 宛先氏名 */
+	@NotBlank(message = "名前を入力してください")
 	private String destinationName;
 	/** 宛先Eメール */
+	@NotBlank(message="メールアドレスを入力してください")
+	@Email(message="メールアドレスの形式が不正です")
 	private String destinationEmail;
 	/** 宛先郵便番号 */
+	@NotBlank(message="郵便番号を入力してください")
 	private String destinationZipcode;
 	/** 宛先住所 */
+	@NotBlank(message="住所を入力してください")
 	private String destinationAddress;
 	/** 宛先TEL */
+	@NotBlank(message="電話番号を入力してください")
 	private String destinationTel;
 	/** 配達日付 */
 	private Date deliveryDate;

@@ -1,9 +1,13 @@
 package com.example.domain;
 
 public class Topping {
+	/** id */
 	private Integer id;
+	/** 名前 */
 	private String name;
+	/** Mの価格 */
 	private Integer priceM;
+	/** Lの価格 */
 	private Integer priceL;
 	public Integer getId() {
 		return id;

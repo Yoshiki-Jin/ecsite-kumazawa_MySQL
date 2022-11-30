@@ -57,6 +57,8 @@ public class LoginUserController {
 			return toLogin(form);
 		}
 		session.setAttribute("user", user);
+		String userName = user.getName();
+		session.setAttribute("userName", userName);
 		
 //		下記はCartControllerのshowCartメソッドと統合した際に実装するためコメントアウトします
 

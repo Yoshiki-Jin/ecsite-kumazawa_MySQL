@@ -30,28 +30,28 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ラクラクアロハ</title>
+    <title>らくらくcoffee</title>
   </head>
   <body>
     <header>
       <div class="container">
         <div class="header">
           <div class="header-left">
-            <a href="top.html">
+             <a th:href="@{/show-itemList/}">
               <img class="logo" th:src="@{/img/header_logo.png}" />
             </a>
           </div>
 
           <div class="header-right">
-            <a href="item_list.html" th:href="@{/show-itemList/}" >商品一覧</a>
-            <a href="register_admin.html" th:href="@{/insertUser/toInsert}" >会員登録</a>
+            <a th:href="@{/show-itemList/}" >商品一覧</a>
+            <a th:href="@{/insertUser/toInsert}" >会員登録</a>
             <a href="#"><i class="fas fa-shopping-cart"></i>カート</a>
             <span th:unless="${session.user}">
-              <a href="login.html" th:href="@{/loginUser/toLogin}" class="login">
+              <a th:href="@{/loginUser/toLogin}" class="login">
                <i class="fas fa-sign-in-alt"></i>ログイン </a>
             </span>
             <span th:if="${session.user}">
-              <a href="login.html" th:href="@{/logoutUser/logout}">ログアウト</a>
+              <a  th:href="@{/logoutUser/logout}">ログアウト</a>
             </span>
 
             <a href="order_history.html">注文履歴</a>
@@ -113,25 +113,28 @@
           <div th:text="${'消費税：'+tax+'円'}" >消費税：8,000円</div>
           <div th:text="${'ご注文金額合計：'+order.totalPrice+'円 (税込)'}">ご注文金額合計：38,000円 (税込)</div>
         </div>
-<form action="order_finished.html" th:action="@{/order/}" method="post">
+<form action="order_finished.html" th:action="@{/order/}" method="post" th:object="${orderForm}">
 <input type="hidden" name="id" th:value="${order.id}">
         <h2 class="page-title">お届け先情報</h2>
         <div class="order-confirm-delivery-info">
           <div class="row">
             <div class="input-field">
-              <input id="name" type="text" name="destinationName" />
+            <div th:errors="*{destinationName}" style="color:red; text-align:center;"></div>
+              <input id="name" type="text" name="destinationName" th:field="*{destinationName}" />
               <label for="name">お名前</label>
             </div>
           </div>
           <div class="row">
             <div class="input-field">
-              <input id="email" type="email" name="destinationEmail"  />
+            <div th:errors="*{destinationEmail}" style="color:red; text-align:center;"></div>
+              <input id="email" type="email" name="destinationEmail" th:field="*{destinationEmail}" />
               <label for="email">メールアドレス</label>
             </div>
           </div>
           <div class="row">
             <div class="input-field">
-              <input id="zipcode" type="text" maxlength="7" name="destinationZipcode" />
+            <div th:errors="*{destinationZipcode}" style="color:red; text-align:center;"></div>
+              <input id="zipcode" type="text" maxlength="7" name="destinationZipcode" th:field="*{destinationZipcode}" />
               <label for="zipcode">郵便番号</label>
               <button class="btn" type="button" id="zipcode_btn">
                 住所検索
@@ -140,18 +143,21 @@
           </div>
           <div class="row">
             <div class="input-field">
-              <input id="address" type="text" name="destinationAddress" />
+            <div th:errors="*{destinationAddress}" style="color:red; text-align:center;"></div>
+              <input id="address" type="text" name="destinationAddress" th:field="*{destinationAddress}" />
               <label for="address">住所</label>
             </div>
           </div>
           <div class="row">
             <div class="input-field">
-              <input id="tel" type="tel" name="destinationTel" />
+            <div th:errors="*{destinationTel}" style="color:red; text-align:center;"></div>
+              <input id="tel" type="tel" name="destinationTel" th:field="*{destinationTel}" />
               <label for="tel">電話番号</label>
             </div>
           </div>
           <div class="row order-confirm-delivery-datetime">
             <div class="input-field">
+            <div th:text="${deliveryDateError}" style="color:red; text-align:center;"></div>
               <input id="deliveryDate" type="date" name="deliveryDate" />
               <label for="address">配達日時</label>
             </div>
@@ -236,7 +242,7 @@
     <footer>
       <div class="container">
         <img th:src="@{/img/header_logo.png}" />
-        <p>アロハな気分をあなたにお届け！</p>
+        <p>ホッと一息できるひとときを、あなたに！</p>
       </div>
     </footer>
     <!-- Compiled and minified JavaScript -->
