@@ -3,7 +3,6 @@ package com.example.repository;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -24,14 +23,9 @@ public class OrderItemRepository {
 	@Autowired
 	private NamedParameterJdbcTemplate template;
 	
-//	private final static RowMapper<OrderItem> ORDER_ITEM_ROW_MAPPER = new BeanPropertyRowMapper<>(OrderItem.class);
-
 	private final static RowMapper<OrderItem> ORDER_ITEM_ROW_MAPPER2 = (rs,i) -> {
 		OrderItem orderItem = new OrderItem();
 		orderItem.setId(rs.getInt("id"));
-//		orderItem.setItemId(rs.getInt("item_id"));
-//		orderItem.setOrderId(rs.getInt("order_id"));
-//		orderItem.setQuantity(rs.getInt("quantity"));
 		return orderItem;
 	};
 	/**
@@ -62,6 +56,10 @@ public class OrderItemRepository {
 		template.update(sql, param);
 	}
 
+	/**
+	 * 登録した最新のOrderItemを１件取り出す.
+	 * @return OrderItem
+	 */
 	public OrderItem findMaxId() {
 
 		String sql = "SELECT max(id) id FROM order_items;";

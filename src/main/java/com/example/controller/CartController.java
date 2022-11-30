@@ -25,7 +25,7 @@ public class CartController {
 
 	@Autowired
 	private CartService service;
-	
+
 	@Autowired
 	private HttpSession session;
 
@@ -37,13 +37,11 @@ public class CartController {
 	 */
 	@PostMapping("/insertOrderItem")
 	public String insertOrderItem(CartForm form) {
-		
-		// ユーザーIDを入手する（未実装）
-		User user = (User)session.getAttribute("user");
+
+		User user = (User) session.getAttribute("user");
 		service.addItem(form, user.getId());
 		return "redirect:/cart/showCart";
 	}
-	
 
 	/**
 	 * カートの中身を表示する.
@@ -53,26 +51,29 @@ public class CartController {
 	 */
 	@GetMapping("/showCart")
 	public String showCart(Model model) {
-		
-		User user = (User)session.getAttribute("user");
-		if(user.getId() == null) {
-			
+
+		User user = (User) session.getAttribute("user");
+		if (user.getId() == null) {
+
 			session.setAttribute("throughOrderConfirmation", true);
 			return "redirect:/loginUser/toLogin";
 		}
 
-		// ユーザーIDを入手する（未実装）
 		Integer userId = user.getId();
 		Order order = service.showCart(userId);
 		model.addAttribute("order", order);
 		return "cart_list";
 	}
-	
+
+	/**
+	 * 選択されたOrderItemとそのOrderToppingを削除する.
+	 * 
+	 * @param orderItemId 選択されたorderitemId
+	 * @return 削除後のカート一覧画面
+	 */
 	@PostMapping("/deleteOrderItem")
 	public String deleteOrderItem(Integer orderItemId) {
-		
-		System.out.println("deleteOrderItem メソッド開始");
-		
+
 		service.deleteOrderItem(orderItemId);
 		return "redirect:/cart/showCart";
 	}
