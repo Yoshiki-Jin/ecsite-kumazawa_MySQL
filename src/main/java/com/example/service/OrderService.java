@@ -1,5 +1,6 @@
 package com.example.service;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -32,23 +33,26 @@ public class OrderService {
 	 * @param orderForm 注文情報を受け取るフォーム.
 	 */
 	public void order(OrderForm orderForm) {
-		// コメントアウト部分はload()が完成したら使用します
-
-//		Order order=orderRepository.load(orderForm.getId());
-
-		// 以下２行load()ができたら消します
-		Order order = new Order();
-		order.setId(1);
+		Order order=orderRepository.load(Integer.parseInt(orderForm.getId()));
 
 		BeanUtils.copyProperties(orderForm, order);
+		order.setId(Integer.parseInt(orderForm.getId()));
+		order.setPaymentMethod(Integer.parseInt(orderForm.getPaymentMethod()));
+		
+		LocalDate nowDate=LocalDate.now();
+		order.setOrderDate(Date.valueOf(nowDate));
+		
+		//配達日時、時間を合わせてTimestamp型に変換
 		LocalDate localDate = orderForm.getDeliveryDate().toLocalDate();
 		LocalDateTime localDateTime = LocalDateTime.of(localDate.getYear(), localDate.getMonthValue(),
 				localDate.getDayOfMonth(), orderForm.getDeliveryTime(), 0, 0, 0);
 		Timestamp timestamp = Timestamp.valueOf(localDateTime);
 		order.setDeliveryTime(timestamp);
-//		order.setId(Integer.parseInt(orderForm.getId()));
-		order.setPaymentMethod(Integer.parseInt(orderForm.getPaymentMethod()));
+    
+		//ステータスを注文済みへ変更
+
 		order.setStatus(1);
+		
 		orderRepository.update(order);
 	}
 

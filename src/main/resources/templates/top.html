@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -25,14 +25,16 @@
           </div>
 
           <div class="header-right">
-            <a href="item_list.html">商品一覧</a>
-            <a href="register_admin.html">会員登録</a>
-            <a href="cart_list.html"
-              ><i class="fas fa-shopping-cart"></i>カート</a
-            >
-            <a href="login.html" class="login">
-              <i class="fas fa-sign-in-alt"></i>ログイン
-            </a>
+            <a href="item_list.html" th:href="@{/show-itemList/}" >商品一覧</a>
+            <a href="register_admin.html" th:href="@{/insertUser/toInsert}" >会員登録</a>
+            <a href="#"><i class="fas fa-shopping-cart"></i>カート</a>
+            <span th:unless="${session.user}">
+              <a href="login.html" th:href="@{/loginUser/toLogin}" class="login">
+               <i class="fas fa-sign-in-alt"></i>ログイン </a>
+            </span>
+            <span th:if="${session.user}">
+              <a href="login.html" th:href="@{/logoutUser/logout}">ログアウト</a>
+            </span>
           </div>
         </div>
 
@@ -51,7 +53,7 @@
           ラクラクアロハは自宅にハワイアン料理がデリバリーで届くハワイアンECサイトです。
         </p>
         <div class="btn-wrapper">
-          <a href="register_admin.html" class="btn signup">会員登録</a>
+          <a href="register_admin.html" th:href="@{/insertUser/toInsert}" class="btn signup">会員登録</a>
           <p>or</p>
           <a href="#" class="btn facebook"
             ><i class="fab fa-facebook"></i>Facebookで登録</a
