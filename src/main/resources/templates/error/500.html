@@ -31,14 +31,14 @@
 		<div class="container">
 			<div class="header">
 				<div class="header-left">
-					<a href="top.html"> <img class="logo"
+					 <a th:href="@{/show-itemList/}"><img class="logo"
 						th:src="@{/img/header_logo.png}" />
 					</a>
 				</div>
 
 				<div class="header-right">
 
-					<a href="login.html" th:href="@{/show-itemList/}"  class="login"> <i
+					<a th:href="@{/show-itemList/}"  class="login"> <i
 						class="fas fa-sign-in-alt"></i>商品一覧
 					</a>
 				</div>
@@ -57,7 +57,7 @@
         
         </pre>
 			<div>しばらく経ってからもう一度操作してください。</div>
-			<a href="../login.html" th:href="@{/show-itemList/}" >商品一覧</a>
+			<a th:href="@{/show-itemList/}" >商品一覧</a>
 		</div>
 		<!-- end container-->
 	</div>
@@ -65,7 +65,7 @@
 	<footer>
 		<div class="container">
 			<img th:src="@{/img/header_logo.png}" />
-			<p>アロハな気分をあなたにお届け！</p>
+			<p>ホッと一息できるひとときを、あなたに！</p>
 		</div>
 	</footer>
 	<!-- Compiled and minified JavaScript -->

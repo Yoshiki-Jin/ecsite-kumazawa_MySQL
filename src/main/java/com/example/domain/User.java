@@ -1,12 +1,19 @@
 package com.example.domain;
 
 public class User {
+	/** id */
 	private Integer id;
+	/** 名前 */
 	private String name;
+	/** Eメール */
 	private String email;
+	/** パスワード */
 	private String password;
+	/** 郵便番号 */
 	private String zipcode;
+	/** 住所 */
 	private String address;
+	/** 電話番号 */
 	private String telephone;
 
 	public Integer getId() {
