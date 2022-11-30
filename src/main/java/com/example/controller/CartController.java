@@ -55,15 +55,16 @@ public class CartController {
 	@GetMapping("/showCart")
 	public String showCart(Model model) {
 		
-		if(session.getAttribute("user") == null) {
-			
-			session.setAttribute("throughOrderConfirmation", true);
-			return "login";
-		}
+//		if(session.getAttribute("user") == null) {
+//			
+//			session.setAttribute("throughOrderConfirmation", true);
+//			return "login";
+//		}
 
 		// ユーザーIDを入手する（未実装）
 		Integer userId = 1;
 		Order order = service.showCart(userId);
+		System.out.println(order);
 		model.addAttribute("order", order);
 		return "cart_list";
 	}

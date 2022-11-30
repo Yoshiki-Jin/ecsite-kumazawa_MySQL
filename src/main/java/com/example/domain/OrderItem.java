@@ -10,54 +10,87 @@ public class OrderItem {
 	private Character size;
 	private Item item;
 	private List<OrderTopping> orderToppingList;
-	
+
 	public Integer getId() {
 		return id;
 	}
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
+
 	public Integer getItemId() {
 		return itemId;
 	}
+
 	public void setItemId(Integer itemId) {
 		this.itemId = itemId;
 	}
+
 	public Integer getOrderId() {
 		return orderId;
 	}
+
 	public void setOrderId(Integer orderId) {
 		this.orderId = orderId;
 	}
+
 	public Integer getQuantity() {
 		return quantity;
 	}
+
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
 	}
+
 	public Character getSize() {
 		return size;
 	}
+
 	public void setSize(Character size) {
 		this.size = size;
 	}
+
 	public Item getItem() {
 		return item;
 	}
+
 	public void setItem(Item item) {
 		this.item = item;
 	}
+
 	public List<OrderTopping> getOrderToppingList() {
 		return orderToppingList;
 	}
+
 	public void setOrderToppingList(List<OrderTopping> orderToppingList) {
 		this.orderToppingList = orderToppingList;
 	}
+
 	@Override
 	public String toString() {
 		return "OrderItem [id=" + id + ", itemId=" + itemId + ", orderId=" + orderId + ", quantity=" + quantity
 				+ ", size=" + size + ", item=" + item + ", orderToppingList=" + orderToppingList + "]";
 	}
 
+	public int getSubTotal() {
 
+		int subTotal = 0;
+		if (this.getSize().equals("M")) {
+			subTotal += this.getItem().getPriceM();
+			List<OrderTopping> orderToppingList = this.getOrderToppingList();
+			for (OrderTopping orderTopping : orderToppingList) {
+				subTotal += orderTopping.getTopping().getPriceM();
+			}
+		} else if (this.getSize().equals("L")) {
+			subTotal += this.getItem().getPriceL();
+			List<OrderTopping> orderToppingList = this.getOrderToppingList();
+			for (OrderTopping orderTopping : orderToppingList) {
+				subTotal += orderTopping.getTopping().getPriceL();
+			}
+
+		}
+		return subTotal;
+
+	}
 }

@@ -167,9 +167,10 @@ public class OrderRepository {
 				+ "ot.id ot_id, ot.topping_id ot_topping_id,ot.order_item_id ot_order_item_id, "
 				+ "i.id i_id, i.name i_name, i.description i_description, i.price_m i_price_m, i.price_l i_price_l, i.image_path i_image_path, i.deleted i_deleted, "
 				+ "t.id t_id, t.name t_name, t.price_m t_price_m, t.price_l t_price_l "
-				+ "FROM Orders o LEFT OUTER JOIN order_items oi ON o.id = oi.order_id "
-				+ "LEFT OUTER JOIN order_toppings ot ON oi.id = ot.order_item_id "
-				+ "JOIN items i ON i.id = oi.item_id " + "JOIN toppings t ON t.id = ot.topping_id "
+				+ "FROM Orders o JOIN order_items oi ON o.id = oi.order_id "
+				+ "JOIN order_toppings ot ON oi.id = ot.order_item_id "
+				+ "JOIN items i ON i.id = oi.item_id " 
+				+ "JOIN toppings t ON t.id = ot.topping_id "
 				+ "WHERE o.id = :orderId ;";
 
 		SqlParameterSource param = new MapSqlParameterSource().addValue("orderId", orderId);

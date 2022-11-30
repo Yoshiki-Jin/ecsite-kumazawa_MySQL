@@ -112,5 +112,20 @@ public class Order {
 				+ destinationAddress + ", destinationTel=" + destinationTel + ", deliveryTime=" + deliveryTime
 				+ ", paymentMethod=" + paymentMethod + ", user=" + user + ", orderItemList=" + orderItemList + "]";
 	}
+	
+	public int getCalcTotalPrice() {
+		
+		int totalPrice = 0;
+		List<OrderItem> orderItemList = this.orderItemList;
+		for(OrderItem orderItem : orderItemList) {
+			totalPrice += orderItem.getSubTotal();
+		}
+		return totalPrice;
+	}
+	
+	public int getTax() {
+		int tax = this.getCalcTotalPrice()/10;
+		return tax;
+	}
 
 }
