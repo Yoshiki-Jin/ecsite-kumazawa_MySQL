@@ -1,5 +1,6 @@
 package com.example.service;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -48,7 +49,10 @@ public class OrderService {
 		order.setDeliveryTime(timestamp);
 //		order.setId(Integer.parseInt(orderForm.getId()));
 		order.setPaymentMethod(Integer.parseInt(orderForm.getPaymentMethod()));
+		LocalDate nowDate=LocalDate.now();
+		order.setOrderDate(Date.valueOf(nowDate));
 		order.setStatus(1);
+		
 		orderRepository.update(order);
 	}
 
