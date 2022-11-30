@@ -57,18 +57,21 @@ public class LoginUserController {
 			return toLogin(form);
 		}
 		session.setAttribute("user", user);
+		
+//		下記はCartControllerのshowCartメソッドと統合した際に実装するためコメントアウトします
 
-		// sessionスコープのthroughOrderConfirmationに"true"か"false"でセットされるため、それを、"isThroughOrderConfirmation"に受け取る。
-		boolean isThroughOrderConfirmation = (boolean) session.getAttribute("throughOrderConfirmation");
+//		// CartControllerでログインだった場合、「true」・未ログインだった場合「null」でsessionスコープにthroughOrderConfirmationがセットされるため、それを、"isThroughOrderConfirmation"に受け取る。
+//		boolean isThroughOrderConfirmation = (boolean) session.getAttribute("throughOrderConfirmation");
+//
+//		if (isThroughOrderConfirmation) { // もし、isThroughOrderConfirmationがtrueだった場合、注文確認画面へ
+//			session.removeAttribute("throughOrderConfirmation");
+//			return "forward:/cart/showCart";
+//
+//		} else { // それ以外の場合は商品一覧へ
+//			session.removeAttribute("throughOrderConfirmation");
+//		}
 
-		if (isThroughOrderConfirmation) { // もし、isThroughOrderConfirmationがtrueだった場合、注文確認画面へ
-			session.removeAttribute("throughOrderConfirmation");
-			return "forward:/cart/showCart";
-		} else { // もし、isThroughOrderConfirmationがfalseだった場合、商品一覧へ
-			session.removeAttribute("throughOrderConfirmation");
-			return "forward:/show-itemList/";
-		}
-
+		return "forward:/show-itemList/";
 	}
 
 }
