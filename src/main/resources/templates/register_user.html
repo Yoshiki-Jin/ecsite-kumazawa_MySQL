@@ -43,8 +43,8 @@
           </div>
 
           <div class="header-right">
-            <a href="item_list.html">商品一覧</a>
-            <a href="register_admin.html">会員登録</a>
+            <a href="item_list.html" th:href="@{/show-itemList/}" >商品一覧</a>
+            <a href="register_admin.html" th:href="@{/insertUser/toInsert}" >会員登録</a>
             <a href="login.html" class="login">
               <i class="fas fa-sign-in-alt"></i>ログイン
             </a>
@@ -80,9 +80,9 @@
             <div class="input-field col s12">
               <input id="zipcode" type="text" name="zipcode" maxlength="8" th:field="*{zipcode}"  />
               <label for="zipcode">郵便番号</label>
-          <!--    <button class="btn" type="button">
+             <button id="zipcode_btn" class="btn" type="button">
                 <span>住所検索</span>
-              </button>   -->
+              </button>   
             </div>
           </div>
           <div class="error" th:errors="*{address}">住所を入力して下さい</div>
@@ -156,5 +156,7 @@
     </footer>
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script src="../js/get_address.js"></script>
   </body>
 </html>
