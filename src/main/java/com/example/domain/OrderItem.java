@@ -73,6 +73,7 @@ public class OrderItem {
 				+ ", size=" + size + ", item=" + item + ", orderToppingList=" + orderToppingList + "]";
 	}
 
+<<<<<<< HEAD
 	public int getSubTotal() {
 
 		int subTotal = 0;
@@ -93,4 +94,6 @@ public class OrderItem {
 		return subTotal;
 
 	}
+=======
+>>>>>>> 926723ffe772421d22db0c17f8dbbd59bed20558
 }
