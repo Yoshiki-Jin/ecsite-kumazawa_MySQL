@@ -145,8 +145,6 @@ public class OrderRepository {
 
 		List<Order> order = template.query(sql, param, ORDER_ROW_MAPPER);
 
-		System.out.println("AAAAAAAAAAAAAAAAAAA get(0)の前");
-
 		return order.get(0);
 	}
 

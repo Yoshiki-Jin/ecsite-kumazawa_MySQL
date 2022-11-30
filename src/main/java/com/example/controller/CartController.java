@@ -52,16 +52,21 @@ public class CartController {
 	@GetMapping("/showCart")
 	public String showCart(Model model) {
 
+		System.out.println("shoeCartメソッド来た");
 		User user = (User) session.getAttribute("user");
 		if (user.getId() == null) {
+			System.out.println("userIdがnullだった");
 
 			session.setAttribute("throughOrderConfirmation", true);
+			System.out.println("/loginUser/toLoginにリダイレクト");
 			return "redirect:/loginUser/toLogin";
 		}
 
+		
 		Integer userId = user.getId();
 		Order order = service.showCart(userId);
 		model.addAttribute("order", order);
+		System.out.println("cart_listにフォワードする");
 		return "cart_list";
 	}
 

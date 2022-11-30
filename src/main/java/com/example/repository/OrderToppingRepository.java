@@ -27,8 +27,6 @@ public class OrderToppingRepository {
 	 */
 	public void insert(OrderTopping ot) {
 
-		System.out.println("WWWWWW ot = " + ot);
-
 		String sql = "INSERT INTO order_toppings (topping_id,order_item_id) VALUES (:toppingId, :orderItemId);";
 
 		SqlParameterSource param = new BeanPropertySqlParameterSource(ot);
@@ -42,8 +40,6 @@ public class OrderToppingRepository {
 	 * @param orderItemId
 	 */
 	public void delete(Integer orderItemId) {
-
-		System.out.println("OrderToppingRepository内のorderItemId　= " + orderItemId);
 
 		String sql = "DELETE FROM order_toppings WHERE order_item_id = :orderItemId ;";
 
