@@ -48,8 +48,9 @@ public class OrderService {
 				localDate.getDayOfMonth(), orderForm.getDeliveryTime(), 0, 0, 0);
 		Timestamp timestamp = Timestamp.valueOf(localDateTime);
 		order.setDeliveryTime(timestamp);
-		
+    
 		//ステータスを注文済みへ変更
+
 		order.setStatus(1);
 		
 		orderRepository.update(order);
