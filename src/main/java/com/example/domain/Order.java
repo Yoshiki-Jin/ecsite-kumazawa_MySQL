@@ -5,19 +5,33 @@ import java.util.Date;
 import java.util.List;
 
 public class Order {
+	/** id */
 	private Integer id;
+	/** ユーザーid */
 	private Integer userId;
+	/** 状態 */
 	private Integer status;
+	/** 合計金額 */
 	private Integer totalPrice;
+	/** 注文日 */
 	private Date orderDate;
+	/** 宛先氏名 */
 	private String destinationName;
+	/** 宛先Eメール */
 	private String destinationEmail;
+	/** 宛先郵便番号 */
 	private String destinationZipcode;
+	/** 宛先住所 */
 	private String destinationAddress;
+	/** 宛先TEL */
 	private String destinationTel;
+	/** 配達時間 */
 	private Timestamp deliveryTime;
+	/** 支払方法 */
 	private Integer paymentMethod;
+	/** ユーザー */
 	private User user;
+	/** 注文商品一覧 */
 	private List<OrderItem> orderItemList;
 	
 
