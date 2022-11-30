@@ -52,6 +52,16 @@ public class OrderController {
 	}
 
 	/**
+	 * 注文完了画面を表示します.
+	 * 
+	 * @return 注文完了画面
+	 */
+	@GetMapping("/toFinished")
+	public String toFinished() {
+		return "order_finished";
+	}
+
+	/**
 	 * お届け先情報が自動入力された注文画面を表示します.
 	 * 
 	 * @param orderForm 注文情報を受け取るフォーム
@@ -70,7 +80,7 @@ public class OrderController {
 	 * 注文をします.
 	 * 
 	 * @param orderForm 注文情報を受け取るフォーム
-	 * @return 注文完了画面
+	 * @return 注文完了画面にリダイレクト
 	 */
 	@PostMapping("/")
 	public String order(@Validated OrderForm orderForm, BindingResult result, Model model) {
@@ -83,6 +93,6 @@ public class OrderController {
 		}
 
 		orderService.order(orderForm);
-		return "order_finished";
+		return "redirect:/order/toFinished";
 	}
 }
