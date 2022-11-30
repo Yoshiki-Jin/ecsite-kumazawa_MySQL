@@ -144,6 +144,8 @@ public class OrderRepository {
 	 * @param userId ユーザーID
 	 */
 	public Order findByUserIdAndStatus(Integer userId) {
+		
+		
 
 		String sql = "SELECT id,user_id,status,total_price,order_date,destination_name,destination_email,destination_zipcode,destination_address,destination_tel,delivery_time,payment_method FROM orders WHERE user_id = :userId AND status = 0; ";
 
@@ -151,6 +153,8 @@ public class OrderRepository {
 
 		List<Order> order = template.query(sql, param, ORDER_ROW_MAPPER);
 
+		System.out.println("AAAAAAAAAAAAAAAAAAA get(0)の前");
+		
 		return order.get(0);
 	}
 

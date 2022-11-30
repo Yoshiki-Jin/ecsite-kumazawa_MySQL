@@ -73,27 +73,28 @@ public class OrderItem {
 				+ ", size=" + size + ", item=" + item + ", orderToppingList=" + orderToppingList + "]";
 	}
 
-<<<<<<< HEAD
 	public int getSubTotal() {
 
+		
 		int subTotal = 0;
-		if (this.getSize().equals("M")) {
-			subTotal += this.getItem().getPriceM();
-			List<OrderTopping> orderToppingList = this.getOrderToppingList();
+		int oneTotal = 0;
+		List<OrderTopping> orderToppingList = null;
+		if (this.getSize().compareTo('M') == 0) {
+			oneTotal += this.getItem().getPriceM();
+			orderToppingList = this.getOrderToppingList();
 			for (OrderTopping orderTopping : orderToppingList) {
-				subTotal += orderTopping.getTopping().getPriceM();
+				oneTotal += orderTopping.getTopping().getPriceM();
 			}
-		} else if (this.getSize().equals("L")) {
-			subTotal += this.getItem().getPriceL();
-			List<OrderTopping> orderToppingList = this.getOrderToppingList();
+			subTotal += oneTotal*this.quantity;
+		} else if (this.getSize().compareTo('L') == 0) {
+			oneTotal += this.getItem().getPriceL();
+			orderToppingList = this.getOrderToppingList();
 			for (OrderTopping orderTopping : orderToppingList) {
-				subTotal += orderTopping.getTopping().getPriceL();
+				oneTotal += orderTopping.getTopping().getPriceL();
 			}
-
+				subTotal += oneTotal*this.quantity;
 		}
 		return subTotal;
 
 	}
-=======
->>>>>>> 926723ffe772421d22db0c17f8dbbd59bed20558
 }

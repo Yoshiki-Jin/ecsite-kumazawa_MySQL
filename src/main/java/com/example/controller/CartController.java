@@ -1,7 +1,5 @@
 package com.example.controller;
 
-import java.util.List;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.domain.Order;
-import com.example.domain.OrderItem;
+import com.example.domain.User;
 import com.example.form.CartForm;
 import com.example.service.CartService;
 
@@ -37,14 +35,15 @@ public class CartController {
 	 * @param form CartForm
 	 * @return 商品一覧ページに移動
 	 */
-	@PostMapping("insertOrderItem")
+	@PostMapping("/insertOrderItem")
 	public String insertOrderItem(CartForm form) {
-
+		
 		// ユーザーIDを入手する（未実装）
-		Integer userId = 0;
-		service.addItem(form, userId);
-		return "item_list";
+		User user = (User)session.getAttribute("user");
+		service.addItem(form, user.getId());
+		return "redirect:/cart/showCart";
 	}
+	
 
 	/**
 	 * カートの中身を表示する.
@@ -55,22 +54,24 @@ public class CartController {
 	@GetMapping("/showCart")
 	public String showCart(Model model) {
 		
-//		if(session.getAttribute("user") == null) {
-//			
-//			session.setAttribute("throughOrderConfirmation", true);
-//			return "login";
-//		}
+		User user = (User)session.getAttribute("user");
+		if(user.getId() == null) {
+			
+			session.setAttribute("throughOrderConfirmation", true);
+			return "redirect:/loginUser/toLogin";
+		}
 
 		// ユーザーIDを入手する（未実装）
-		Integer userId = 1;
+		Integer userId = user.getId();
 		Order order = service.showCart(userId);
-		System.out.println(order);
 		model.addAttribute("order", order);
 		return "cart_list";
 	}
 	
 	@PostMapping("/deleteOrderItem")
 	public String deleteOrderItem(Integer orderItemId) {
+		
+		System.out.println("deleteOrderItem メソッド開始");
 		
 		service.deleteOrderItem(orderItemId);
 		return "redirect:/cart/showCart";

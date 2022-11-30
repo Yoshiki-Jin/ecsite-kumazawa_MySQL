@@ -14,6 +14,7 @@ import com.example.form.CartForm;
 import com.example.repository.OrderItemRepository;
 import com.example.repository.OrderRepository;
 import com.example.repository.OrderToppingRepository;
+import com.example.repository.ToppingRepository;
 
 /**
  * Cartへの追加、削除、表示をするServiceクラス.
@@ -32,7 +33,10 @@ public class CartService {
 
 	@Autowired
 	private OrderToppingRepository orderToppingRepository;
-
+	
+	@Autowired 
+	private ToppingRepository toppingRepository;
+	
 	/**
 	 * status=0のorderIdの有無を確認→無い場合作成.
 	 * カートに追加するOrderItemを登録する.
@@ -45,7 +49,7 @@ public class CartService {
 		Order order = orderRepository.findByUserIdAndStatus(userId);
 		// 該当ユーザーIdでstatusが0のorderIdが存在するかチェック
 
-		Integer orderId = 0;
+		Integer orderId = order.getId();
 		if (order.getStatus() != 0) {
 			// 存在しない場合orderオブジェクトを新たに作る。（ここでユーザーIdが必要になってくる。）
 			Order createOrder = new Order();
@@ -67,15 +71,20 @@ public class CartService {
 		oi.setQuantity(form.getQuantity());
 		oi.setSize(form.getSize());
 		orderItemRepository.insert(oi);
+		
 
 		// OrderToppingRepositoryのinsert()のためにOrderToppingをインスタンス化し、ToopingList（Integer）をfor文で回し、登録。
 		OrderTopping ot = new OrderTopping();
-		ot.setOrderItemId(oi.getId());
-
 		List<Integer> toppinglist = form.getToppingList();
 
-		for (Integer topping : toppinglist) {
-			ot.setToppingId(topping);
+		for (Integer toppingId : toppinglist) {
+			ot.setToppingId(toppingId);
+			//トッピングIDからトッピングオブジェクトを検索できるモノを持ってくる
+			OrderItem orderItem = orderItemRepository.findMaxId();
+			Integer recentId = orderItem.getId();
+			ot.setOrderItemId(recentId);
+			Topping topping = toppingRepository.load(toppingId);
+			ot.setTopping(topping);
 			orderToppingRepository.insert(ot);
 		}
 	}
@@ -109,4 +118,8 @@ public class CartService {
 		//OrderItemを削除する
 		orderItemRepository.delete(orderItemId);
 	}
+	
+//	public OrderItem load() {
+//		
+//	}
 }
