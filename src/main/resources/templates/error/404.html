@@ -44,8 +44,8 @@
 
           <div class="header-right">
             
-            <a href="login.html" class="login">
-              <i class="fas fa-sign-in-alt"></i>ログイン
+            <a href="login.html" th:href="@{/show-itemList/}"class="login">
+              <i class="fas fa-sign-in-alt"></i>商品一覧
             </a>
           </div>
         </div>
@@ -56,8 +56,8 @@
         <h1>404 Not Found</h1>
         <div>申し訳ございません。お探しのページは見つかりませんでした。</div>
         <br>
-        <div>以下のリンクからログインし直してください。</div>
-        <a href="../login.html" >ログイン画面</a>
+        <div>以下のリンクからアクセスし直してください。</div>
+        <a href="../login.html"  th:href="@{/show-itemList/}">商品一覧</a>
       </div>
       <!-- end container-->
     </div>
