@@ -51,6 +51,7 @@
 					<span th:if="${session.user}"> <a th:href="@{/logoutUser/logout}">ログアウト</a>
             　　　　　　　</span>
 					<a href="order_history.html">注文履歴</a>
+					<span th:if="${session.userName}" th:text="${session.userName} + 'さんこんにちは'">山田太郎</span>
 				</div>
 			</div>
 		</div>
@@ -82,9 +83,12 @@
 			<div class="items">
 				<div class="item" th:each="item:${itemList}">
 					<div class="item-icon">
-						<img src="img/1.jpg" th:src="@{/img/}+${item.imagePath}"/>
+					<a th:href="@{/show-detail/?id=}+${item.id}">
+						<img src="img/1.jpg" th:src="@{/img/}+${item.imagePath}"  />
+					</a>
 					</div>
 					<a href="item_detail.html" th:text="${item.name}" th:href="@{/show-detail/?id=}+${item.id}">ハワイアンパラダイス</a><br />
+					
 					<span class="price" th:text="${item.priceM}">Ｍ</span>円(税抜)<br /> <span class="price" th:text="${item.priceL}">Ｌ</span>円(税抜)<br />
 				</div>
 
