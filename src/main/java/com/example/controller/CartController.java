@@ -43,7 +43,7 @@ public class CartController {
 	 * @param model　リクエストスコープ用
 	 * @return　カート詳細画面に移動
 	 */
-	@GetMapping("showCart")
+	@GetMapping("/showCart")
 	public String showCart(Model model) {
 		
 		//ユーザーIDを入手する（未実装）
