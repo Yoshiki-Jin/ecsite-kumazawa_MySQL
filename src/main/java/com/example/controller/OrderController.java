@@ -52,6 +52,21 @@ public class OrderController {
 	}
 
 	/**
+	 * お届け先情報が自動入力された注文画面を表示します.
+	 * 
+	 * @param orderForm 注文情報を受け取るフォーム
+	 * @return 注文画面
+	 */
+	@PostMapping("/autoEntry")
+	public String autoEntry(OrderForm orderForm, Model model) {
+
+		model.addAttribute("autoEntry", "autoEntry");
+
+		return toOrder(orderForm, model);
+
+	}
+
+	/**
 	 * 注文をします.
 	 * 
 	 * @param orderForm 注文情報を受け取るフォーム
@@ -59,12 +74,12 @@ public class OrderController {
 	 */
 	@PostMapping("/")
 	public String order(@Validated OrderForm orderForm, BindingResult result, Model model) {
-		if(orderForm.getDeliveryDate()==null) {
+		if (orderForm.getDeliveryDate() == null) {
 			model.addAttribute("deliveryDateError", "日付を入力してください");
 		}
-		
+
 		if (result.hasErrors()) {
-			return toOrder(orderForm,model);
+			return toOrder(orderForm, model);
 		}
 
 		orderService.order(orderForm);
