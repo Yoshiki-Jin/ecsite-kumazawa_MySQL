@@ -1,9 +1,13 @@
 package com.example.domain;
 
 public class OrderTopping {
+	/** id */
 	private Integer id;
+	/** トッピングid */
 	private Integer toppingId;
+	/** 注文id */
 	private Integer orderItemId;
+	/** トッピング */
 	private Topping topping;
 
 	@Override
