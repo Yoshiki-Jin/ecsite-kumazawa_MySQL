@@ -57,7 +57,6 @@ public class LoginUserController {
 			return toLogin(form);
 		}
 		session.setAttribute("user", user);
-		System.out.println(user);
 		
 //		下記はCartControllerのshowCartメソッドと統合した際に実装するためコメントアウトします
 
