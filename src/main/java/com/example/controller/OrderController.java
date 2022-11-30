@@ -3,6 +3,8 @@ package com.example.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,21 +26,21 @@ public class OrderController {
 
 	@Autowired
 	private OrderService orderService;
-	
+
 	@Autowired
 	private CartService cartService;
-	
+
 	/**
 	 * 注文画面を表示します.
 	 * 
 	 * @return 注文画面
 	 */
 	@GetMapping("/toOrder")
-	public String toOrder(Model model) {
-		
-		//UserId取得の機能実装後書き換えます
+	public String toOrder(OrderForm orderForm, Model model) {
+
+		// UserId取得の機能実装後書き換えます
 		Integer userId = 1;
-		
+
 		Order order = cartService.showCart(userId);
 		model.addAttribute("order",order);
 		
@@ -52,7 +54,15 @@ public class OrderController {
 	 * @return 注文完了画面
 	 */
 	@PostMapping("/")
-	public String order(OrderForm orderForm) {
+	public String order(@Validated OrderForm orderForm, BindingResult result, Model model) {
+		if(orderForm.getDeliveryDate()==null) {
+			model.addAttribute("deliveryDateError", "日付を入力してください");
+		}
+		
+		if (result.hasErrors()) {
+			return toOrder(orderForm,model);
+		}
+
 		orderService.order(orderForm);
 		return "order_finished";
 	}
