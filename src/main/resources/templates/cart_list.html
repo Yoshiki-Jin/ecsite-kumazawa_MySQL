@@ -60,6 +60,8 @@
       <div class="container">
         <h1 class="page-title">ショッピングカート</h1>
         <!-- table -->
+        <div th:if="${order == null}" th:text="${NoOrder}"></div>
+        <div th:unless="${order == null}">
         <div class="row">
           <table class="striped">
             <thead>
@@ -123,6 +125,7 @@
       </div>
       <!-- end container -->
     </div>
+        </div>
     <!-- end top-wrapper -->
     <footer>
       <div class="container">

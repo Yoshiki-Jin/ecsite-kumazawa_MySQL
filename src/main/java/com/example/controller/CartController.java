@@ -37,9 +37,15 @@ public class CartController {
 	 */
 	@PostMapping("/insertOrderItem")
 	public String insertOrderItem(CartForm form) {
-
 		User user = (User) session.getAttribute("user");
-		service.addItem(form, user.getId());
+
+		Integer userId = null;
+		if (user == null) {
+			userId = session.hashCode();
+		} else {
+			userId = user.getId();
+		}
+		service.addItem(form, userId);
 		return "redirect:/cart/showCart";
 	}
 
@@ -52,21 +58,21 @@ public class CartController {
 	@GetMapping("/showCart")
 	public String showCart(Model model) {
 
-		System.out.println("shoeCartメソッド来た");
 		User user = (User) session.getAttribute("user");
-		if (user.getId() == null) {
-			System.out.println("userIdがnullだった");
+		Integer userId = 0;
+		if (user == null) {
+			userId = session.hashCode();
 
-			session.setAttribute("throughOrderConfirmation", true);
-			System.out.println("/loginUser/toLoginにリダイレクト");
-			return "redirect:/loginUser/toLogin";
+		} else {
+			userId = user.getId();
 		}
 
-		
-		Integer userId = user.getId();
 		Order order = service.showCart(userId);
-		model.addAttribute("order", order);
-		System.out.println("cart_listにフォワードする");
+		if (order == null) {
+			model.addAttribute("NoOrder", "カート内は空です。");
+		} else {
+			model.addAttribute("order", order);
+		}
 		return "cart_list";
 	}
 
