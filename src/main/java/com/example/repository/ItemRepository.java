@@ -58,7 +58,9 @@ public class ItemRepository {
 	 * @return 名前が曖昧一致している商品一覧
 	 */
 	public List<Item> findByItemName(String name) {
-		String sql = "SELECT id,name,description,price_m,price_l,image_path,deleted FROM items WHERE name ILIKE :name;";
+
+		String sql = "SELECT id,name,description,price_m,price_l,image_path,deleted FROM items WHERE name ILIKE :name ORDER BY price_m DESC;";
+
 		SqlParameterSource param = new MapSqlParameterSource().addValue("name", "%" + name + "%");
 		List<Item> itemList = template.query(sql, param, ITEM_ROW_MAPPER);
 		return itemList;
@@ -70,7 +72,7 @@ public class ItemRepository {
 	 * @return 検索された商品情報全件
 	 */
 	public List<Item> findAll() {
-		String sql = "SELECT id,name,description,price_m,price_l,image_path,deleted FROM items ORDER BY id;";
+		String sql = "SELECT id,name,description,price_m,price_l,image_path,deleted FROM items ORDER BY price_m DESC;";
 		List<Item> itemList = template.query(sql, ITEM_ROW_MAPPER);
 
 		return itemList;

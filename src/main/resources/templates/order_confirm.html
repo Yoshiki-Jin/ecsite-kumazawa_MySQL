@@ -98,7 +98,7 @@
                     </li>
                   </ul>
                 </td>
-                <td><div class="text-center">3,280円</div></td>
+                <td><div class="text-center" th:text="'小計　'+${#numbers.formatInteger(orderItem.getSubTotal,1,'COMMA')}+' 円'">3,280円</div></td>
                 <td>
                   <form th:action="@{/cart/deleteOrderItem}" method="post">
                   <button class="btn" type="submit">
@@ -110,10 +110,9 @@
             </tbody>
           </table>
         </div>
-
         <div class="row cart-total-price">
-          <div th:text="'消費税 '+${order.getTax}+' 円'" >消費税：8,000円</div>
-          <div th:text="'ご注文合計金額 '+${order.getCalcTotalPrice}+' 円'">ご注文金額合計：38,000円 (税込)</div>
+          <div th:text="'消費税 '+${#numbers.formatInteger(order.getTax,1,'COMMA')}+' 円'" >消費税：8,000円</div>
+          <div th:text="'ご注文合計金額 '+${#numbers.formatInteger(order.getCalcTotalPrice,1,'COMMA')}+' 円'">ご注文金額合計：38,000円 (税込)</div>
         </div>
         <h2 class="page-title">お届け先情報</h2>
         <form th:action="@{/order/autoEntry}" method="post" ><button class="btn order-confirm-delivery-info" id="auto_entry_btn">登録情報を自動入力する</button></form>
