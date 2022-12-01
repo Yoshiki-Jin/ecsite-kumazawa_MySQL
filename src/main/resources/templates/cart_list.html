@@ -71,7 +71,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr th:each="orderItem : ${order.orderItemList}" >
+              <tr  th:each="orderItem : ${order.orderItemList}" >
                 <td class="cart-item-name">
                   <div class="cart-item-icon">
                     <img src="img/1.jpg" th:src="@{/img/}+${orderItem.item.imagePath}"/>
@@ -113,13 +113,12 @@
           <div th:text="'ご注文合計金額 '+${order.getCalcTotalPrice}+' 円'">ご注文金額合計：38,000円 (税込)</div>
         </div>
         <div class="row order-confirm-btn">
+        <form th:action="@{/order/toOrder}">
           <button
             class="btn"
-            type="button"
-            onclick="location.href='order_confirm.html'"
           >
             <span>注文に進む</span>
-          </button>
+          </button></form>
         </div>
       </div>
       <!-- end container -->
