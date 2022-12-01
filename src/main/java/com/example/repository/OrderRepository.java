@@ -231,7 +231,7 @@ public class OrderRepository {
 				+ "FROM Orders o LEFT OUTER  JOIN order_items oi ON o.id = oi.order_id "
 				+ " LEFT OUTER  JOIN order_toppings ot ON oi.id = ot.order_item_id "
 				+ " LEFT OUTER JOIN items i ON i.id = oi.item_id "
-				+ " LEFT OUTER JOIN toppings t ON t.id = ot.topping_id " + "WHERE o.user_id = :userId AND o.status=4 ORDER BY o.order_date DESC ;";
+				+ " LEFT OUTER JOIN toppings t ON t.id = ot.topping_id " + "WHERE o.user_id = :userId AND o.status=4 ORDER BY o.id DESC ;";
 
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
 
@@ -248,7 +248,7 @@ public class OrderRepository {
 				+ "FROM Orders o LEFT OUTER  JOIN order_items oi ON o.id = oi.order_id "
 				+ " LEFT OUTER  JOIN order_toppings ot ON oi.id = ot.order_item_id "
 				+ " LEFT OUTER JOIN items i ON i.id = oi.item_id "
-				+ " LEFT OUTER JOIN toppings t ON t.id = ot.topping_id " + "WHERE o.user_id = :userId AND o.status=3 ;";
+				+ " LEFT OUTER JOIN toppings t ON t.id = ot.topping_id " + "WHERE o.user_id = :userId AND o.status=3 ORDER BY o.id DESC ;";
 		
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
 		
@@ -265,7 +265,7 @@ public class OrderRepository {
 				+ "FROM Orders o LEFT OUTER  JOIN order_items oi ON o.id = oi.order_id "
 				+ " LEFT OUTER  JOIN order_toppings ot ON oi.id = ot.order_item_id "
 				+ " LEFT OUTER JOIN items i ON i.id = oi.item_id "
-				+ " LEFT OUTER JOIN toppings t ON t.id = ot.topping_id " + "WHERE o.user_id = :userId AND o.status=2 ;";
+				+ " LEFT OUTER JOIN toppings t ON t.id = ot.topping_id " + "WHERE o.user_id = :userId AND o.status=2 ORDER BY o.id DESC ;";
 		
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
 		
@@ -282,7 +282,7 @@ public class OrderRepository {
 				+ "FROM Orders o LEFT OUTER  JOIN order_items oi ON o.id = oi.order_id "
 				+ " LEFT OUTER  JOIN order_toppings ot ON oi.id = ot.order_item_id "
 				+ " LEFT OUTER JOIN items i ON i.id = oi.item_id "
-				+ " LEFT OUTER JOIN toppings t ON t.id = ot.topping_id " + "WHERE o.user_id = :userId AND o.status=1 ;";
+				+ " LEFT OUTER JOIN toppings t ON t.id = ot.topping_id " + "WHERE o.user_id = :userId AND o.status=1 ORDER BY o.id DESC ;";
 		
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
 		
