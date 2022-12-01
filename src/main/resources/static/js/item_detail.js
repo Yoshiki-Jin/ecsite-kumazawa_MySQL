@@ -32,6 +32,6 @@ $(function() {
 			toppingPrice = 300 * countChecked;
 		}
 		let totalPrice = (normalPrice + toppingPrice) * quantity;
-		$("#show-total-price").text(totalPrice);
+		$("#show-total-price").text(totalPrice.toLocaleString());
 	}
 });
