@@ -90,8 +90,11 @@
 					</a>
 					</div>
 					<a href="item_detail.html" th:text="${item.name}" th:href="@{/show-detail/?id=}+${item.id}">ハワイアンパラダイス</a><br />
+					<span class="price" th:text="Ｍ">Ｍ</span>
+					<span th:text="${item.priceM}"></span>円(税抜)<br /> 
 					
-					<span class="price" th:text="${item.priceM}">Ｍ</span>円(税抜)<br /> <span class="price" th:text="${item.priceL}">Ｌ</span>円(税抜)<br />
+					<span class="price" th:text="Ｌ">Ｌ</span>
+					<span th:text="${item.priceL}"></span>円(税抜)<br />
 				</div>
 
 						</div>
