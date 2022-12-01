@@ -52,22 +52,47 @@ public class OrderController {
 	}
 
 	/**
+	 * 注文完了画面を表示します.
+	 * 
+	 * @return 注文完了画面
+	 */
+	@GetMapping("/toFinished")
+	public String toFinished() {
+		return "order_finished";
+	}
+
+	/**
+	 * お届け先情報が自動入力された注文画面を表示します.
+	 * 
+	 * @param orderForm 注文情報を受け取るフォーム
+	 * @return 注文画面
+	 */
+	@PostMapping("/autoEntry")
+	public String autoEntry(OrderForm orderForm, Model model) {
+
+		model.addAttribute("autoEntry", "autoEntry");
+
+		return toOrder(orderForm, model);
+
+	}
+
+	/**
 	 * 注文をします.
 	 * 
 	 * @param orderForm 注文情報を受け取るフォーム
-	 * @return 注文完了画面
+	 * @return 注文完了画面にリダイレクト
 	 */
 	@PostMapping("/")
 	public String order(@Validated OrderForm orderForm, BindingResult result, Model model) {
-		if(orderForm.getDeliveryDate()==null) {
+		if (orderForm.getDeliveryDate() == null) {
 			model.addAttribute("deliveryDateError", "日付を入力してください");
 		}
-		
+
 		if (result.hasErrors()) {
-			return toOrder(orderForm,model);
+			return toOrder(orderForm, model);
 		}
 
 		orderService.order(orderForm);
-		return "order_finished";
+		return "redirect:/order/toFinished";
 	}
 }
