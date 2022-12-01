@@ -74,7 +74,7 @@
               <tr th:each="orderItem : ${order.orderItemList}" >
                 <td class="cart-item-name">
                   <div class="cart-item-icon">
-                    <img src="img/1.jpg" />
+                    <img src="img/1.jpg" th:src="@{/img/}+${orderItem.item.imagePath}"/>
                   </div>
                   <span th:text="${orderItem.item.name}">ハワイアンパラダイス</span>
                 </td>
@@ -94,11 +94,14 @@
                     </li>
                   </ul>
                 </td>
-                <td><div class="text-center">3,280円</div></td>
+                <td><div class="text-center" th:text="'小計　'+${orderItem.getSubTotal}+' 円'">3,280円</div></td>
                 <td>
-                  <button class="btn" type="button">
+                <form th:action="@{/cart/deleteOrderItem}" method="post">
+                  <button class="btn" type="submit">
                     <span>削除</span>
                   </button>
+                    <input type="hidden" name="orderItemId" th:value="${orderItem.id}"/>
+                </form>
                 </td>
               </tr>
             </tbody>
@@ -106,9 +109,8 @@
         </div>
 
         <div class="row cart-total-price">
-         <p>あいうえおかきくけこ</p>
-          <div>消費税：8,000円</div>
-          <div>ご注文金額合計：38,000円 (税込)</div>
+          <div th:text="'消費税 '+${order.getTax}+' 円'">消費税：8,000円</div>
+          <div th:text="'合計金額 '+${order.getCalcTotalPrice}+' 円'">ご注文金額合計：38,000円 (税込)</div>
         </div>
         <div class="row order-confirm-btn">
           <button

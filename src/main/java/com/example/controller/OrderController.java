@@ -42,12 +42,8 @@ public class OrderController {
 		Integer userId = 1;
 
 		Order order = cartService.showCart(userId);
-		model.addAttribute("order", order);
-
-		int totalPrice = order.getTotalPrice();
-		int tax = (int) (totalPrice * 10 / 110);
-		model.addAttribute("tax", tax);
-
+		model.addAttribute("order",order);
+		
 		return "order_confirm";
 	}
 

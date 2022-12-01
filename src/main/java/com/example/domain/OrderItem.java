@@ -80,4 +80,28 @@ public class OrderItem {
 				+ ", size=" + size + ", item=" + item + ", orderToppingList=" + orderToppingList + "]";
 	}
 
+	public int getSubTotal() {
+
+		
+		int subTotal = 0;
+		int oneTotal = 0;
+		List<OrderTopping> orderToppingList = null;
+		if (this.getSize().compareTo('M') == 0) {
+			oneTotal += this.getItem().getPriceM();
+			orderToppingList = this.getOrderToppingList();
+			for (OrderTopping orderTopping : orderToppingList) {
+				oneTotal += orderTopping.getTopping().getPriceM();
+			}
+			subTotal += oneTotal*this.quantity;
+		} else if (this.getSize().compareTo('L') == 0) {
+			oneTotal += this.getItem().getPriceL();
+			orderToppingList = this.getOrderToppingList();
+			for (OrderTopping orderTopping : orderToppingList) {
+				oneTotal += orderTopping.getTopping().getPriceL();
+			}
+				subTotal += oneTotal*this.quantity;
+		}
+		return subTotal;
+
+	}
 }

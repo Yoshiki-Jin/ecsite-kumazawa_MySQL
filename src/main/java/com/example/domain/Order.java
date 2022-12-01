@@ -155,5 +155,23 @@ public class Order {
 				+ destinationAddress + ", destinationTel=" + destinationTel + ", deliveryTime=" + deliveryTime
 				+ ", paymentMethod=" + paymentMethod + ", user=" + user + ", orderItemList=" + orderItemList + "]";
 	}
+	
+	//最終的な税込み価格
+	public int getCalcTotalPrice() {
+		
+		int totalPrice = 0;
+		List<OrderItem> orderItemList = this.orderItemList;
+		for(OrderItem orderItem : orderItemList) {
+			totalPrice += orderItem.getSubTotal();
+		}
+		
+		totalPrice *= 1.1;
+		return totalPrice;
+	}
+	
+	public int getTax() {
+		int tax = this.getCalcTotalPrice()/11;
+		return tax;
+	}
 
 }

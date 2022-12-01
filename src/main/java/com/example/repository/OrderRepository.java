@@ -19,7 +19,6 @@ import com.example.domain.OrderItem;
 import com.example.domain.OrderTopping;
 import com.example.domain.Topping;
 
-
 /**
  * 注文情報を操作するリポジトリ.
  * 
@@ -32,21 +31,19 @@ public class OrderRepository {
 	@Autowired
 	private NamedParameterJdbcTemplate template;
 
-	// 戻り値をOrderのListにしている。（注文履歴表示のfind（）にも使えるから。）
 	public static final ResultSetExtractor<List<Order>> ORDER_RESULT_SET_EXTRACTOR = (rs) -> {
 		List<Order> orderList = new LinkedList<Order>();
 		List<OrderItem> ordeItemList = null;
 		List<OrderTopping> orderToppingList = null;
 
-		// 前の行のOrderIdを対比しておく変数
 		long beforeOrderId = 0;
 		long beforeOrderIitemId = 0;
 		long beforeOrderTopping = 0;
 
 		while (rs.next()) {
-			
+
 			int nowOrderId = rs.getInt("o_id");
-			
+
 			if (nowOrderId != beforeOrderId) {
 				Order order = new Order();
 				order.setId(nowOrderId);
@@ -110,12 +107,9 @@ public class OrderRepository {
 				orderToppingList.add(orderTopping);
 			}
 			beforeOrderTopping = nowOrderTopping;
-
 			beforeOrderIitemId = nowOrderItemId;
-
 			beforeOrderId = nowOrderId;
 		}
-
 		return orderList;
 	};
 
@@ -134,8 +128,6 @@ public class OrderRepository {
 		order.setDestinationTel(rs.getString("destination_tel"));
 		order.setDeliveryTime(rs.getTimestamp("delivery_time"));
 		order.setPaymentMethod(rs.getInt("payment_method"));
-//		order.setUser(rs.getUser("user"));
-//		order.setOrderItemList(rs.getOrderItemList("orderItemList"));
 
 		return order;
 	};
@@ -151,15 +143,13 @@ public class OrderRepository {
 
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
 
-		// queryForObjectだと該当０件の時エラーが起きてしまう
-		// →Serviceクラスで例外処理 OR queryにして戻り値をList<Order>にする？
-		Order order = template.queryForObject(sql, param, ORDER_ROW_MAPPER);
+		List<Order> order = template.query(sql, param, ORDER_ROW_MAPPER);
 
-		return order;
+		return order.get(0);
 	}
 
 	/**
-	 * orderIdを条件にOrderリストを返す。
+	 * orderIdを条件にOrderリストを返す.
 	 * 
 	 * @param orderId オーダーID
 	 * @return Orderリスト（履歴検索も考慮して、複数検索ができるようにしてます。）
@@ -174,36 +164,32 @@ public class OrderRepository {
 				+ "FROM Orders o LEFT OUTER  JOIN order_items oi ON o.id = oi.order_id "
 				+ " LEFT OUTER  JOIN order_toppings ot ON oi.id = ot.order_item_id "
 				+ " LEFT OUTER JOIN items i ON i.id = oi.item_id "
-				+ " LEFT OUTER JOIN toppings t ON t.id = ot.topping_id "
-				+ "WHERE o.id = :orderId ;";
+				+ " LEFT OUTER JOIN toppings t ON t.id = ot.topping_id " + "WHERE o.id = :orderId ;";
 
 		SqlParameterSource param = new MapSqlParameterSource().addValue("orderId", orderId);
 
 		List<Order> orderList = null;
 		orderList = template.query(sql, param, ORDER_RESULT_SET_EXTRACTOR);
-//		Order order = null;
-//		try {
-//			order = orderList.get(0);
-//			System.out.println(order);
-//		}catch(Exception e) {
-//			System.out.println("template.query()でエラー");
-//		}
 		return orderList.get(0);
-//		return order;
 	}
 
+	/**
+	 * 該当ユーザーのStatus=0のOrderを１件登録する.
+	 * 
+	 * @param order Order
+	 */
 	public void insert(Order order) {
 
 		// 注文内容確認～宛先情報入力～完了等に関係するカラムは含めていない。
-		String sql = "INSERT INTO orders(user_id,status,total_price) VALUES(:userId, :status, :total_price);";
+		String sql = "INSERT INTO orders(user_id,status,total_price) VALUES(:userId, 0, :total_price);";
 
 		SqlParameterSource param = new BeanPropertySqlParameterSource(order);
 
 		template.update(sql, param);
 	}
-	
+
 	/**
-	 * 注文情報を更新します.
+	 * 注文情報を更新する.
 	 * 
 	 * @param order 注文情報
 	 */

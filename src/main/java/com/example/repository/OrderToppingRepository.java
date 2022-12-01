@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.example.domain.OrderTopping;
 
 /**
- * OrderToppingのRepository
+ * OrderToppingのRepository.
  * 
  * @author kaneko
  */
@@ -21,13 +21,13 @@ public class OrderToppingRepository {
 	private NamedParameterJdbcTemplate template;
 
 	/**
-	 * OrderToppingを１件登録する。
+	 * OrderToppingを１件登録する.
 	 * 
 	 * @param ot OrderToppingオブジェクト
 	 */
 	public void insert(OrderTopping ot) {
 
-		String sql = "INSERT INTO order_topping(topping_id,order_item_id,topping) VALUES (:topping_id, :order_item_id, :topping ;";
+		String sql = "INSERT INTO order_toppings (topping_id,order_item_id) VALUES (:toppingId, :orderItemId);";
 
 		SqlParameterSource param = new BeanPropertySqlParameterSource(ot);
 
@@ -35,15 +35,15 @@ public class OrderToppingRepository {
 	}
 
 	/**
-	 * OrderItemIdを元に該当するOrderToppingを削除する。
+	 * OrderItemIdを元に該当するOrderToppingを削除する.
 	 * 
 	 * @param orderItemId
 	 */
 	public void delete(Integer orderItemId) {
 
-		String sql = "DELETE FROM order_topping WHERE order_item_id = :orderItemId ;";
+		String sql = "DELETE FROM order_toppings WHERE order_item_id = :orderItemId ;";
 
-		SqlParameterSource param = new MapSqlParameterSource().addValue("ordertemId", orderItemId);
+		SqlParameterSource param = new MapSqlParameterSource().addValue("orderItemId", orderItemId);
 
 		template.update(sql, param);
 	}
