@@ -217,7 +217,7 @@ public class OrderRepository {
 		String sql = "UPDATE orders SET order_date=:orderDate, destination_name=:destinationName,"
 				+ " destination_email=:destinationEmail,destination_zipcode=:destinationZipcode,"
 				+ "destination_address=:destinationAddress,destination_tel=:destinationTel,"
-				+ "delivery_time=:deliveryTime,payment_method=:paymentMethod WHERE id=:id;";
+				+ "delivery_time=:deliveryTime,payment_method=:paymentMethod,status=:status WHERE id=:id;";
 		SqlParameterSource param = new BeanPropertySqlParameterSource(order);
 		template.update(sql, param);
 	}

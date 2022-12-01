@@ -1,5 +1,7 @@
 package com.example.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.domain.Order;
+import com.example.domain.User;
 import com.example.form.OrderForm;
 import com.example.service.CartService;
 import com.example.service.OrderService;
@@ -29,6 +32,9 @@ public class OrderController {
 
 	@Autowired
 	private CartService cartService;
+	
+	@Autowired
+	private HttpSession session;
 
 	/**
 	 * 注文画面を表示します.
@@ -39,7 +45,8 @@ public class OrderController {
 	public String toOrder(OrderForm orderForm, Model model) {
 
 		// UserId取得の機能実装後書き換えます
-		Integer userId = 1;
+		User user=(User)(session.getAttribute("user"));
+		Integer userId=user.getId();
 
 		Order order = cartService.showCart(userId);
 		model.addAttribute("order",order);
