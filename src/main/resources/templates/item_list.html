@@ -42,7 +42,7 @@
 				<div class="header-right">
 					<a th:href="@{/show-itemList/}" >商品一覧</a>
 					 <a th:href="@{/insertUser/toInsert}" >会員登録</a>
-					<a href="cart_list.html" th:href="@{/cart/showCart}"> <i class="fas fa-shopping-cart">
+					<a th:href="@{/cart/showCart#}"> <i class="fas fa-shopping-cart">
 					</i>カート
 					</a> 
 					 <span th:unless="${session.user}"><a th:href="@{/loginUser/toLogin}" class="login"> <i
