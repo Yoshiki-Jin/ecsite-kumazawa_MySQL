@@ -50,7 +50,6 @@ public class OrderService {
 		order.setDeliveryTime(timestamp);
     
 		//ステータスを注文済みへ変更
-
 		order.setStatus(1);
 		
 		orderRepository.update(order);
