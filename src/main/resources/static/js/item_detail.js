@@ -4,8 +4,8 @@
 "use-strict";
 
 $(function() {
-	let totalPrice = 0;
-	$("#show-total-price").text(totalPrice);
+
+	calcPrice();
 
 	$(".size_radio").on("change", function() {
 		calcPrice();
