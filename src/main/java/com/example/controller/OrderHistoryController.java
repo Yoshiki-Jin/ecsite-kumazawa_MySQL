@@ -14,6 +14,12 @@ import com.example.domain.Order;
 import com.example.domain.User;
 import com.example.service.OrderHistoryService;
 
+/**
+ * 注文履歴情報を操作するコントローラー.
+ * 
+ * @author inagakisaia
+ *
+ */
 @Controller
 @RequestMapping("/orderHistory")
 public class OrderHistoryController {
@@ -24,18 +30,27 @@ public class OrderHistoryController {
 	@Autowired
 	private HttpSession session;
 
+	/**
+	 * ログイン画面を表示します.
+	 * 
+	 * @return ログイン画面
+	 */
 	@GetMapping("/")
 	public String showHistory(Model model) {
-		User user = (User) session.getAttribute("user");
+		try {
+			User user = (User) session.getAttribute("user");
+			List<Order> finOrderList = orderHistoryService.showHistoryOfStatusFour(user.getId());
+			model.addAttribute("finOrderList", finOrderList);
+			List<Order> orderListThree = orderHistoryService.showHistoryOfStatusThree(user.getId());
+			model.addAttribute("orderListThree", orderListThree);
+			List<Order> orderListTwo = orderHistoryService.showHistoryOfStatusTwo(user.getId());
+			model.addAttribute("orderListTwo", orderListTwo);
+			List<Order> orderListOne = orderHistoryService.showHistoryOfStatusOne(user.getId());
+			model.addAttribute("orderListOne", orderListOne);
 
-		List<Order> finOrderList = orderHistoryService.showHistoryOfStatusFour(user.getId());
-		model.addAttribute("finOrderList", finOrderList);
-		List<Order> orderListThree = orderHistoryService.showHistoryOfStatusThree(user.getId());
-		model.addAttribute("orderListThree", orderListThree);
-		List<Order> orderListTwo = orderHistoryService.showHistoryOfStatusTwo(user.getId());
-		model.addAttribute("orderListTwo", orderListTwo);
-		List<Order> orderListOne = orderHistoryService.showHistoryOfStatusOne(user.getId());
-		model.addAttribute("orderListOne", orderListOne);
+		} catch (NullPointerException e) {
+			return "login";
+		}
 
 		return "order_history";
 	}
