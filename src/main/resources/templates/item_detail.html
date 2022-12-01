@@ -53,6 +53,7 @@
 			</span>
 			<span th:if="${session.user}"> <a th:href="@{/logoutUser/logout}">ログアウト</a>
             </span>
+			<span th:if="${session.userName}" th:text="${session.userName} + 'さんこんにちは'">山田太郎</span>
           </div>
         </div>
       </div>
