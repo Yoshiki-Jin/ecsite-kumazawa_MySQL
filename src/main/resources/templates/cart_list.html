@@ -37,8 +37,8 @@
       <div class="container">
         <div class="header">
           <div class="header-left">
-            <a th:href="@{/show-itemList/}">
-              <img class="logo" src="img/header_logo.png" />
+             <a th:href="@{/show-itemList/}">
+					   <img class="logo" th:src="@{/img/header_logo.png}" />
             </a>
           </div>
 
@@ -110,7 +110,7 @@
 
         <div class="row cart-total-price">
           <div th:text="'消費税 '+${order.getTax}+' 円'">消費税：8,000円</div>
-          <div th:text="'合計金額 '+${order.getCalcTotalPrice}+' 円'">ご注文金額合計：38,000円 (税込)</div>
+          <div th:text="'ご注文合計金額 '+${order.getCalcTotalPrice}+' 円'">ご注文金額合計：38,000円 (税込)</div>
         </div>
         <div class="row order-confirm-btn">
         <form th:action="@{/order/toOrder}">
