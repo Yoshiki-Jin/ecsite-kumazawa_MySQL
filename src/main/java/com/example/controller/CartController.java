@@ -83,9 +83,11 @@ public class CartController {
 	 * @return 削除後のカート一覧画面
 	 */
 	@PostMapping("/deleteOrderItem")
-	public String deleteOrderItem(Integer orderItemId) {
-
+	public String deleteOrderItem(Integer orderItemId,String toOrderConfirm) {
 		service.deleteOrderItem(orderItemId);
+		if(toOrderConfirm.equals("toOrderConfirm")) {
+			return "redirect:/order/toOrder";
+		}
 		return "redirect:/cart/showCart";
 	}
 }
