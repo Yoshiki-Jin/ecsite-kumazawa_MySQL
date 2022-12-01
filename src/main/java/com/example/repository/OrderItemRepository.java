@@ -28,6 +28,17 @@ public class OrderItemRepository {
 		orderItem.setId(rs.getInt("id"));
 		return orderItem;
 	};
+	
+	private final static RowMapper<OrderItem> ORDER_ITEM_ROW_MAPPER3 = (rs,i) -> {
+		OrderItem orderItem = new OrderItem();
+		orderItem.setId(rs.getInt("id"));
+		orderItem.setItemId(rs.getInt("item_id"));
+		orderItem.setOrderId(rs.getInt("order_id"));
+		orderItem.setQuantity(rs.getInt("quantity"));
+		orderItem.setSize(rs.getString("size").charAt(0));
+		return orderItem;
+	};
+	
 	/**
 	 * OrderItemを１件登録する.
 	 * 
@@ -67,5 +78,25 @@ public class OrderItemRepository {
 		List<OrderItem> oiList = template.query(sql, ORDER_ITEM_ROW_MAPPER2);
 
 		return oiList.get(0);
+	}
+	
+	public List<OrderItem> getOrderItemListByOrderId(Integer orderId){
+		
+		String sql = "SELECT id,item_id,order_id,quantity,size FROM order_items WHERE order_id = :orderId;";
+		
+		SqlParameterSource param = new MapSqlParameterSource().addValue("orderId", orderId);
+		
+		List<OrderItem> orderItemList = template.query(sql, param,ORDER_ITEM_ROW_MAPPER3);
+		return orderItemList;
+	}
+	
+	public void update(OrderItem orderItem) {
+		
+		System.out.println("OrderItemのupdateメソッドに来ました。");
+		
+		String sql = "UPDATE order_items SET item_id = :itemId,order_id = :orderId, quantity = :quantity, size = :size WHERE id = :id ;";
+		
+		SqlParameterSource param = new BeanPropertySqlParameterSource(orderItem);
+		template.update(sql, param);
 	}
 }

@@ -37,20 +37,32 @@ public class CartController {
 	 */
 	@PostMapping("/insertOrderItem")
 	public String insertOrderItem(CartForm form) {
-
+		System.out.println("insertOrderItem()に移動しました。");
+		System.out.println("セッションID　＝　"+session.hashCode());
 		User user = (User) session.getAttribute("user");
+		System.out.println("ログイン中のuser情報　="+user);
+		
 		Integer userId = null;
-		try {
-			userId = user.getId();
-		}catch(Exception e) {
-			//ここでセッションIDを取得
+		if(user == null) {
 			userId = session.hashCode();
-//			userId = 1234221344;
-			Order order =service.searchDummyOrder(userId);
-			if(order.getUserId()==null) {
-				service.createDummyOrder(userId);
-			}
+		} else {
+			userId = user.getId();
 		}
+//		try {
+//			userId = user.getId();
+//		}catch(Exception e) {
+//			//ここでセッションIDを取得
+//			userId = session.hashCode();
+////			userId = 1234221344;
+//			Order order =service.searchDummyOrder(userId);
+//			try {
+//				order.getUserId();
+//			}catch(Exception ee) {
+//				service.createDummyOrder(userId);
+//				userId = service.searchDummyOrder(userId).getUserId();
+//			}
+//		}
+		System.out.println("登録予定のuserId ="+userId);
 		System.out.println("addItem()に移動します");
 		service.addItem(form, userId);
 		return "redirect:/cart/showCart";
@@ -65,20 +77,34 @@ public class CartController {
 	@GetMapping("/showCart")
 	public String showCart(Model model) {
 		System.out.println("showCart()に移動しました。");
+		System.out.println("セッションID ＝　"+session.hashCode());
 
 		User user = (User) session.getAttribute("user");
 		Integer userId = 0;
 		if (user == null) {
+			userId = session.hashCode();
 			
-			//ここでセッションIDを取得.
-//		Integer dummyUserId = 1232445;
-		Integer dummyUserId = session.hashCode();
-		Order dummyOrder = service.createDummyOrder(dummyUserId);
-		userId = dummyOrder.getUserId();
+		} else {
+			userId = user.getId();
 		}
+//		Integer userId = 0;
+//		if (user == null) {
+//			
+//			//ここでセッションIDを取得.
+////		Integer dummyUserId = 1232445;
+//		Integer dummyUserId = session.hashCode();
+//		Order dummyOrder = service.createDummyOrder(dummyUserId);
+//		userId = dummyOrder.getUserId();
+//		}
 		
 		Order order = service.showCart(userId);
-		model.addAttribute("order", order);
+		if(order==null) {
+			model.addAttribute("NoOrder","カート内は空です。");
+		}else {
+			model.addAttribute("order", order);		
+		}
+		System.out.println("showCart()からcart_listに遷移する直前です。");
+		System.out.println("セッションID ＝　"+session.hashCode());
 		return "cart_list";
 	}
 //

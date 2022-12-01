@@ -43,18 +43,20 @@ public class OrderController {
 	 */
 	@GetMapping("/toOrder")
 	public String toOrder(OrderForm orderForm, Model model) {
+		System.out.println("toOrder()に移動しました。");
+		System.out.println("セッションID　＝　"+session.hashCode());
 
+		
 		// UserId取得の機能実装後書き換えます
 		User user = null;
-		try {
 		user=(User)(session.getAttribute("user"));
+		Integer userId = 0;
+		try {
+		userId = user.getId();
 		}catch(Exception e) {
-			//ここでセッションIDを取得する
-//			Integer sessionId = session.getId();
-//			session.setAttribute("toOrderToken", sessionId);
+			session.setAttribute("throughOrderConfirmation", true);
 			return "redirect:/loginUser/toLogin";
 		}
-		Integer userId=user.getId();
 
 		Order order = cartService.showCart(userId);
 		model.addAttribute("order",order);

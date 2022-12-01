@@ -58,10 +58,9 @@ public class CartService {
 		
 		//ログイン時→sessionの
 		System.out.println("セッションIDを取得する直前です");
-		System.out.println("AAAAAAAAAAAAAA sessionID = "+session.getId());
 		
 		Order order = orderRepository.findByUserIdAndStatus(userId);
-		System.out.println("order = "+order);
+		System.out.println("ここはnullでもいい。order = "+order);
 
 		
 		if (order==null) {
@@ -73,7 +72,7 @@ public class CartService {
 		Order newOrder = orderRepository.findByUserIdAndStatus(userId);
 
 	} 
-//		order = orderRepository.findByUserIdAndStatus(userId);
+		order = orderRepository.findByUserIdAndStatus(userId);
 		Integer orderId = order.getId();
 		
 
@@ -139,6 +138,45 @@ public class CartService {
 	}
 	
 	public Order searchDummyOrder(Integer dummyUserId) {
-		return orderRepository.findByUserIdAndStatus(dummyUserId);
+		Order order = orderRepository.findByUserIdAndStatus(dummyUserId);
+		System.out.println("SearchDummyOrderメソッド内のorder = "+order);
+		return order;
 	}
+	
+	public Order transferItemList(Order trueOrder,List<OrderItem> dummyOrderItemList) {
+		
+		
+//		dummyOrder.setId(trueOrder.getId());
+//		dummyOrder.setUserId(trueOrder.getUserId());
+//		dummyOrder.setStatus(trueOrder.getStatus());
+//		dummyOrder.setTotalPrice(trueOrder.getTotalPrice());
+//		List<OrderItem> dummyList = dummyOrderItemList.getOrderItemList();
+//		
+		
+		//trueOrderのOrderItemListにOrderItemを加えるのではなくて、
+		//dummyOrderItem(List)のorderIdをtrueOrderのOrderIdにして、更新する。
+		Integer trueOrderId = trueOrder.getId();
+		for(OrderItem dummyOrderItem:dummyOrderItemList) {
+			dummyOrderItem.setOrderId(trueOrderId);
+			orderItemRepository.update(dummyOrderItem);
+		}
+		return trueOrder;
+	}
+	
+	public void update(Order transferdOrder) {
+		orderRepository.update(transferdOrder);
+	}
+	
+	public Integer findIdAtRecentOrder() {
+		return orderRepository.findRecentId();
+	}
+	
+	public Integer findUserIdAtRecentOrder(Integer recentId) {
+		return orderRepository.findRecentUserId(recentId);
+	}
+	
+	public List<OrderItem> getOrderItemListByOrderId(Integer orderId){
+		return orderItemRepository.getOrderItemListByOrderId(orderId);
+	}
+	
 }
