@@ -132,41 +132,45 @@ public class OrderRepository {
 		return order;
 	};
 
+	public static final RowMapper<Order> ORDER_ROW_MAPPER2 = (rs, i) -> {
+
+		Order order = new Order();
+		order.setId(rs.getInt("id"));
+
+		return order;
+	};
+
+	public static final RowMapper<Order> ORDER_ROW_MAPPER3 = (rs, i) -> {
+
+		Order order = new Order();
+		order.setId(rs.getInt("id"));
+		order.setUserId(rs.getInt("user_id"));
+
+		return order;
+	};
+
 	/**
 	 * userId と status=0 を条件にOrderオブジェクトを1件取得する
 	 * 
 	 * @param userId ユーザーID
 	 */
 	public Order findByUserIdAndStatus(Integer userId) {
-		System.out.println(userId);
 
 		String sql = "SELECT id,user_id,status,total_price,order_date,destination_name,destination_email,destination_zipcode,destination_address,destination_tel,delivery_time,payment_method FROM orders WHERE user_id = :userId AND status = 0; ";
 
 		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
 
 		List<Order> order = template.query(sql, param, ORDER_ROW_MAPPER);
-		
+
+		System.out.println("findByUserIdAndStatusメソッド内の order =" + order);
 		try {
 			order.get(0);
-		}catch(IndexOutOfBoundsException e){
+		} catch (IndexOutOfBoundsException e) {
 			return null;
 		}
 
 		return order.get(0);
 	}
-	
-	
-//	public Order findByUserIdAndStatus(Integer userId) {
-//		System.out.println(userId);
-//		
-//		String sql = "SELECT id,user_id,status,total_price,order_date,destination_name,destination_email,destination_zipcode,destination_address,destination_tel,delivery_time,payment_method FROM orders WHERE user_id = :userId AND status = 0; ";
-//		
-//		SqlParameterSource param = new MapSqlParameterSource().addValue("userId", userId);
-//		
-//		List<Order> order = template.query(sql, param, ORDER_ROW_MAPPER);
-//		
-//		return order.get(0);
-//	}
 
 	/**
 	 * orderIdを条件にOrderリストを返す.
@@ -199,8 +203,8 @@ public class OrderRepository {
 	 * @param order Order
 	 */
 	public void insert(Order order) {
+		System.out.println("OrderRepository#insertよばれた");
 
-		// 注文内容確認～宛先情報入力～完了等に関係するカラムは含めていない。
 		String sql = "INSERT INTO orders(user_id,status,total_price) VALUES(:userId, 0, :totalPrice);";
 
 		SqlParameterSource param = new BeanPropertySqlParameterSource(order);
@@ -313,6 +317,37 @@ public class OrderRepository {
 		List<Order> orderList = null;
 		orderList = template.query(sql, param, ORDER_RESULT_SET_EXTRACTOR);
 		return orderList;
+	}
+
+	/**
+	 * 登録した最新のOrderのidを返します,
+	 * 
+	 * @return 最新のId
+	 */
+	public Integer findRecentId() {
+
+		String sql = "SELECT max(id) id FROM orders ;";
+
+		List<Order> orderList = template.query(sql, ORDER_ROW_MAPPER2);
+		Integer recentId = orderList.get(0).getId();
+		return recentId;
+	}
+
+	/**
+	 * 指定のidを持つOrderのuserIdを返します.
+	 * 
+	 * @param recentId id
+	 * @return userId
+	 */
+	public Integer findRecentUserId(Integer recentId) {
+
+		String sql = "SELECT id,user_id FROM orders WHERE id = :recentId;";
+
+		SqlParameterSource param = new MapSqlParameterSource().addValue("recentId", recentId);
+
+		List<Order> orderList = template.query(sql, param, ORDER_ROW_MAPPER3);
+		Integer recentUserId = orderList.get(0).getUserId();
+		return recentUserId;
 	}
 
 }

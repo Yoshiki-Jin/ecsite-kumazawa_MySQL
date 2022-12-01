@@ -46,9 +46,15 @@ public class OrderController {
 	@GetMapping("/toOrder")
 	public String toOrder(OrderForm orderForm, Model model) {
 
-		// UserId取得の機能実装後書き換えます
-		User user=(User)(session.getAttribute("user"));
-		Integer userId=user.getId();
+		User user = null;
+		user=(User)(session.getAttribute("user"));
+		Integer userId = 0;
+		try {
+		userId = user.getId();
+		}catch(Exception e) {
+			session.setAttribute("throughOrderConfirmation", true);
+			return "redirect:/loginUser/toLogin";
+		}
 
 		Order order = cartService.showCart(userId);
 		model.addAttribute("order",order);
