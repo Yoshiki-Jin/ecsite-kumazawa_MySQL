@@ -71,7 +71,7 @@ public class LoginUserController {
 			return "redirect:order/toOrder";
 		}catch(NullPointerException e){
 //			session.removeAttribute("throughOrderConfirmation");
-			return "redirect:/show-itemList/";
+			return "redirect:/";
 		}
 
 //		if (isThroughOrderConfirmation) { // もし、isThroughOrderConfirmationがtrueだった場合、注文確認画面へ
