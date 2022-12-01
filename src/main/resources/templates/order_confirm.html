@@ -139,7 +139,7 @@
             <div th:errors="*{destinationZipcode}" style="color:red; text-align:center;"></div>
               <input th:unless="${autoEntry}" id="zipcode" type="text" maxlength="7" name="destinationZipcode" th:field="*{destinationZipcode}" />
               <input th:if="${autoEntry}" id="zipcode" type="text" maxlength="7" name="destinationZipcode" th:value="${session.user.zipcode}" />
-              <label for="zipcode">郵便番号</label>
+              <label for="zipcode">郵便番号(XXX-XXXXの形式で入力してください)</label>
               <button th:unless="${autoEntry}" class="btn" type="button" id="zipcode_btn">
                 住所検索
               </button>
@@ -158,7 +158,7 @@
             <div th:errors="*{destinationTel}" style="color:red; text-align:center;"></div>
               <input th:unless="${autoEntry}" id="tel" type="tel" name="destinationTel" th:field="*{destinationTel}" />
               <input th:if="${autoEntry}" type="tel" name="destinationTel" th:value="${session.user.telephone}" />
-              <label for="tel">電話番号</label>
+              <label for="tel">電話番号(ーを含んでください)</label>
             </div>
           </div>
           <div class="row order-confirm-delivery-datetime">
