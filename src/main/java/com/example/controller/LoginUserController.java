@@ -65,17 +65,24 @@ public class LoginUserController {
 		// CartControllerでログインだった場合、「true」・未ログインだった場合「null」でsessionスコープにthroughOrderConfirmationがセットされるため、それを、"isThroughOrderConfirmation"に受け取る。
 		
 		//おそらく、ここでセッションスコープから値を取り出すことができない　or　出来なかったときにエラーが起きている。（金子)
-		boolean isThroughOrderConfirmation = (boolean) session.getAttribute("throughOrderConfirmation");
-
-		if (isThroughOrderConfirmation) { // もし、isThroughOrderConfirmationがtrueだった場合、注文確認画面へ
+		try{
+			boolean isThroughOrderConfirmation = (boolean) session.getAttribute("throughOrderConfirmation");
 			session.removeAttribute("throughOrderConfirmation");
 			return "redirect:/cart/showCart";
-
-		} else { // それ以外の場合は商品一覧へ
-			session.removeAttribute("throughOrderConfirmation");
+		}catch(NullPointerException e){
+//			session.removeAttribute("throughOrderConfirmation");
+			return "redirect:/show-itemList/";
 		}
 
-		return "redirect:/show-itemList/";
+//		if (isThroughOrderConfirmation) { // もし、isThroughOrderConfirmationがtrueだった場合、注文確認画面へ
+//			session.removeAttribute("throughOrderConfirmation");
+//			return "redirect:/cart/showCart";
+//
+//		} else { // それ以外の場合は商品一覧へ
+//			session.removeAttribute("throughOrderConfirmation");
+//		}
+
+//		return "redirect:/show-itemList/";
 	}
 
 }

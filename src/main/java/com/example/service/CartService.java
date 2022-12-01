@@ -49,19 +49,36 @@ public class CartService {
 
 		Order order = orderRepository.findByUserIdAndStatus(userId);
 
-		Integer orderId = order.getId();
-		if (order.getStatus() != 0) {
-			Order createOrder = new Order();
-			createOrder.setUserId(userId);
-			createOrder.setStatus(0);
-			createOrder.setTotalPrice(0);
-			orderRepository.insert(createOrder);
-			Order newOrder = orderRepository.findByUserIdAndStatus(userId);
-			orderId = newOrder.getId();
+		
+		if (order==null) {
+		Order createOrder = new Order();
+		createOrder.setUserId(userId);
+		createOrder.setStatus(0);
+		createOrder.setTotalPrice(0);
+		orderRepository.insert(createOrder);
+		Order newOrder = orderRepository.findByUserIdAndStatus(userId);
+//		orderId = newOrder.getId();
 
-		} else {
-			orderId = order.getId();
-		}
+	} else {
+//		orderId = order.getId();
+	}
+		order = orderRepository.findByUserIdAndStatus(userId);
+		Integer orderId = order.getId();
+		
+
+//		Integer orderId = order.getId();
+//		if (order.getStatus() != 0) {
+//			Order createOrder = new Order();
+//			createOrder.setUserId(userId);
+//			createOrder.setStatus(0);
+//			createOrder.setTotalPrice(0);
+//			orderRepository.insert(createOrder);
+//			Order newOrder = orderRepository.findByUserIdAndStatus(userId);
+//			orderId = newOrder.getId();
+//
+//		} else {
+//			orderId = order.getId();
+//		}
 		OrderItem oi = new OrderItem();
 		oi.setItemId(form.getItemId());
 		oi.setOrderId(orderId);
