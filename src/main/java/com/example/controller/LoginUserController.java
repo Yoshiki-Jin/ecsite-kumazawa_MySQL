@@ -68,7 +68,7 @@ public class LoginUserController {
 		try{
 			boolean isThroughOrderConfirmation = (boolean) session.getAttribute("throughOrderConfirmation");
 			session.removeAttribute("throughOrderConfirmation");
-			return "redirect:/cart/showCart";
+			return "redirect:order/toOrder";
 		}catch(NullPointerException e){
 //			session.removeAttribute("throughOrderConfirmation");
 			return "redirect:/show-itemList/";

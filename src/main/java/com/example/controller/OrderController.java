@@ -75,8 +75,8 @@ public class OrderController {
 
 		model.addAttribute("autoEntry", "autoEntry");
 
+		System.out.println("autoEntry");
 		return toOrder(orderForm, model);
-
 	}
 
 	/**
