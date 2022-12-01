@@ -106,6 +106,11 @@
                 <span th:text="${topping.name}">ハワイアンソルト</span>
               </label>
             </div>
+            <input type="button" onClick="checkAllBox(true)" value="全選択">
+            <input type="button" onClick="checkAllBox(false)" value="全解除">
+            
+            <script th:src="@{/js/allchack_button.js}"></script>
+            
           </div>
           <div class="row item-quantity">
             <div class="item-hedding item-hedding-quantity">数量</div>
