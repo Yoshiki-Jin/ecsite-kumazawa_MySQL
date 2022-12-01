@@ -43,11 +43,7 @@ public class OrderController {
 	 */
 	@GetMapping("/toOrder")
 	public String toOrder(OrderForm orderForm, Model model) {
-		System.out.println("toOrder()に移動しました。");
-		System.out.println("セッションID　＝　"+session.hashCode());
 
-		
-		// UserId取得の機能実装後書き換えます
 		User user = null;
 		user=(User)(session.getAttribute("user"));
 		Integer userId = 0;

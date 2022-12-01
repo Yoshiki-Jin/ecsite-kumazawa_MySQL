@@ -39,7 +39,7 @@ public class CartService {
 
 	@Autowired
 	private ToppingRepository toppingRepository;
-	
+
 	@Autowired
 	private HttpSession session;
 
@@ -52,29 +52,18 @@ public class CartService {
 	 */
 	public void addItem(CartForm form, Integer userId) {
 
-		//未ログイン時でもカートに追加できるようにする。
-		//未ログイン時→sessionにuser情報が無い状態→ダミーのuserId（セッションＩＤ）を作ってOrderオブジェクト作成
-		//作成したダミーuserId入りのOrderのid(OrderId)をもとにカートに追加
-		
-		//ログイン時→sessionの
-		System.out.println("セッションIDを取得する直前です");
-		
 		Order order = orderRepository.findByUserIdAndStatus(userId);
-		System.out.println("ここはnullでもいい。order = "+order);
 
-		
-		if (order==null) {
-		Order createOrder = new Order();
-		createOrder.setUserId(userId);
-		createOrder.setStatus(0);
-		createOrder.setTotalPrice(0);
-		orderRepository.insert(createOrder);
-		Order newOrder = orderRepository.findByUserIdAndStatus(userId);
+		if (order == null) {
+			Order createOrder = new Order();
+			createOrder.setUserId(userId);
+			createOrder.setStatus(0);
+			createOrder.setTotalPrice(0);
+			orderRepository.insert(createOrder);
 
-	} 
+		}
 		order = orderRepository.findByUserIdAndStatus(userId);
 		Integer orderId = order.getId();
-		
 
 		OrderItem oi = new OrderItem();
 		oi.setItemId(form.getItemId());
@@ -125,58 +114,57 @@ public class CartService {
 
 		orderItemRepository.delete(orderItemId);
 	}
-	
+
 	public Order createDummyOrder(Integer dummuUserId) {
-		
+
 		Order dummyOrderDetail = new Order();
 		dummyOrderDetail.setUserId(dummuUserId);
 		dummyOrderDetail.setStatus(0);
 		dummyOrderDetail.setTotalPrice(0);
-		
+
 		orderRepository.insert(dummyOrderDetail);
 		return dummyOrderDetail;
 	}
-	
+
 	public Order searchDummyOrder(Integer dummyUserId) {
 		Order order = orderRepository.findByUserIdAndStatus(dummyUserId);
-		System.out.println("SearchDummyOrderメソッド内のorder = "+order);
+		System.out.println("SearchDummyOrderメソッド内のorder = " + order);
 		return order;
 	}
-	
-	public Order transferItemList(Order trueOrder,List<OrderItem> dummyOrderItemList) {
-		
-		
+
+	public Order transferItemList(Order trueOrder, List<OrderItem> dummyOrderItemList) {
+
 //		dummyOrder.setId(trueOrder.getId());
 //		dummyOrder.setUserId(trueOrder.getUserId());
 //		dummyOrder.setStatus(trueOrder.getStatus());
 //		dummyOrder.setTotalPrice(trueOrder.getTotalPrice());
 //		List<OrderItem> dummyList = dummyOrderItemList.getOrderItemList();
 //		
-		
-		//trueOrderのOrderItemListにOrderItemを加えるのではなくて、
-		//dummyOrderItem(List)のorderIdをtrueOrderのOrderIdにして、更新する。
+
+		// trueOrderのOrderItemListにOrderItemを加えるのではなくて、
+		// dummyOrderItem(List)のorderIdをtrueOrderのOrderIdにして、更新する。
 		Integer trueOrderId = trueOrder.getId();
-		for(OrderItem dummyOrderItem:dummyOrderItemList) {
+		for (OrderItem dummyOrderItem : dummyOrderItemList) {
 			dummyOrderItem.setOrderId(trueOrderId);
 			orderItemRepository.update(dummyOrderItem);
 		}
 		return trueOrder;
 	}
-	
+
 	public void update(Order transferdOrder) {
 		orderRepository.update(transferdOrder);
 	}
-	
+
 	public Integer findIdAtRecentOrder() {
 		return orderRepository.findRecentId();
 	}
-	
+
 	public Integer findUserIdAtRecentOrder(Integer recentId) {
 		return orderRepository.findRecentUserId(recentId);
 	}
-	
-	public List<OrderItem> getOrderItemListByOrderId(Integer orderId){
+
+	public List<OrderItem> getOrderItemListByOrderId(Integer orderId) {
 		return orderItemRepository.getOrderItemListByOrderId(orderId);
 	}
-	
+
 }
