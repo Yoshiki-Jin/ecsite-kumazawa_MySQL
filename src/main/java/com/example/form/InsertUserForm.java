@@ -3,7 +3,6 @@ package com.example.form;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 
 /**
  * ユーザー情報を登録する際のフォームクラス.
@@ -26,16 +25,14 @@ public class InsertUserForm {
 	private String email;
 
 	/** パスワード */
-	@NotBlank(message="パスワードを入力してください")
-	@Size(min=8,max=16,message="パスワードは８文字以上１６文字以内で設定してください")
+	@Pattern(regexp="^(?=.*[a-z])(?=.*[A-Z])(?=.*[.?/-])[a-zA-Z0-9.?/-]{8,16}$", message="パスワードはアルファベットの大文字・小文字・記号（.?/-）を含む  ８文字以上１６文字以内で設定してください")
 	private String password;
 
 	/** 確認用パスワード */
-	@NotBlank(message="確認用パスワードを入力してください")
+	@NotBlank(message="パスワードと確認用パスワードが不一致です")
 	private String confimationPassword;
 
 	/** 郵便番号 */
-	@NotBlank(message="郵便番号を入力してください")
 	@Pattern(regexp="^[0-9]{3}-[0-9]{4}$",message="郵便番号はXXX-XXXXの形式で入力してください")
 	private String zipcode;
 
@@ -44,8 +41,7 @@ public class InsertUserForm {
 	private String address;
 
 	/** 電話番号 */
-	@NotBlank(message="電話番号を入力してください")
-	@Pattern(regexp="^0[-0-9]{11,12}$",message="電話番号はXXXX-XXXX-XXXXの形式で入力してください")
+	@Pattern(regexp="^\\d{2,4}-\\d{2,4}-\\d{4}$",message="電話番号は-を含んで正しい入力をしてください")
 	private String telephone;
 
 	/** GetterとSetter */

@@ -76,14 +76,14 @@
           <div class="row">
             <div class="input-field col s12">
               <input id="email" type="email" class="validate"  name="email" th:field="*{email}"/>
-              <label for="email">メールアドレス</label>
+              <label for="email">メールアドレス(@を含んでください)</label>
             </div>
           </div>
           <div class="error" th:errors="*{zipcode}">郵便番号はXXX-XXXXの形式で入力してください</div>
           <div class="row">
             <div class="input-field col s12">
               <input id="zipcode" type="text" name="zipcode" maxlength="8" th:field="*{zipcode}"  />
-              <label for="zipcode">郵便番号</label>
+              <label for="zipcode">郵便番号は(XXX-XXXXの形式で入力して下さい)</label>
              <button id="zipcode_btn" class="btn" type="button">
                 <span>住所検索</span>
               </button>   
@@ -97,12 +97,12 @@
             </div>
           </div>
           <div class="error" th:errors="*{telephone}">
-            電話番号はXXXX-XXXX-XXXXの形式で入力してください
+            電話番号はXXX-XXXX-XXXXの形式で入力してください
           </div>
           <div class="row">
             <div class="input-field col s12">
               <input id="tel" type="tel" name="telephone" th:field="*{telephone}"/>
-              <label for="tel">電話番号</label>
+              <label for="tel">電話番号(ーを含んでください)</label>
             </div>
           </div>
           <div class="error" th:errors="*{password}">
@@ -119,9 +119,11 @@
                 minlength="8"
                
               />
-              <label for="password">パスワード</label>
+              
+              <label for="password">パスワード(８文字以上１６文字以内で設定してください)</label>
             </div>
           </div>
+          
           <div class="error" th:errors="*{confimationPassword}">パスワードと確認用パスワードが不一致です</div>
           <div class="row">
             <div class="input-field col s12">

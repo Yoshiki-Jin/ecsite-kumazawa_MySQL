@@ -51,7 +51,7 @@ public class InsertUserController {
 
 		// 入力したパスワードと確認用パスワードが一致しない場合、エラーメッセージを返す
 		if (!form.getPassword().equals(form.getConfimationPassword())) {
-			result.rejectValue("confimationPassword", null, "　パスワードと確認用パスワードが不一致です");
+			result.rejectValue("confimationPassword", null, "");
 
 		}
 
