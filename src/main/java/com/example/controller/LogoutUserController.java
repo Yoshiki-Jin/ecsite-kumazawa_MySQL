@@ -28,7 +28,7 @@ public class LogoutUserController {
 	@GetMapping(value = "/logout")
 	public String logout() {
 		session.invalidate();
-		return "forward:/show-itemList/";
+		return "redirect:/loginUser/toLogin";
 	}
 
 }
