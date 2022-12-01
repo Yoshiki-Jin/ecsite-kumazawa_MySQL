@@ -4,7 +4,7 @@ import java.sql.Date;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 
 /**
  * 注文情報を受け取るフォーム.
@@ -26,13 +26,13 @@ public class OrderForm {
 	@Email(message="メールアドレスの形式が不正です")
 	private String destinationEmail;
 	/** 宛先郵便番号 */
-	@NotBlank(message="郵便番号を入力してください")
+	@Pattern(regexp="^[0-9]{3}-[0-9]{4}$",message="郵便番号はXXX-XXXXの形式で入力してください")
 	private String destinationZipcode;
 	/** 宛先住所 */
 	@NotBlank(message="住所を入力してください")
 	private String destinationAddress;
 	/** 宛先TEL */
-	@NotBlank(message="電話番号を入力してください")
+	@Pattern(regexp="^\\d{2,4}-\\d{2,4}-\\d{4}$",message="電話番号は-を含んで正しい入力をしてください")
 	private String destinationTel;
 	/** 配達日付 */
 	private Date deliveryDate;
