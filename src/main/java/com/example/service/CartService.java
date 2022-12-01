@@ -49,22 +49,20 @@ public class CartService {
 
 		Order order = orderRepository.findByUserIdAndStatus(userId);
 
-		
-		if (order==null) {
-		Order createOrder = new Order();
-		createOrder.setUserId(userId);
-		createOrder.setStatus(0);
-		createOrder.setTotalPrice(0);
-		orderRepository.insert(createOrder);
-		Order newOrder = orderRepository.findByUserIdAndStatus(userId);
+		if (order == null) {
+			Order createOrder = new Order();
+			createOrder.setUserId(userId);
+			createOrder.setStatus(0);
+			createOrder.setTotalPrice(0);
+			orderRepository.insert(createOrder);
+			Order newOrder = orderRepository.findByUserIdAndStatus(userId);
 //		orderId = newOrder.getId();
 
-	} else {
+		} else {
 //		orderId = order.getId();
-	}
+		}
 		order = orderRepository.findByUserIdAndStatus(userId);
 		Integer orderId = order.getId();
-		
 
 //		Integer orderId = order.getId();
 //		if (order.getStatus() != 0) {
@@ -89,14 +87,16 @@ public class CartService {
 		OrderTopping ot = new OrderTopping();
 		List<Integer> toppinglist = form.getToppingList();
 
-		for (Integer toppingId : toppinglist) {
-			ot.setToppingId(toppingId);
-			OrderItem orderItem = orderItemRepository.findMaxId();
-			Integer recentId = orderItem.getId();
-			ot.setOrderItemId(recentId);
-			Topping topping = toppingRepository.load(toppingId);
-			ot.setTopping(topping);
-			orderToppingRepository.insert(ot);
+		if (toppinglist != null) {
+			for (Integer toppingId : toppinglist) {
+				ot.setToppingId(toppingId);
+				OrderItem orderItem = orderItemRepository.findMaxId();
+				Integer recentId = orderItem.getId();
+				ot.setOrderItemId(recentId);
+				Topping topping = toppingRepository.load(toppingId);
+				ot.setTopping(topping);
+				orderToppingRepository.insert(ot);
+			}
 		}
 	}
 
