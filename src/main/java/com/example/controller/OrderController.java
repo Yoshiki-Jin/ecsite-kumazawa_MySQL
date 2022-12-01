@@ -45,7 +45,15 @@ public class OrderController {
 	public String toOrder(OrderForm orderForm, Model model) {
 
 		// UserId取得の機能実装後書き換えます
-		User user=(User)(session.getAttribute("user"));
+		User user = null;
+		try {
+		user=(User)(session.getAttribute("user"));
+		}catch(Exception e) {
+			//ここでセッションIDを取得する
+//			Integer sessionId = session.getId();
+//			session.setAttribute("toOrderToken", sessionId);
+			return "redirect:/loginUser/toLogin";
+		}
 		Integer userId=user.getId();
 
 		Order order = cartService.showCart(userId);

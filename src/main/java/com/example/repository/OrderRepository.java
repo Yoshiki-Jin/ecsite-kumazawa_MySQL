@@ -138,7 +138,6 @@ public class OrderRepository {
 	 * @param userId ユーザーID
 	 */
 	public Order findByUserIdAndStatus(Integer userId) {
-		System.out.println(userId);
 
 		String sql = "SELECT id,user_id,status,total_price,order_date,destination_name,destination_email,destination_zipcode,destination_address,destination_tel,delivery_time,payment_method FROM orders WHERE user_id = :userId AND status = 0; ";
 

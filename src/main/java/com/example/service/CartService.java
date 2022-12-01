@@ -2,6 +2,8 @@ package com.example.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,6 +39,9 @@ public class CartService {
 
 	@Autowired
 	private ToppingRepository toppingRepository;
+	
+	@Autowired
+	private HttpSession session;
 
 	/**
 	 * status=0のorderIdの有無を確認→無い場合作成. カートに追加するOrderItemを登録する.
@@ -47,7 +52,16 @@ public class CartService {
 	 */
 	public void addItem(CartForm form, Integer userId) {
 
+		//未ログイン時でもカートに追加できるようにする。
+		//未ログイン時→sessionにuser情報が無い状態→ダミーのuserId（セッションＩＤ）を作ってOrderオブジェクト作成
+		//作成したダミーuserId入りのOrderのid(OrderId)をもとにカートに追加
+		
+		//ログイン時→sessionの
+		System.out.println("セッションIDを取得する直前です");
+		System.out.println("AAAAAAAAAAAAAA sessionID = "+session.getId());
+		
 		Order order = orderRepository.findByUserIdAndStatus(userId);
+		System.out.println("order = "+order);
 
 		
 		if (order==null) {
@@ -57,28 +71,12 @@ public class CartService {
 		createOrder.setTotalPrice(0);
 		orderRepository.insert(createOrder);
 		Order newOrder = orderRepository.findByUserIdAndStatus(userId);
-//		orderId = newOrder.getId();
 
-	} else {
-//		orderId = order.getId();
-	}
-		order = orderRepository.findByUserIdAndStatus(userId);
+	} 
+//		order = orderRepository.findByUserIdAndStatus(userId);
 		Integer orderId = order.getId();
 		
 
-//		Integer orderId = order.getId();
-//		if (order.getStatus() != 0) {
-//			Order createOrder = new Order();
-//			createOrder.setUserId(userId);
-//			createOrder.setStatus(0);
-//			createOrder.setTotalPrice(0);
-//			orderRepository.insert(createOrder);
-//			Order newOrder = orderRepository.findByUserIdAndStatus(userId);
-//			orderId = newOrder.getId();
-//
-//		} else {
-//			orderId = order.getId();
-//		}
 		OrderItem oi = new OrderItem();
 		oi.setItemId(form.getItemId());
 		oi.setOrderId(orderId);
@@ -127,5 +125,20 @@ public class CartService {
 		orderToppingRepository.delete(orderItemId);
 
 		orderItemRepository.delete(orderItemId);
+	}
+	
+	public Order createDummyOrder(Integer dummuUserId) {
+		
+		Order dummyOrderDetail = new Order();
+		dummyOrderDetail.setUserId(dummuUserId);
+		dummyOrderDetail.setStatus(0);
+		dummyOrderDetail.setTotalPrice(0);
+		
+		orderRepository.insert(dummyOrderDetail);
+		return dummyOrderDetail;
+	}
+	
+	public Order searchDummyOrder(Integer dummyUserId) {
+		return orderRepository.findByUserIdAndStatus(dummyUserId);
 	}
 }

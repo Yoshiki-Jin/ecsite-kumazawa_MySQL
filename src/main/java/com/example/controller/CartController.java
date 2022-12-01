@@ -39,7 +39,20 @@ public class CartController {
 	public String insertOrderItem(CartForm form) {
 
 		User user = (User) session.getAttribute("user");
-		service.addItem(form, user.getId());
+		Integer userId = null;
+		try {
+			userId = user.getId();
+		}catch(Exception e) {
+			//ここでセッションIDを取得
+			userId = session.hashCode();
+//			userId = 1234221344;
+			Order order =service.searchDummyOrder(userId);
+			if(order.getUserId()==null) {
+				service.createDummyOrder(userId);
+			}
+		}
+		System.out.println("addItem()に移動します");
+		service.addItem(form, userId);
 		return "redirect:/cart/showCart";
 	}
 
@@ -51,24 +64,26 @@ public class CartController {
 	 */
 	@GetMapping("/showCart")
 	public String showCart(Model model) {
+		System.out.println("showCart()に移動しました。");
 
-		System.out.println("shoeCartメソッド来た");
 		User user = (User) session.getAttribute("user");
-		if (user.getId() == null) {
-			System.out.println("userIdがnullだった");
-
-			session.setAttribute("throughOrderConfirmation", true);
-			System.out.println("/loginUser/toLoginにリダイレクト");
-			return "redirect:/loginUser/toLogin";
+		Integer userId = 0;
+		if (user == null) {
+			
+			//ここでセッションIDを取得.
+//		Integer dummyUserId = 1232445;
+		Integer dummyUserId = session.hashCode();
+		Order dummyOrder = service.createDummyOrder(dummyUserId);
+		userId = dummyOrder.getUserId();
 		}
-
 		
-		Integer userId = user.getId();
 		Order order = service.showCart(userId);
 		model.addAttribute("order", order);
-		System.out.println("cart_listにフォワードする");
 		return "cart_list";
 	}
+//
+//			session.setAttribute("throughOrderConfirmation", true);
+//			return "redirect:/loginUser/toLogin";
 
 	/**
 	 * 選択されたOrderItemとそのOrderToppingを削除する.
