@@ -85,6 +85,7 @@ public class CartController {
 	@PostMapping("/deleteOrderItem")
 	public String deleteOrderItem(Integer orderItemId,String toOrderConfirm) {
 		service.deleteOrderItem(orderItemId);
+		System.out.println("");
 		if(toOrderConfirm.equals("toOrderConfirm")) {
 			return "redirect:/order/toOrder";
 		}
