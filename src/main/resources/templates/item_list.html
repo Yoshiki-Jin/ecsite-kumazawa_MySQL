@@ -34,13 +34,13 @@
 		<div class="container">
 			<div class="header">
 				<div class="header-left">
-					  <a th:href="@{/show-itemList/}">
+					  <a th:href="@{/}">
 					   <img class="logo" th:src="@{/img/header_logo.png}" />
 					</a>
 				</div>
 
 				<div class="header-right">
-					<a th:href="@{/show-itemList/}" >商品一覧</a>
+					<a th:href="@{/}" >商品一覧</a>
 					 <a th:href="@{/insertUser/toInsert}" >会員登録</a>
 
 					<a th:href="@{/cart/showCart#}"> <i class="fas fa-shopping-cart">
@@ -52,7 +52,6 @@
 				     </span>
 					<span th:if="${session.user}"> <a th:href="@{/logoutUser/logout}">ログアウト</a>
             　　　　　　　</span>
-					<a href="order_history.html">注文履歴</a>
 					<span th:if="${session.userName}" th:text="${session.userName} + 'さんこんにちは'">山田太郎</span>
 				</div>
 			</div>
@@ -61,7 +60,7 @@
 	<!-- search form -->
 	<div class="search-wrapper">
 		<div class="container">
-			<form method="post" th:action="@{/show-itemList/}" class="search-form">
+			<form method="post" th:action="@{/}" class="search-form">
 				<input type="text" name="name" class="search-name-input" list="itemList" />
 				<datalist id="itemList">
 				<option th:each="item:${itemList}" th:value="${item.name}"></option>
@@ -90,8 +89,11 @@
 					</a>
 					</div>
 					<a href="item_detail.html" th:text="${item.name}" th:href="@{/show-detail/?id=}+${item.id}">ハワイアンパラダイス</a><br />
+					<span class="price" th:text="Ｍ">Ｍ</span>
+					<span th:text="${item.priceM}"></span>円(税抜)<br /> 
 					
-					<span class="price" th:text="${item.priceM}">Ｍ</span>円(税抜)<br /> <span class="price" th:text="${item.priceL}">Ｌ</span>円(税抜)<br />
+					<span class="price" th:text="Ｌ">Ｌ</span>
+					<span th:text="${item.priceL}"></span>円(税抜)<br />
 				</div>
 
 						</div>

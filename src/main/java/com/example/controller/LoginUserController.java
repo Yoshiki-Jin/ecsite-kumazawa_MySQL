@@ -84,9 +84,8 @@ public class LoginUserController {
 			cartService.update(transferdOrder);
 			session.removeAttribute("throughOrderConfirmation");
 			return "redirect:/order/toOrder";
-		}catch(Exception e){
-			e.printStackTrace();
-			return "redirect:/show-itemList/";
+		}catch(NullPointerException e){
+			return "redirect:/";
 		}
 
 	}

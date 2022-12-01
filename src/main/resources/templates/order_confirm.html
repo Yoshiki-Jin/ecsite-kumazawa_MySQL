@@ -37,13 +37,13 @@
       <div class="container">
         <div class="header">
           <div class="header-left">
-             <a th:href="@{/show-itemList/}">
+             <a th:href="@{/}">
               <img class="logo" th:src="@{/img/header_logo.png}" />
             </a>
           </div>
 
           <div class="header-right">
-            <a th:href="@{/show-itemList/}" >商品一覧</a>
+            <a th:href="@{/}" >商品一覧</a>
             <a th:href="@{/insertUser/toInsert}" >会員登録</a>
             <a th:href="@{/cart/showCart#}"><i class="fas fa-shopping-cart"></i>カート</a>
             <span th:unless="${session.user}">
@@ -53,8 +53,8 @@
             <span th:if="${session.user}">
               <a  th:href="@{/logoutUser/logout}">ログアウト</a>
             </span>
+     		<span th:if="${session.userName}" th:text="${session.userName} + 'さんこんにちは'">山田太郎</span>
 
-            <a href="order_history.html">注文履歴</a>
           </div>
         </div>
       </div>
@@ -98,7 +98,7 @@
                     </li>
                   </ul>
                 </td>
-                <td><div class="text-center">3,280円</div></td>
+                <td><div class="text-center" th:text="'小計　'+${#numbers.formatInteger(orderItem.getSubTotal,1,'COMMA')}+' 円'">3,280円</div></td>
                 <td>
                   <form th:action="@{/cart/deleteOrderItem}" method="post">
                   <button class="btn" type="submit">
@@ -110,10 +110,9 @@
             </tbody>
           </table>
         </div>
-
         <div class="row cart-total-price">
-          <div th:text="'消費税 '+${order.getTax}+' 円'" >消費税：8,000円</div>
-          <div th:text="'ご注文合計金額 '+${order.getCalcTotalPrice}+' 円'">ご注文金額合計：38,000円 (税込)</div>
+          <div th:text="'消費税 '+${#numbers.formatInteger(order.getTax,1,'COMMA')}+' 円'" >消費税：8,000円</div>
+          <div th:text="'ご注文合計金額 '+${#numbers.formatInteger(order.getCalcTotalPrice,1,'COMMA')}+' 円'">ご注文金額合計：38,000円 (税込)</div>
         </div>
         <h2 class="page-title">お届け先情報</h2>
         <form th:action="@{/order/autoEntry}" method="post" ><button class="btn order-confirm-delivery-info" id="auto_entry_btn">登録情報を自動入力する</button></form>
@@ -141,7 +140,7 @@
             <div th:errors="*{destinationZipcode}" style="color:red; text-align:center;"></div>
               <input th:unless="${autoEntry}" id="zipcode" type="text" maxlength="7" name="destinationZipcode" th:field="*{destinationZipcode}" />
               <input th:if="${autoEntry}" id="zipcode" type="text" maxlength="7" name="destinationZipcode" th:value="${session.user.zipcode}" />
-              <label for="zipcode">郵便番号</label>
+              <label for="zipcode">郵便番号(XXX-XXXXの形式で入力してください)</label>
               <button th:unless="${autoEntry}" class="btn" type="button" id="zipcode_btn">
                 住所検索
               </button>
@@ -160,7 +159,7 @@
             <div th:errors="*{destinationTel}" style="color:red; text-align:center;"></div>
               <input th:unless="${autoEntry}" id="tel" type="tel" name="destinationTel" th:field="*{destinationTel}" />
               <input th:if="${autoEntry}" type="tel" name="destinationTel" th:value="${session.user.telephone}" />
-              <label for="tel">電話番号</label>
+              <label for="tel">電話番号(ーを含んでください)</label>
             </div>
           </div>
           <div class="row order-confirm-delivery-datetime">

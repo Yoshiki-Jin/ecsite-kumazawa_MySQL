@@ -60,7 +60,7 @@ public class CartService {
 			createOrder.setStatus(0);
 			createOrder.setTotalPrice(0);
 			orderRepository.insert(createOrder);
-
+//			Order newOrder = orderRepository.findByUserIdAndStatus(userId);
 		}
 		order = orderRepository.findByUserIdAndStatus(userId);
 		Integer orderId = order.getId();
@@ -75,14 +75,16 @@ public class CartService {
 		OrderTopping ot = new OrderTopping();
 		List<Integer> toppinglist = form.getToppingList();
 
-		for (Integer toppingId : toppinglist) {
-			ot.setToppingId(toppingId);
-			OrderItem orderItem = orderItemRepository.findMaxId();
-			Integer recentId = orderItem.getId();
-			ot.setOrderItemId(recentId);
-			Topping topping = toppingRepository.load(toppingId);
-			ot.setTopping(topping);
-			orderToppingRepository.insert(ot);
+		if (toppinglist != null) {
+			for (Integer toppingId : toppinglist) {
+				ot.setToppingId(toppingId);
+				OrderItem orderItem = orderItemRepository.findMaxId();
+				Integer recentId = orderItem.getId();
+				ot.setOrderItemId(recentId);
+				Topping topping = toppingRepository.load(toppingId);
+				ot.setTopping(topping);
+				orderToppingRepository.insert(ot);
+			}
 		}
 	}
 

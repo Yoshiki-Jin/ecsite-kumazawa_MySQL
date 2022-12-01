@@ -17,7 +17,7 @@ import com.example.service.ShowItemListService;
  *
  */
 @Controller
-@RequestMapping("/show-itemList")
+@RequestMapping("/")
 public class ShowItemListController {
 	@Autowired
 	private ShowItemListService showItemListService;
@@ -28,7 +28,7 @@ public class ShowItemListController {
 	 * @param name 商品名
 	 * @return 商品一覧画面
 	 */
-	@RequestMapping("/")
+	@RequestMapping("")
 	public String showItemList(String name, Model model) {
 		List<Item> itemList = showItemListService.showItemList(name);
 		model.addAttribute("itemList", itemList);

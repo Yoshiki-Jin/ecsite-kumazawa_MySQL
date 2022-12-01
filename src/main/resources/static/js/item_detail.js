@@ -4,8 +4,8 @@
 "use-strict";
 
 $(function() {
-	let totalPrice = 0;
-	$("#show-total-price").text(totalPrice);
+
+	calcPrice();
 
 	$(".size_radio").on("change", function() {
 		calcPrice();
@@ -32,6 +32,6 @@ $(function() {
 			toppingPrice = 300 * countChecked;
 		}
 		let totalPrice = (normalPrice + toppingPrice) * quantity;
-		$("#show-total-price").text(totalPrice);
+		$("#show-total-price").text(totalPrice.toLocaleString());
 	}
 });
