@@ -1,5 +1,7 @@
 package com.example.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +11,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.example.domain.Order;
+import com.example.domain.OrderItem;
 import com.example.domain.User;
 import com.example.form.LoginUserForm;
+import com.example.service.CartService;
 import com.example.service.LoginUserService;
 
 /**
@@ -24,6 +29,9 @@ import com.example.service.LoginUserService;
 public class LoginUserController {
 	@Autowired
 	private LoginUserService loginUserService;
+
+	@Autowired
+	private CartService cartService;
 
 	@Autowired
 	private HttpSession session;
@@ -60,29 +68,29 @@ public class LoginUserController {
 		String userName = user.getName();
 		session.setAttribute("userName", userName);
 		
-//		下記はCartControllerのshowCartメソッドと統合した際に実装するためコメントアウトします
-
-		// CartControllerでログインだった場合、「true」・未ログインだった場合「null」でsessionスコープにthroughOrderConfirmationがセットされるため、それを、"isThroughOrderConfirmation"に受け取る。
+		Boolean isToOrderHistory = (Boolean)session.getAttribute("toOrderHistory");
+		if(isToOrderHistory != null && isToOrderHistory.booleanValue()) {
+			return "redirect:/orderHistory/";
+		}
 		
-		//おそらく、ここでセッションスコープから値を取り出すことができない　or　出来なかったときにエラーが起きている。（金子)
-		try{
-			boolean isThroughOrderConfirmation = (boolean) session.getAttribute("throughOrderConfirmation");
+		
+			Boolean isThroughOrderConfirmation = (Boolean) session.getAttribute("throughOrderConfirmation");
+			if(isThroughOrderConfirmation != null && isThroughOrderConfirmation.booleanValue()) {
+			Integer recentId = cartService.findIdAtRecentOrder();
+			Integer recentUserId = cartService.findUserIdAtRecentOrder(recentId);
+			Order dummyOrder = cartService.searchDummyOrder(recentUserId);
+			Integer dummyOrderId = dummyOrder.getId();
+			List<OrderItem> dummyOrderItemList = cartService.getOrderItemListByOrderId(dummyOrderId);
+			
+			Order trueOrder = cartService.searchDummyOrder(user.getId());
+			Order transferdOrder = cartService.transferItemList(trueOrder,dummyOrderItemList);
+			cartService.update(transferdOrder);
 			session.removeAttribute("throughOrderConfirmation");
 			return "redirect:/order/toOrder";
-		}catch(NullPointerException e){
-//			session.removeAttribute("throughOrderConfirmation");
+			}else {
 			return "redirect:/";
 		}
 
-//		if (isThroughOrderConfirmation) { // もし、isThroughOrderConfirmationがtrueだった場合、注文確認画面へ
-//			session.removeAttribute("throughOrderConfirmation");
-//			return "redirect:/cart/showCart";
-//
-//		} else { // それ以外の場合は商品一覧へ
-//			session.removeAttribute("throughOrderConfirmation");
-//		}
-
-//		return "redirect:/show-itemList/";
 	}
 
 }

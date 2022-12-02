@@ -1,5 +1,7 @@
 package com.example.controller;
 
+import java.time.LocalDateTime;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,12 +46,22 @@ public class OrderController {
 	@GetMapping("/toOrder")
 	public String toOrder(OrderForm orderForm, Model model) {
 
-		// UserId取得の機能実装後書き換えます
-		User user=(User)(session.getAttribute("user"));
-		Integer userId=user.getId();
+		User user = null;
+		user=(User)(session.getAttribute("user"));
+		Integer userId = 0;
+		try {
+		userId = user.getId();
+		}catch(Exception e) {
+			session.setAttribute("throughOrderConfirmation", true);
+			return "redirect:/loginUser/toLogin";
+		}
 
 		Order order = cartService.showCart(userId);
 		model.addAttribute("order",order);
+		
+		//htmlのヘッダーのカードにアイテム数を表示させるためにセットしてます
+		int orderItemCount =  order.getOrderItemList().size();
+		session.setAttribute("orderItemCount", orderItemCount);
 		
 		return "order_confirm";
 	}
@@ -61,6 +73,8 @@ public class OrderController {
 	 */
 	@GetMapping("/toFinished")
 	public String toFinished() {
+		//注文完了画面表示時にヘッダーの上のカートのアイコンの個数をリセットしてます
+		session.removeAttribute("orderItemCount");
 		return "order_finished";
 	}
 
@@ -89,6 +103,15 @@ public class OrderController {
 	public String order(@Validated OrderForm orderForm, BindingResult result, Model model) {
 		if (orderForm.getDeliveryDate() == null) {
 			model.addAttribute("deliveryDateError", "日付を入力してください");
+			return toOrder(orderForm, model);
+		}
+		LocalDateTime nowDateTime=LocalDateTime.now();
+		nowDateTime=nowDateTime.plusHours(3);
+		LocalDateTime orderDateTime=orderForm.getDeliveryDate().toLocalDate().atStartOfDay();
+		orderDateTime.plusHours(orderForm.getDeliveryTime());
+		if(nowDateTime.isAfter(orderDateTime)) {
+			model.addAttribute("deliveryDateError", "今から3時間後の日時をご入力ください");
+			return toOrder(orderForm, model);
 		}
 
 		if (result.hasErrors()) {
@@ -96,6 +119,7 @@ public class OrderController {
 		}
 
 		orderService.order(orderForm);
+		
 		return "redirect:/order/toFinished";
 	}
 }
