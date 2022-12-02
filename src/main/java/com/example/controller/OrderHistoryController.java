@@ -49,6 +49,7 @@ public class OrderHistoryController {
 			model.addAttribute("orderListOne", orderListOne);
 
 		} catch (NullPointerException e) {
+			session.setAttribute("toOrderHistory",true);
 			return "login";
 		}
 
