@@ -73,9 +73,9 @@ public class LoginUserController {
 			return "redirect:/orderHistory/";
 		}
 		
-		try{
+		
 			Boolean isThroughOrderConfirmation = (Boolean) session.getAttribute("throughOrderConfirmation");
-			
+			if(isThroughOrderConfirmation != null && isThroughOrderConfirmation.booleanValue()) {
 			Integer recentId = cartService.findIdAtRecentOrder();
 			Integer recentUserId = cartService.findUserIdAtRecentOrder(recentId);
 			Order dummyOrder = cartService.searchDummyOrder(recentUserId);
@@ -87,7 +87,7 @@ public class LoginUserController {
 			cartService.update(transferdOrder);
 			session.removeAttribute("throughOrderConfirmation");
 			return "redirect:/order/toOrder";
-		}catch(NullPointerException e){
+			}else {
 			return "redirect:/";
 		}
 
