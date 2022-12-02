@@ -29,7 +29,7 @@ import com.example.service.LoginUserService;
 public class LoginUserController {
 	@Autowired
 	private LoginUserService loginUserService;
-	
+
 	@Autowired
 	private CartService cartService;
 
@@ -57,8 +57,6 @@ public class LoginUserController {
 	 */
 	@PostMapping("/login")
 	public String login(Model model, LoginUserForm form, BindingResult result) {
-		System.out.println("login()に移動しました。");
-		System.out.println("セッションID　＝　"+session.hashCode());
 
 		User user = loginUserService.login(form.getEmail(), form.getPassword());
 
@@ -69,6 +67,11 @@ public class LoginUserController {
 		session.setAttribute("user", user);
 		String userName = user.getName();
 		session.setAttribute("userName", userName);
+		
+		Boolean isToOrderHistory = (Boolean)session.getAttribute("toOrderHistory");
+		if(isToOrderHistory != null && isToOrderHistory.booleanValue()) {
+			return "redirect:/orderHistory/";
+		}
 		
 		try{
 			Boolean isThroughOrderConfirmation = (Boolean) session.getAttribute("throughOrderConfirmation");
