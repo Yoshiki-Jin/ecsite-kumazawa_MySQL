@@ -45,7 +45,7 @@
 
 					<a th:href="@{/cart/showCart#}"> <i class="fas fa-shopping-cart">
 
-					</i>カート
+					</i>カート  <span th:text="${session.orderItemCount}"></span>
 					</a> 
 					 <span th:unless="${session.user}"><a th:href="@{/loginUser/toLogin}" class="login"> <i
 						  class="fas fa-sign-in-alt"></i>ログイン</a> 
