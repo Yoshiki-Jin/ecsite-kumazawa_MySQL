@@ -11,6 +11,8 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
     />
+    <!-- 目のマークを表示する -->
+     <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
     <!-- Import Font Wesome -->
     <link
       href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
@@ -83,6 +85,9 @@
                   <i class="material-icons prefix">lock_outline</i>
                   <input id="password" type="password" name="password" />
                   <label for="password">パスワード</label>
+                  
+                  <span id="buttonEye" class="fa fa-eye" onclick="pushHideButton()"></span>←パスワード表示/非表示
+                  
                 </div>
               </div>
               <div class="row login-btn">
@@ -101,6 +106,21 @@
                 </div>
               </div>
             </form>
+            <script language="javascript">
+      function pushHideButton() {
+        var txtPass = document.getElementById("password");
+        var btnEye = document.getElementById("buttonEye");
+        if (txtPass.type === "text") {
+          txtPass.type = "password";
+          btnEye.className = "fa fa-eye";
+        } else {
+          txtPass.type = "text";
+          btnEye.className = "fa fa-eye-slash";
+        }
+      }
+    </script>
+            
+            
           </div>
         </div>
       </div>
