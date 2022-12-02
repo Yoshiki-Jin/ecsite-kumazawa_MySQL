@@ -69,6 +69,8 @@ public class OrderController {
 	 */
 	@GetMapping("/toFinished")
 	public String toFinished() {
+		//注文完了画面表示時にヘッダーの上のカートのアイコンの個数をリセットしてます
+		session.removeAttribute("orderItemCount");
 		return "order_finished";
 	}
 
