@@ -35,7 +35,7 @@ public class OrderItemRepository {
 		orderItem.setItemId(rs.getInt("item_id"));
 		orderItem.setOrderId(rs.getInt("order_id"));
 		orderItem.setQuantity(rs.getInt("quantity"));
-		orderItem.setSize(rs.getString("size").charAt(0));
+		orderItem.setSize(rs.getString("size"));
 		return orderItem;
 	};
 
@@ -44,11 +44,11 @@ public class OrderItemRepository {
 	 * 
 	 * @param oi Orderitemオブジェクト
 	 */
-	public void insert(OrderItem oi) {
+	public void insert(OrderItem orderItem) {
 
 		String sql = "INSERT INTO order_items(item_id,order_id,quantity,size) VALUES (:itemId, :orderId, :quantity, :size) ;";
 
-		SqlParameterSource param = new BeanPropertySqlParameterSource(oi);
+		SqlParameterSource param = new BeanPropertySqlParameterSource(orderItem);
 
 		template.update(sql, param);
 	}

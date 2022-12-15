@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 /**
  * ログアウトを行うコントローラークラス.
  * 
- * @author hongo
+ * @author kumazawa
  *
  */
 @Controller
@@ -25,10 +25,10 @@ public class LogoutUserController {
 	 * 
 	 * @return 商品一覧画面
 	 */
-	@GetMapping(value = "/logout")
+	@GetMapping("/logout")
 	public String logout() {
 		session.invalidate();
-		return "redirect:/loginUser/toLogin";
+		return "redirect:/";
 	}
 
 }

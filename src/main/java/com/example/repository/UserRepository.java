@@ -15,7 +15,7 @@ import com.example.domain.User;
 /**
  * usersテーブルを操作するリポジトリクラス.
  * 
- * @author hongo
+ * @author kumazawa
  *
  */
 @Repository
@@ -41,50 +41,85 @@ public class UserRepository {
 	};
 
 	/**
-	 * ユーザー情報を登録する.
+	 * 会員登録を行うメソッド.
 	 * 
-	 * @param user ユーザー情報
+	 * @param user 入力されたユーザー情報.
 	 */
 	public void insert(User user) {
-		String sql = "INSERT INTO users (name,email,password,zipcode,address,telephone) VALUES(:name,:email,:password,:zipcode,:address,:telephone)";
 		SqlParameterSource param = new BeanPropertySqlParameterSource(user);
-		template.update(sql, param);
+		String insertAql = "INSERT INTO users(name,email,password,zipcode,address,telephone)VALUES(:name,:email,:password,:zipcode,:address,:telephone);";
+		template.update(insertAql, param);
 	}
 
-	/**
-	 * メールアドレスからユーザー情報を検索する.
-	 * 
-	 * @param email メールアドレス
-	 * @return ユーザー情報
-	 */
 	public User findByEmail(String email) {
-		String sql = "SELECT id,name,email,password,zipcode,address,telephone FROM users WHERE email=:email";
+		String sql = "SELECT id,name,email,password,zipcode,address,telephone FROM users WHERE email=:email;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("email", email);
-
 		List<User> userList = template.query(sql, param, USER_LOW_MAPPER);
-
-		if (userList.size() == 0) { // 検索結果が０だった場合「null」を返す
+		if (userList.size() == 0) {
 			return null;
 		}
-
 		return userList.get(0);
 	}
 
-	/**
-	 * メールアドレスとパスワードを探すメソッド
-	 * @param email　メールアドレス
-	 * @param password　パスワード
-	 * @return　メールアドレスとパスワードを探してきた検索結果
-	 */
 	public User findByEmailAndPassword(String email, String password) {
-		String sql = "SELECT id,name,email,password,zipcode,address,telephone FROM users WHERE email=:email AND password=:password";
+		String sql = "SELECT id,name,email,password,zipcode,address,telephone FROM users WHERE email=:email AND password=:password;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("email", email).addValue("password", password);
-
 		List<User> userList = template.query(sql, param, USER_LOW_MAPPER);
-
-		if (userList.size() == 0) { // 検索結果が０だった場合「null」を返す
+		if (userList.size() == 0) {
 			return null;
+		} else {
+
+			return userList.get(0);
 		}
-		return userList.get(0);
 	}
+
+//	
+//	
+//	/**
+//	 * ユーザー情報を登録する.
+//	 * 
+//	 * @param user ユーザー情報
+//	 */
+//	public void insert(User user) {
+//		String sql = "INSERT INTO users (name,email,password,zipcode,address,telephone) VALUES(:name,:email,:password,:zipcode,:address,:telephone)";
+//		SqlParameterSource param = new BeanPropertySqlParameterSource(user);
+//		template.update(sql, param);
+//	}
+//
+//	/**
+//	 * メールアドレスからユーザー情報を検索する.
+//	 * 
+//	 * @param email メールアドレス
+//	 * @return ユーザー情報
+//	 */
+//	public User findByEmail(String email) {
+//		String sql = "SELECT id,name,email,password,zipcode,address,telephone FROM users WHERE email=:email";
+//		SqlParameterSource param = new MapSqlParameterSource().addValue("email", email);
+//
+//		List<User> userList = template.query(sql, param, USER_LOW_MAPPER);
+//
+//		if (userList.size() == 0) { // 検索結果が０だった場合「null」を返す
+//			return null;
+//		}
+//
+//		return userList.get(0);
+//	}
+//
+//	/**
+//	 * メールアドレスとパスワードを探すメソッド
+//	 * @param email　メールアドレス
+//	 * @param password　パスワード
+//	 * @return　メールアドレスとパスワードを探してきた検索結果
+//	 */
+//	public User findByEmailAndPassword(String email, String password) {
+//		String sql = "SELECT id,name,email,password,zipcode,address,telephone FROM users WHERE email=:email AND password=:password";
+//		SqlParameterSource param = new MapSqlParameterSource().addValue("email", email).addValue("password", password);
+//
+//		List<User> userList = template.query(sql, param, USER_LOW_MAPPER);
+//
+//		if (userList.size() == 0) { // 検索結果が０だった場合「null」を返す
+//			return null;
+//		}
+//		return userList.get(0);
+//	}
 }

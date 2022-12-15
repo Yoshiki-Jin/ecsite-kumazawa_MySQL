@@ -14,7 +14,7 @@ import com.example.domain.Item;
 /**
  * 商品情報を操作するリポジトリ.
  * 
- * @author inagakisaia
+ * @author kumazawa
  *
  */
 @Repository
@@ -32,24 +32,25 @@ public class ItemRepository {
 		item.setPriceM(rs.getInt("price_m"));
 		item.setPriceL(rs.getInt("price_l"));
 		item.setImagePath(rs.getString("image_path"));
-		item.setDeleted(rs.getBoolean("deleted"));
+		//item.setDeleted(rs.getBoolean("deleted"));
 
 		return item;
 
 	};
 
+	
 	/**
-	 * IDから商品情報を一件検索します.
-	 * 
-	 * @param id ID
-	 * @return 検索された商品情報
+	 * @param id 商品ID
+	 * @return　クリックした商品の詳細画面
 	 */
 	public Item load(int id) {
-		String sql = "SELECT id,name,description,price_m,price_l,image_path,deleted FROM items WHERE id=:id;";
+		String sql = "SELECT id,name,description,price_m,price_l,image_path FROM items WHERE id =:id;";
 		SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
-		Item item = template.queryForObject(sql, param, ITEM_ROW_MAPPER);
+	    Item item = template.queryForObject(sql, param, ITEM_ROW_MAPPER);
+		
 		return item;
 	}
+	
 
 	/**
 	 * 名前で商品情報をあいまい検索します.
@@ -59,7 +60,7 @@ public class ItemRepository {
 	 */
 	public List<Item> findByItemName(String name) {
 
-		String sql = "SELECT id,name,description,price_m,price_l,image_path,deleted FROM items WHERE name ILIKE :name ORDER BY price_m DESC;";
+		String sql = "SELECT id,name,description,price_m,price_l,image_path FROM items WHERE name ILIKE :name ORDER BY price_m DESC;";
 
 		SqlParameterSource param = new MapSqlParameterSource().addValue("name", "%" + name + "%");
 		List<Item> itemList = template.query(sql, param, ITEM_ROW_MAPPER);
@@ -72,7 +73,7 @@ public class ItemRepository {
 	 * @return 検索された商品情報全件
 	 */
 	public List<Item> findAll() {
-		String sql = "SELECT id,name,description,price_m,price_l,image_path,deleted FROM items ORDER BY price_m DESC;";
+		String sql = "SELECT id,name,description,price_m,price_l,image_path FROM items ORDER BY price_m DESC;";
 		List<Item> itemList = template.query(sql, ITEM_ROW_MAPPER);
 
 		return itemList;

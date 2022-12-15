@@ -33,29 +33,31 @@ public class OrderService {
 	 * @param orderForm 注文情報を受け取るフォーム.
 	 */
 	public void order(OrderForm orderForm) {
-		Order order=orderRepository.load(Integer.parseInt(orderForm.getId()));
+		//Orderに、注文IDをキーに検索してきたorderを代入
+		Order order = orderRepository.load(Integer.parseInt(orderForm.getId()));
 
 		BeanUtils.copyProperties(orderForm, order);
 		order.setId(Integer.parseInt(orderForm.getId()));
 		order.setPaymentMethod(Integer.parseInt(orderForm.getPaymentMethod()));
-		
-		LocalDate nowDate=LocalDate.now();
+
+		// 注文時間を挿入
+		LocalDate nowDate = LocalDate.now();
 		order.setOrderDate(Date.valueOf(nowDate));
-		
-		//配達日時、時間を合わせてTimestamp型に変換
+
+		// 配達日時、時間を合わせてTimestamp型に変換し、挿入
 		LocalDate localDate = orderForm.getDeliveryDate().toLocalDate();
 		LocalDateTime localDateTime = LocalDateTime.of(localDate.getYear(), localDate.getMonthValue(),
 				localDate.getDayOfMonth(), orderForm.getDeliveryTime(), 0, 0, 0);
 		Timestamp timestamp = Timestamp.valueOf(localDateTime);
 		order.setDeliveryTime(timestamp);
-    
-		//決済方法によってステータスを変更
-		if(orderForm.getPaymentMethod().equals("1")) {
+
+		// 決済方法によってステータスを変更
+		if (orderForm.getPaymentMethod().equals("1")) {
 			order.setStatus(1);
-		}else if(orderForm.getPaymentMethod().equals("2")) {
+		} else if (orderForm.getPaymentMethod().equals("2")) {
 			order.setStatus(2);
 		}
-		
+
 		orderRepository.update(order);
 	}
 

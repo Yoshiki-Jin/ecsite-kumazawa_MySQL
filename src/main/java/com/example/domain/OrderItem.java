@@ -12,7 +12,7 @@ public class OrderItem {
 	/** 数量 */
 	private Integer quantity;
 	/** サイズ */
-	private Character size;
+	private String size;
 	/** 商品 */
 	private Item item;
 	/** トッピングリスト */
@@ -50,11 +50,11 @@ public class OrderItem {
 		this.quantity = quantity;
 	}
 
-	public Character getSize() {
+	public String getSize() {
 		return size;
 	}
 
-	public void setSize(Character size) {
+	public void setSize(String size) {
 		this.size = size;
 	}
 
@@ -86,14 +86,14 @@ public class OrderItem {
 		int subTotal = 0;
 		int oneTotal = 0;
 		List<OrderTopping> orderToppingList = null;
-		if (this.getSize().compareTo('M') == 0) {
+		if (this.getSize() == "M") {
 			oneTotal += this.getItem().getPriceM();
 			orderToppingList = this.getOrderToppingList();
 			for (OrderTopping orderTopping : orderToppingList) {
 				oneTotal += orderTopping.getTopping().getPriceM();
 			}
 			subTotal += oneTotal*this.quantity;
-		} else if (this.getSize().compareTo('L') == 0) {
+		} else if (this.getSize() == "L") {
 			oneTotal += this.getItem().getPriceL();
 			orderToppingList = this.getOrderToppingList();
 			for (OrderTopping orderTopping : orderToppingList) {

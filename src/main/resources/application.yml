@@ -1,9 +1,9 @@
 spring:
   datasource:
-    driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/ec-202210c
-    username: postgres
-    password: postgres
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/test1
+    username: root
+    password: mysql
 server:
   servlet:
     context-path: /ec-202210c

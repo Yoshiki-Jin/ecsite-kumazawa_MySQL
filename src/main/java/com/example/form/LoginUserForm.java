@@ -3,7 +3,7 @@ package com.example.form;
 /**
  * ログイン時に入力した情報を格納するフォーム.
  * 
- * @author hongo
+ * @author kumazawa
  *
  */
 public class LoginUserForm {

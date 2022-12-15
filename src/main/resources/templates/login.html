@@ -40,38 +40,35 @@
       <div class="container">
         <div class="header">
           <div class="header-left">
-          <a th:href="@{/}">
-              <img class="logo" th:src="@{/img/header_logo.png}" />
+            <a href="top.html">
+              <img class="logo" src="img/header_logo.png" th:src="@{/img/header_logo.png}" />
             </a>
           </div>
 
           <div class="header-right">
-            <a th:href="@{/}">商品一覧</a>
-            <a th:href="@{/insertUser/toInsert}">会員登録</a>
-            <span th:unless="${session.user}">
-              <a th:href="@{/loginUser/toLogin}" class="login">
-               <i class="fas fa-sign-in-alt"></i>ログイン</a>
-            </span>
-            <span th:if="${session.user}">
-              <a th:href="@{/logoutUser/logout}">ログアウト</a>
-            </span>
+            <a href="item_list.html" th:href="@{/}">商品一覧</a>
+            <a href="register_admin.html" th:href="@{/insertUser/toInsertScreen}">会員登録</a>
+            <a href="login.html" class="login" th:href="@{/loginUser/}">
+              <i class="fas fa-sign-in-alt"></i>ログイン
+            </a>
           </div>
         </div>
       </div>
     </header>
+    
     <div class="top-wrapper">
       <div class="container">
+      
+      <form method="post" th:action="@{/loginUser/login}">
         <div class="row login-page">
           <div class="col s12 z-depth-6 card-panel">
-          <br>
-            <div class="error" th:text="${errorMessage}">エラーメッセージ</div>
-            
-            <form class="login-form" action="login.html"  th:action="@{/loginUser/login}" method="post" >
+            <div class="error" th:text="${errormessage}">エラーメッセージ</div>
+            <form class="login-form" action="employeeList.html">
               <div class="row"></div>
               <div class="row">
                 <div class="input-field col s12">
                   <i class="material-icons prefix">mail_outline</i>
-                  <input class="validate" id="mailAddress" type="email" name="email"  />
+                  <input class="validate" id="mailAddress" type="email" name="email" />
                   <label
                     for="mailAddress"
                     data-error="wrong"
@@ -85,42 +82,27 @@
                   <i class="material-icons prefix">lock_outline</i>
                   <input id="password" type="password" name="password" />
                   <label for="password">パスワード</label>
-                  
-                  <span id="buttonEye" class="fa fa-eye" onclick="pushHideButton()"></span>←パスワード表示/非表示
-                  
                 </div>
               </div>
               <div class="row login-btn">
                 <button
                   class="btn"
                   type="submit"
+                  onclick="location.href='item_list.html'"
                 >
                   <span>ログイン</span>
                 </button>
+                </form>
+                
               </div>
               <div class="row">
                 <div class="input-field col s6 m6 l6">
                   <p class="margin medium-small">
-                    <a th:href="@{/insertUser/toInsert}">ユーザー登録はこちら</a>
+                    <a href="register_admin.html" th:href="@{/insertUser/toInsertScreen}">ユーザー登録はこちら</a>
                   </p>
                 </div>
               </div>
             </form>
-            <script language="javascript">
-      function pushHideButton() {
-        var txtPass = document.getElementById("password");
-        var btnEye = document.getElementById("buttonEye");
-        if (txtPass.type === "text") {
-          txtPass.type = "password";
-          btnEye.className = "fa fa-eye";
-        } else {
-          txtPass.type = "text";
-          btnEye.className = "fa fa-eye-slash";
-        }
-      }
-    </script>
-            
-            
           </div>
         </div>
       </div>
@@ -128,9 +110,11 @@
     <!-- end top-wrapper -->
     <footer>
       <div class="container">
-        <img th:src="@{/img/header_logo.png}" />
-        <p>ホッと一息できるひとときを、あなたに！</p>
+      <a th:href="@{/}">
+        <img src="img/header_logo.png" th:src="@{/img/header_logo.png}" />
+        <p>アロハな気分をあなたにお届け！</p>
       </div>
+      </a>
     </footer>
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>

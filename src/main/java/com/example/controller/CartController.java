@@ -17,14 +17,14 @@ import com.example.service.CartService;
 /**
  * カートに商品を追加、削除、カートの表示をするコントローラ.
  * 
- * @author kaneko
+ * @author kumazawa
  */
 @Controller
 @RequestMapping("/cart")
 public class CartController {
 
 	@Autowired
-	private CartService service;
+	private CartService cartService;
 
 	@Autowired
 	private HttpSession session;
@@ -38,14 +38,15 @@ public class CartController {
 	@PostMapping("/insertOrderItem")
 	public String insertOrderItem(CartForm form) {
 		User user = (User) session.getAttribute("user");
-
+		System.out.println(user);
 		Integer userId = null;
-		if (user == null) {
-			userId = session.hashCode();
-		} else {
-			userId = user.getId();
-		}
-		service.addItem(form, userId);
+		// いったんログインした状態でカートに追加していることを想定
+//		if (user == null) {
+//			userId = session.hashCode();
+//		} else {
+		userId = user.getId();
+//		}
+		cartService.addItem(form, userId);
 		return "redirect:/cart/showCart";
 	}
 
@@ -60,6 +61,9 @@ public class CartController {
 
 		User user = (User) session.getAttribute("user");
 		Integer userId = 0;
+		// orderを手打ちで入力した際、userIdを１でとうろくしてあるため。稼働確認
+		// Integer userId = 1;
+		// 以下コメントアウトは表示機能のテストのためカートへの追加機能開発後にコメントアウト解除
 		if (user == null) {
 			userId = session.hashCode();
 
@@ -67,15 +71,16 @@ public class CartController {
 			userId = user.getId();
 		}
 
-		Order order = service.showCart(userId);
+		Order order = cartService.showCart(userId);
+		System.out.println("--------------------->"+order);
 		if (order == null) {
 			model.addAttribute("NoOrder", "カート内は空です。");
 		} else {
 			model.addAttribute("order", order);
-			
-			//htmlのヘッダーのカードにアイテム数を表示させるためにセットしてます
-			int orderItemCount =  order.getOrderItemList().size();
-			session.setAttribute("orderItemCount", orderItemCount);
+
+//			// htmlのヘッダーのカードにアイテム数を表示させるためにセットしてます
+//			int orderItemCount = order.getOrderItemList().size();
+//			session.setAttribute("orderItemCount", orderItemCount);
 		}
 		return "cart_list";
 	}
@@ -85,14 +90,15 @@ public class CartController {
 	 * 
 	 * @param orderItemId 選択されたorderitemId
 	 * @return 削除後のカート一覧画面
+	 * 
+	 *         引数に入れる。金ちゃんのやつString toOrderConfirm if
+	 *         (toOrderConfirm.equals("toOrderConfirm")) { return
+	 *         "redirect:/order/toOrder"; }
 	 */
 	@PostMapping("/deleteOrderItem")
-	public String deleteOrderItem(Integer orderItemId,String toOrderConfirm) {
-		service.deleteOrderItem(orderItemId);
-		System.out.println("");
-		if(toOrderConfirm.equals("toOrderConfirm")) {
-			return "redirect:/order/toOrder";
-		}
+	public String deleteOrderItem(Integer orderItemId) {
+		cartService.deleteOrderItem(orderItemId);
+
 		return "redirect:/cart/showCart";
 	}
 }

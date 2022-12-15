@@ -7,7 +7,7 @@ import javax.validation.constraints.Pattern;
 /**
  * ユーザー情報を登録する際のフォームクラス.
  * 
- * @author hongo
+ * @author kumazawa
  *
  */
 public class InsertUserForm {
@@ -44,8 +44,7 @@ public class InsertUserForm {
 	@Pattern(regexp="^\\d{2,4}-\\d{2,4}-\\d{4}$",message="電話番号は-を含んで正しい入力をしてください")
 	private String telephone;
 
-	/** GetterとSetter */
-
+	
 	public String getFirstName() {
 		return firstName;
 	}

@@ -4,7 +4,7 @@ import java.util.List;
 
 /**
  * Cart登録時のForm
- * @author kaneko
+ * @author kumazawa
  *
  */
 public class CartForm {
@@ -13,7 +13,7 @@ public class CartForm {
 	private Integer ItemId;
 	
 	/** サイズ　*/
-	private char size;
+	private String size;
 	
 	/**　量　*/
 	private Integer quantity;
@@ -35,11 +35,11 @@ public class CartForm {
 		ItemId = itemId;
 	}
 
-	public char getSize() {
+	public String getSize() {
 		return size;
 	}
 
-	public void setSize(char size) {
+	public void setSize(String size) {
 		this.size = size;
 	}
 

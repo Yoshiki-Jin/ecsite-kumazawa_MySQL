@@ -22,7 +22,7 @@ import com.example.service.OrderService;
 /**
  * 注文情報を操作するコントローラ.
  * 
- * @author inagakisaia
+ * @author kumazawa
  *
  */
 @Controller
@@ -34,7 +34,7 @@ public class OrderController {
 
 	@Autowired
 	private CartService cartService;
-	
+
 	@Autowired
 	private HttpSession session;
 
@@ -46,23 +46,25 @@ public class OrderController {
 	@GetMapping("/toOrder")
 	public String toOrder(OrderForm orderForm, Model model) {
 
-		User user = null;
-		user=(User)(session.getAttribute("user"));
-		Integer userId = 0;
-		try {
-		userId = user.getId();
-		}catch(Exception e) {
-			session.setAttribute("throughOrderConfirmation", true);
-			return "redirect:/loginUser/toLogin";
-		}
-
+		// ログインしていない時を考慮したもの
+//		User user = null;
+//		user=(User)(session.getAttribute("user"));
+//		Integer userId = 0;
+//		try {
+//		userId = user.getId();
+//		}catch(Exception e) {
+//			session.setAttribute("throughOrderConfirmation", true);
+//			return "redirect:/loginUser/toLogin";
+//		}
+		User user = (User) (session.getAttribute("user"));
+		Integer userId = user.getId();
 		Order order = cartService.showCart(userId);
-		model.addAttribute("order",order);
-		
-		//htmlのヘッダーのカードにアイテム数を表示させるためにセットしてます
-		int orderItemCount =  order.getOrderItemList().size();
-		session.setAttribute("orderItemCount", orderItemCount);
-		
+		model.addAttribute("order", order);
+
+//		//htmlのヘッダーのカードにアイテム数を表示させるためにセットしてます
+//		int orderItemCount =  order.getOrderItemList().size();
+//		session.setAttribute("orderItemCount", orderItemCount);
+
 		return "order_confirm";
 	}
 
@@ -73,53 +75,61 @@ public class OrderController {
 	 */
 	@GetMapping("/toFinished")
 	public String toFinished() {
-		//注文完了画面表示時にヘッダーの上のカートのアイコンの個数をリセットしてます
-		session.removeAttribute("orderItemCount");
+		// 注文完了画面表示時にヘッダーの上のカートのアイコンの個数をリセットしてます
+		// session.removeAttribute("orderItemCount");
 		return "order_finished";
 	}
 
-	/**
-	 * お届け先情報が自動入力された注文画面を表示します.
-	 * 
-	 * @param orderForm 注文情報を受け取るフォーム
-	 * @return 注文画面
-	 */
-	@PostMapping("/autoEntry")
-	public String autoEntry(OrderForm orderForm, Model model) {
-
-		model.addAttribute("autoEntry", "autoEntry");
-
-		System.out.println("autoEntry");
-		return toOrder(orderForm, model);
-	}
-
+//
+//	/**
+//	 * お届け先情報が自動入力された注文画面を表示します.
+//	 * 
+//	 * @param orderForm 注文情報を受け取るフォーム
+//	 * @return 注文画面
+//	 */
+//	@PostMapping("/autoEntry")
+//	public String autoEntry(OrderForm orderForm, Model model) {
+//
+//		model.addAttribute("autoEntry", "autoEntry");
+//
+//		System.out.println("autoEntry");
+//		return toOrder(orderForm, model);
+//	}
+//
 	/**
 	 * 注文をします.
 	 * 
 	 * @param orderForm 注文情報を受け取るフォーム
 	 * @return 注文完了画面にリダイレクト
 	 */
-	@PostMapping("/")
+	@PostMapping("/orderToComlete")
 	public String order(@Validated OrderForm orderForm, BindingResult result, Model model) {
-		if (orderForm.getDeliveryDate() == null) {
-			model.addAttribute("deliveryDateError", "日付を入力してください");
-			return toOrder(orderForm, model);
-		}
-		LocalDateTime nowDateTime=LocalDateTime.now();
-		nowDateTime=nowDateTime.plusHours(3);
-		LocalDateTime orderDateTime=orderForm.getDeliveryDate().toLocalDate().atStartOfDay();
-		orderDateTime.plusHours(orderForm.getDeliveryTime());
-		if(nowDateTime.isAfter(orderDateTime)) {
-			model.addAttribute("deliveryDateError", "今から3時間後の日時をご入力ください");
-			return toOrder(orderForm, model);
-		}
+//		if (orderForm.getDeliveryDate() == null) {
+//			model.addAttribute("deliveryDateError", "日付を入力してください");
+//			return toOrder(orderForm, model);
+//		}
+//		LocalDateTime nowDateTime=LocalDateTime.now();
+//		//nowDateTime=nowDateTime.plusHours(3);
+//		LocalDateTime orderDateTime=orderForm.getDeliveryDate().toLocalDate().atStartOfDay();
 
+		// orderDateTime.plusHours(orderForm.getDeliveryTime());
+//		if(nowDateTime.isAfter(orderDateTime)) {
+//			model.addAttribute("deliveryDateError", "今から3時間後の日時をご入力ください");
+//			return toOrder(orderForm, model);
+//		}
+
+		System.out.println("ああああああああああああああああああああああ" + orderForm);
+		System.out.println(result);
 		if (result.hasErrors()) {
+			
+			System.out.println("エラーありになってる" + orderForm);
 			return toOrder(orderForm, model);
 		}
 
+		System.out.println("iiiiiiiiiiiiiiiiiiiiiiiiiiiiii" + orderForm);
 		orderService.order(orderForm);
-		
-		return "redirect:/order/toFinished";
+
+		return "/order/toFinished";
+
 	}
 }

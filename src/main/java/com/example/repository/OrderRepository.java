@@ -22,7 +22,7 @@ import com.example.domain.Topping;
 /**
  * 注文情報を操作するリポジトリ.
  * 
- * @author inagakisaia
+ * @author kumazawa
  *
  */
 @Repository
@@ -73,7 +73,7 @@ public class OrderRepository {
 				orderItem.setItemId(rs.getInt("oi_item_id"));
 				orderItem.setOrderId(rs.getInt("oi_order_id"));
 				orderItem.setQuantity(rs.getInt("oi_quantity"));
-				orderItem.setSize(rs.getString("oi_size").charAt(0));
+				orderItem.setSize(rs.getString("oi_size"));
 
 				Item item = new Item();
 				item.setId(rs.getInt("i_id"));
@@ -151,7 +151,6 @@ public class OrderRepository {
 
 	/**
 	 * userId と status=0 を条件にOrderオブジェクトを1件取得する
-	 * 
 	 * @param userId ユーザーID
 	 */
 	public Order findByUserIdAndStatus(Integer userId) {
@@ -162,7 +161,6 @@ public class OrderRepository {
 
 		List<Order> order = template.query(sql, param, ORDER_ROW_MAPPER);
 
-		System.out.println("findByUserIdAndStatusメソッド内の order =" + order);
 		try {
 			order.get(0);
 		} catch (IndexOutOfBoundsException e) {
@@ -183,17 +181,17 @@ public class OrderRepository {
 		String sql = "SELECT o.id o_id, o.user_id o_user_id, o.status o_status, o.total_price o_total_price, o.order_date o_order_date, o.destination_name o_destination_name, o.destination_email o_destination_email, o.destination_zipcode o_destination_zipcode, o.destination_address o_destination_address, o.destination_tel o_destination_tel, o.delivery_time o_delivery_time, o.payment_method o_payment_method, "
 				+ "oi.id oi_id, oi.item_id oi_item_id, oi.order_id oi_order_id,oi.quantity oi_quantity, oi.size oi_size, "
 				+ "ot.id ot_id, ot.topping_id ot_topping_id,ot.order_item_id ot_order_item_id, "
-				+ "i.id i_id, i.name i_name, i.description i_description, i.price_m i_price_m, i.price_l i_price_l, i.image_path i_image_path, i.deleted i_deleted, "
+				+ "i.id i_id, i.name i_name, i.description i_description, i.price_m i_price_m, i.price_l i_price_l, i.image_path i_image_path, "
 				+ "t.id t_id, t.name t_name, t.price_m t_price_m, t.price_l t_price_l "
 				+ "FROM Orders o LEFT OUTER  JOIN order_items oi ON o.id = oi.order_id "
-				+ " LEFT OUTER  JOIN order_toppings ot ON oi.id = ot.order_item_id "
+				+ " LEFT OUTER JOIN order_toppings ot ON oi.id = ot.order_item_id "
 				+ " LEFT OUTER JOIN items i ON i.id = oi.item_id "
 				+ " LEFT OUTER JOIN toppings t ON t.id = ot.topping_id " + "WHERE o.id = :orderId ;";
 
 		SqlParameterSource param = new MapSqlParameterSource().addValue("orderId", orderId);
 
-		List<Order> orderList = null;
-		orderList = template.query(sql, param, ORDER_RESULT_SET_EXTRACTOR);
+		List<Order> orderList = template.query(sql, param, ORDER_RESULT_SET_EXTRACTOR);
+		System.out.println(orderList);
 		return orderList.get(0);
 	}
 
@@ -203,7 +201,6 @@ public class OrderRepository {
 	 * @param order Order
 	 */
 	public void insert(Order order) {
-		System.out.println("OrderRepository#insertよばれた");
 
 		String sql = "INSERT INTO orders(user_id,status,total_price) VALUES(:userId, 0, :totalPrice);";
 
@@ -319,35 +316,35 @@ public class OrderRepository {
 		return orderList;
 	}
 
-	/**
-	 * 登録した最新のOrderのidを返します,
-	 * 
-	 * @return 最新のId
-	 */
-	public Integer findRecentId() {
+//	/**
+//	 * 登録した最新のOrderのidを返します,
+//	 * 
+//	 * @return 最新のId
+//	 */
+//	public Integer findRecentId() {
+//
+//		String sql = "SELECT max(id) id FROM orders ;";
+//
+//		List<Order> orderList = template.query(sql, ORDER_ROW_MAPPER2);
+//		Integer recentId = orderList.get(0).getId();
+//		return recentId;
+//	}
 
-		String sql = "SELECT max(id) id FROM orders ;";
-
-		List<Order> orderList = template.query(sql, ORDER_ROW_MAPPER2);
-		Integer recentId = orderList.get(0).getId();
-		return recentId;
-	}
-
-	/**
-	 * 指定のidを持つOrderのuserIdを返します.
-	 * 
-	 * @param recentId id
-	 * @return userId
-	 */
-	public Integer findRecentUserId(Integer recentId) {
-
-		String sql = "SELECT id,user_id FROM orders WHERE id = :recentId;";
-
-		SqlParameterSource param = new MapSqlParameterSource().addValue("recentId", recentId);
-
-		List<Order> orderList = template.query(sql, param, ORDER_ROW_MAPPER3);
-		Integer recentUserId = orderList.get(0).getUserId();
-		return recentUserId;
-	}
+//	/**
+//	 * 指定のidを持つOrderのuserIdを返します.
+//	 * 
+//	 * @param recentId id
+//	 * @return userId
+//	 */
+//	public Integer findRecentUserId(Integer recentId) {
+//
+//		String sql = "SELECT id,user_id FROM orders WHERE id = :recentId;";
+//
+//		SqlParameterSource param = new MapSqlParameterSource().addValue("recentId", recentId);
+//
+//		List<Order> orderList = template.query(sql, param, ORDER_ROW_MAPPER3);
+//		Integer recentUserId = orderList.get(0).getUserId();
+//		return recentUserId;
+//	}
 
 }

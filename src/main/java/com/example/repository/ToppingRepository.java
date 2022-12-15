@@ -48,11 +48,11 @@ public class ToppingRepository {
 //		return toppinglist.get(0);
 //	}
 
-	public Topping load(Integer toiingId) {
+	public Topping load(Integer toppingId) {
 		
 		String sql = "SELECT id,name,price_m,price_l FROM toppings WHERE id = :id;";
 		
-		SqlParameterSource param = new MapSqlParameterSource().addValue("id",toiingId);
+		SqlParameterSource param = new MapSqlParameterSource().addValue("id",toppingId);
 		
 		Topping topping = template.queryForObject(sql, param, TOPPING_ROW_MAPPER);
 		return topping;

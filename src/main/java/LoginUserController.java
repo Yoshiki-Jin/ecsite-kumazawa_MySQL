@@ -1,4 +1,4 @@
-package com.example.controller;
+
 
 import javax.servlet.http.HttpSession;
 
@@ -40,7 +40,7 @@ public class LoginUserController {
 			//model.addAttribute("errormessage", "メールアドレス、またはパスワードが間違っています");
 			return "login";
 		}
-		session.setAttribute("user", user);
+		//session.setAttribute("user", user);
 		return "redirect:/";
 	}
 
